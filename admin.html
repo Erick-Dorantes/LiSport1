@@ -935,9 +935,9 @@
         async function uploadSingleImage(file) {
             const fd = new FormData();
             fd.append('file', file);
-            fd.append('upload_preset', CONFIG.UPLOAD_PRESET);
+            fd.append('upload_preset', UPLOAD_PRESET);
             
-            const res = await fetch('https://api.cloudinary.com/v1_1/' + CONFIG.CLOUD_NAME + '/image/upload', {
+            const res = await fetch('https://api.cloudinary.com/v1_1/' + CLOUD_NAME + '/image/upload', {
                 method: 'POST',
                 body: fd
             });
@@ -1021,7 +1021,7 @@
             showStatus(isEditing ? '⏳ Actualizando producto...' : '⏳ Creando producto...', 'loading');
             
             try {
-                const res = await fetch(CONFIG.APP_SCRIPT_URL + '?action=' + action, {
+                const res = await fetch(APP_SCRIPT_URL + '?action=' + action, {
                     method: 'POST', 
                     headers: {'Content-Type': 'application/json'}, 
                     body: JSON.stringify(payload)
@@ -1060,7 +1060,7 @@
             try {
                 list.innerHTML = '<div class="text-center py-4"><i class="fas fa-spinner fa-spin text-pink-500"></i> Cargando...</div>';
                 
-                const res = await fetch(CONFIG.APP_SCRIPT_URL + '?action=getProducts');
+                const res = await fetch(APP_SCRIPT_URL + '?action=getProducts');
                 const data = await res.json();
                 
                 if (!data.ok) {
@@ -1237,7 +1237,7 @@
             showStatus('⏳ Eliminando producto...', 'loading');
             
             try {
-                const res = await fetch(CONFIG.APP_SCRIPT_URL + '?action=delete', { 
+                const res = await fetch(APP_SCRIPT_URL + '?action=delete', { 
                     method: 'POST',
                     headers: {'Content-Type': 'application/json'}, 
                     body: JSON.stringify({ 
