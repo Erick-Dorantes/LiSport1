@@ -1,0 +1,80 @@
+# =============================================
+# LISPORT2 - Ropa Deportiva para Mujer
+# =============================================
+
+# Archivos del sistema operativo
+# ==============================
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+desktop.ini
+
+# Archivos de editors/IDEs
+# ========================
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Archivos de entorno y configuración sensible
+# ============================================
+.env
+.env.local
+.env.production
+.config.js
+config.backup.js
+*.key
+*.pem
+credentials.json
+
+# Logs
+# ====
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+
+# Dependencias (por si agregas algo después)
+# ==========================================
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Archivos de build temporales
+# ============================
+dist/
+build/
+*.tmp
+*.temp
+
+# Archivos de sistema Windows
+# ===========================
+[Tt]humbs.db
+$RECYCLE.BIN/
+
+# Archivos de macOS
+# =================
+.AppleDouble
+.LSOverride
+
+# Cache de dependencias
+# =====================
+.npm
+.eslintcache
+
+# Coverage reports
+# ================
+coverage/
+.nyc_output/
+
+# Archivos de producción generados
+# ================================
+/build
+/dist
