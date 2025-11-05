@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Admin - LiSport</title>
     
-    <!-- Tailwind CSS Corregido -->
+    <!-- Tailwind CSS -->
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     
     <!-- Iconos -->
@@ -37,7 +37,6 @@
             color: #e6eef8;
         }
         
-        /* Efectos de tarjetas mejorados */
         .glass-card {
             background: rgba(255, 255, 255, 0.95);
             border: 1px solid rgba(255, 255, 255, 0.2);
@@ -51,7 +50,6 @@
             border: 1px solid rgba(255, 255, 255, 0.1);
         }
         
-        /* Texto con mejor contraste */
         .text-high-contrast {
             color: #1e293b;
         }
@@ -68,7 +66,6 @@
             color: #cbd5e1;
         }
         
-        /* Inputs con mejor visibilidad */
         .modern-input {
             border-radius: 12px;
             transition: all 0.3s ease;
@@ -89,7 +86,6 @@
             outline: none;
         }
         
-        /* Logo reducido */
         .logo-image {
             height: 50px;
             width: auto;
@@ -101,12 +97,10 @@
             transform: scale(1.05);
         }
         
-        /* Header más compacto */
         .header-compact {
             padding: 10px 20px;
         }
         
-        /* Menú móvil */
         .mobile-menu {
             transform: translateX(100%);
             transition: transform 0.3s ease;
@@ -124,7 +118,6 @@
             transition: opacity 0.3s ease;
         }
         
-        /* Utilidades */
         .line-clamp-2 {
             display: -webkit-box;
             -webkit-line-clamp: 2;
@@ -144,7 +137,6 @@
             border: 0;
         }
         
-        /* Botones con gradiente */
         .btn-gradient {
             background: var(--gradient-primary);
             transition: all 0.3s ease;
@@ -156,13 +148,11 @@
             box-shadow: 0 6px 20px rgba(255, 76, 122, 0.4);
         }
         
-        /* Header con gradiente */
         .header-gradient {
             background: var(--gradient-primary);
             box-shadow: 0 4px 20px rgba(255, 76, 122, 0.3);
         }
         
-        /* Labels con mejor visibilidad */
         .form-label {
             color: #374151;
             font-weight: 500;
@@ -172,7 +162,6 @@
             color: #e5e7eb;
         }
         
-        /* Placeholders visibles */
         .modern-input::placeholder {
             color: #6b7280;
         }
@@ -181,7 +170,6 @@
             color: #9ca3af;
         }
         
-        /* Responsive para logo */
         @media (max-width: 768px) {
             .logo-image {
                 height: 22px;
@@ -256,7 +244,6 @@
             transform: scale(1.1);
         }
 
-        /* Indicador de múltiples imágenes en lista */
         .image-count-badge {
             position: absolute;
             top: 4px;
@@ -584,7 +571,7 @@
                     </div>
                 </div>             
                 
-                <!-- Sección de Múltiples Imágenes CORREGIDA -->
+                <!-- Sección de Múltiples Imágenes -->
                 <div class="mb-6">
                     <label class="form-label block text-sm font-medium mb-2">
                         Imágenes del Producto (Múltiples)
@@ -721,6 +708,7 @@
     <script>
         // ===== CONFIGURACIÓN =====
         const APP_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxcYnsQR4R--fF6ggRPBcbwsIWFPAlzkX9Lwt7LlJ6LbAMpfTYy72XOM3jPw5t8sfU/exec';
+        const CORS_PROXY = 'https://cors-anywhere.herokuapp.com/';
         const PASSWORD_HASH = '240be518fabd2724ddb6f04eeb1da5967448d7e831c08c8fa822809f74c720a9';
 
         // ===== SISTEMA DE AUTENTICACIÓN SEGURA =====
@@ -736,26 +724,20 @@
                 return;
             }
 
-            // Crear hash SHA-256 del input
             const inputHash = await generarHash(inputPassword);
             
             if (inputHash === PASSWORD_HASH) {
-                // Login exitoso
                 isAuthenticated = true;
                 document.getElementById('loginBox').style.display = 'none';
                 document.getElementById('adminPanel').style.display = 'block';
-                
-                // Inicializar el panel admin
                 inicializarPanelAdmin();
             } else {
-                // Login fallido
                 errorMsg.style.display = 'block';
                 document.getElementById('admin-password').value = '';
                 document.getElementById('admin-password').focus();
             }
         }
 
-        // Función para generar hash SHA-256
         async function generarHash(message) {
             const msgBuffer = new TextEncoder().encode(message);
             const hashBuffer = await crypto.subtle.digest('SHA-256', msgBuffer);
@@ -775,7 +757,7 @@
             }
         }
 
-        // ===== FUNCIONES PRINCIPALES MEJORADAS =====
+        // ===== FUNCIONES PRINCIPALES =====
         let currentProducts = [];
         let isEditing = false;
         let currentEditId = null;
@@ -793,17 +775,11 @@
         const totalCount = document.getElementById('total-count');
         const progressBar = document.getElementById('progress-bar');
 
-        // ===== SISTEMA DE SUBIDA DE IMÁGENES CORREGIDO =====
+        // ===== SISTEMA DE IMÁGENES =====
         function inicializarSistemaImagenes() {
-            // Evento para hacer clic en el área de subida
-            uploadArea.addEventListener('click', () => {
-                fileInput.click();
-            });
-
-            // Evento para seleccionar archivos
+            uploadArea.addEventListener('click', () => fileInput.click());
             fileInput.addEventListener('change', handleFileSelect);
 
-            // Drag and drop events
             uploadArea.addEventListener('dragover', (e) => {
                 e.preventDefault();
                 uploadArea.classList.add('border-pink-400', 'bg-pink-50', 'dark:bg-pink-900/20');
@@ -816,7 +792,6 @@
             uploadArea.addEventListener('drop', (e) => {
                 e.preventDefault();
                 uploadArea.classList.remove('border-pink-400', 'bg-pink-50', 'dark:bg-pink-900/20');
-                
                 if (e.dataTransfer.files.length > 0) {
                     fileInput.files = e.dataTransfer.files;
                     handleFileSelect();
@@ -828,24 +803,20 @@
             const files = fileInput.files;
             if (files.length === 0) return;
             
-            // Validar número de archivos
             if (files.length > 10) {
                 showStatus('⚠️ Máximo 10 imágenes permitidas', 'error');
                 return;
             }
             
-            // Validar tipos de archivo
             const invalidFiles = Array.from(files).filter(file => !file.type.startsWith('image/'));
             if (invalidFiles.length > 0) {
                 showStatus('❌ Solo se permiten archivos de imagen', 'error');
                 return;
             }
             
-            // Simular subida de imágenes (en un caso real, aquí subirías a Imgur)
             simularSubidaImagenes(files);
         }
 
-        // Función para simular subida de imágenes (reemplaza con tu lógica real de Imgur)
         function simularSubidaImagenes(files) {
             uploadProgress.classList.remove('hidden');
             totalCount.textContent = files.length;
@@ -855,7 +826,6 @@
             const uploadedUrls = [];
             let completed = 0;
             
-            // Simular progreso de subida
             const interval = setInterval(() => {
                 completed++;
                 uploadCount.textContent = completed;
@@ -864,28 +834,22 @@
                 if (completed === files.length) {
                     clearInterval(interval);
                     
-                    // Generar URLs de placeholder (en producción, estas serían las URLs de Imgur)
                     Array.from(files).forEach((file, index) => {
                         const url = URL.createObjectURL(file);
                         uploadedUrls.push(url);
                         addImagePreview(url, file.name);
                     });
                     
-                    // Actualizar array de URLs
                     imageUrls = [...imageUrls, ...uploadedUrls];
                     imagenesUrlsInput.value = imageUrls.join(',');
                     
-                    // Finalizar
                     uploadProgress.classList.add('hidden');
                     showStatus(`✅ ${uploadedUrls.length} imagen(es) procesada(s) correctamente`, 'success');
-                    
-                    // Limpiar input
                     fileInput.value = '';
                 }
             }, 300);
         }
 
-        // Agregar vista previa de imagen
         function addImagePreview(url, filename = 'Imagen') {
             const preview = document.createElement('div');
             preview.className = 'image-preview';
@@ -898,7 +862,6 @@
             `;
             imagesPreview.appendChild(preview);
             
-            // Evento para eliminar
             preview.querySelector('.remove-image-btn').addEventListener('click', (e) => {
                 e.stopPropagation();
                 removeImage(url);
@@ -906,26 +869,21 @@
             });
         }
 
-        // Eliminar imagen
         function removeImage(url) {
             imageUrls = imageUrls.filter(imgUrl => imgUrl !== url);
             imagenesUrlsInput.value = imageUrls.join(',');
             showStatus('🗑️ Imagen eliminada', 'success');
         }
 
-        // ===== FUNCIÓN MEJORADA PARA CARGAR PRODUCTOS =====
+        // ===== FUNCIONES CRUD =====
         async function loadProductList() {
             const list = document.getElementById('list');
             
             try {
                 list.innerHTML = '<div class="text-center py-4"><i class="fas fa-spinner fa-spin text-pink-500"></i> Cargando...</div>';
                 
-                // Usar fetch con manejo de CORS mejorado
-                const res = await fetch(`${APP_SCRIPT_URL}?action=getProducts&timestamp=${Date.now()}`, {
-                    method: 'GET',
-                    mode: 'cors',
-                    cache: 'no-cache'
-                });
+                // Usar proxy CORS para evitar problemas
+                const res = await fetch(CORS_PROXY + APP_SCRIPT_URL + '?action=getProducts&timestamp=' + Date.now());
                 
                 if (!res.ok) {
                     throw new Error(`Error HTTP: ${res.status}`);
@@ -938,114 +896,14 @@
                 }
                 
                 currentProducts = data.products || [];
-                
-                if (currentProducts.length === 0) {
-                    list.innerHTML = `
-                        <div class="text-center py-8 text-medium-contrast">
-                            <i class="fas fa-box-open text-4xl mb-3"></i>
-                            <p class="text-lg">No hay productos registrados</p>
-                            <p class="text-sm">Usa el formulario superior para agregar el primer producto</p>
-                        </div>
-                    `;
-                    return;
-                }
-                
-                list.innerHTML = currentProducts.map(product => {
-                    const id = product.ID || product.id || 'N/A';
-                    const nombre = product.Nombre || product.nombre || 'Sin nombre';
-                    const descripcion = product.Descripción || product.descripcion || 'Sin descripción';
-                    const precio = product.Precio || product.precio || '0';
-                    const cantidad = product.Cantidad || product.cantidad || 0;
-                    
-                    // Manejar múltiples imágenes
-                    let imagen = '';
-                    let imageCount = 0;
-                    
-                    if (product.Imagen && Array.isArray(product.Imagen) && product.Imagen.length > 0) {
-                        imagen = product.Imagen[0];
-                        imageCount = product.Imagen.length;
-                    } else if (product.Imagen) {
-                        imagen = product.Imagen;
-                        imageCount = 1;
-                    }
-                    
-                    const categoria = product.Categoría || product.categoria || 'General';
-                    const hasMultipleImages = imageCount > 1;
-                    
-                    return `
-                        <div class="bg-white dark:bg-gray-700 p-4 rounded-lg border border-gray-200 dark:border-gray-600 product-card">
-                            <div class="flex flex-col md:flex-row md:items-center gap-4">
-                                <div class="flex-shrink-0 relative">
-                                    <img src="${imagen || 'https://via.placeholder.com/100x75?text=Sin+img'}" 
-                                         alt="${nombre}" 
-                                         class="w-20 h-20 object-cover rounded-lg"
-                                         onerror="this.src='https://via.placeholder.com/100x75?text=Error'">
-                                    ${hasMultipleImages ? `<span class="image-count-badge">+${imageCount-1}</span>` : ''}
-                                </div>
-                                <div class="flex-1 min-w-0">
-                                    <div class="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-2">
-                                        <div>
-                                            <h3 class="font-semibold text-high-contrast truncate">${nombre}</h3>
-                                            <p class="text-sm text-medium-contrast mt-1 line-clamp-2">${descripcion}</p>
-                                            <div class="flex flex-wrap items-center gap-3 mt-2 text-sm">
-                                                <span class="bg-pink-100 dark:bg-pink-900 text-pink-800 dark:text-pink-200 px-2 py-1 rounded-full text-xs font-medium">
-                                                    ${categoria}
-                                                </span>
-                                                <span class="font-bold text-green-600 dark:text-green-400">$${precio}</span>
-                                                <span class="font-medium ${cantidad > 0 ? 'text-green-600 dark:text-green-400' : 'text-red-600 dark:text-red-400'}">
-                                                    ${cantidad} disponibles
-                                                </span>
-                                                <span class="text-medium-contrast">ID: ${id}</span>
-                                            </div>
-                                        </div>
-                                        <div class="flex gap-2">
-                                            <button class="edit-btn bg-gradient-to-r from-yellow-500 to-orange-500 text-white px-3 py-2 rounded-lg text-sm font-semibold hover:shadow-lg transition-all"
-                                                    data-id="${id}">
-                                                <i class="fas fa-edit mr-1"></i>Editar
-                                            </button>
-                                            <button class="del-btn bg-gradient-to-r from-red-500 to-pink-600 text-white px-3 py-2 rounded-lg text-sm font-semibold hover:shadow-lg transition-all"
-                                                    data-id="${id}">
-                                                <i class="fas fa-trash mr-1"></i>Eliminar
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    `;
-                }).join('');
-                
-                // Agregar event listeners
-                document.querySelectorAll('.edit-btn').forEach(btn => {
-                    btn.addEventListener('click', (e) => {
-                        const id = e.currentTarget.dataset.id;
-                        editProduct(id);
-                    });
-                });
-                
-                document.querySelectorAll('.del-btn').forEach(btn => {
-                    btn.addEventListener('click', (e) => {
-                        const id = e.currentTarget.dataset.id;
-                        deleteProduct(id);
-                    });
-                });
+                renderProductList(currentProducts);
                 
             } catch (err) {
                 console.error('Error cargando productos:', err);
-                list.innerHTML = `
-                    <div class="text-center py-8 text-red-500">
-                        <i class="fas fa-exclamation-triangle text-2xl mb-2"></i>
-                        <p>Error al cargar los productos: ${err.message}</p>
-                        <p class="text-sm mt-2">Verifica tu conexión a internet</p>
-                        <button onclick="loadProductList()" class="mt-4 bg-pink-500 text-white px-4 py-2 rounded-lg text-sm hover:bg-pink-600 transition">
-                            <i class="fas fa-sync-alt mr-2"></i>Reintentar
-                        </button>
-                    </div>
-                `;
+                showProductListError(err);
             }
         }
 
-        // ===== FUNCIÓN MEJORADA PARA CREAR/ACTUALIZAR PRODUCTOS =====
         async function saveProduct() {
             const nombre = document.getElementById('nombre').value.trim();
             const descripcion = document.getElementById('descripcion').value.trim();
@@ -1053,7 +911,6 @@
             const cantidad = document.getElementById('cantidad').value.trim();
             const categoria = document.getElementById('categoria').value;
             
-            // Validaciones
             if (!nombre) {
                 showStatus('⚠️ El nombre del producto es obligatorio', 'error');
                 return;
@@ -1087,10 +944,11 @@
             showStatus(isEditing ? '⏳ Actualizando producto...' : '⏳ Creando producto...', 'loading');
             
             try {
-                const res = await fetch(`${APP_SCRIPT_URL}?action=${action}`, {
+                const res = await fetch(CORS_PROXY + APP_SCRIPT_URL + '?action=' + action, {
                     method: 'POST',
                     headers: {
-                        'Content-Type': 'application/json'
+                        'Content-Type': 'application/json',
+                        'X-Requested-With': 'XMLHttpRequest'
                     },
                     body: JSON.stringify(payload)
                 });
@@ -1114,11 +972,8 @@
             }
         }
 
-        // ===== FUNCIÓN MEJORADA PARA ELIMINAR PRODUCTOS =====
         async function deleteProduct(id) {
-            const product = currentProducts.find(p => 
-                (p.ID === id) || (p.id === id)
-            );
+            const product = currentProducts.find(p => (p.ID === id) || (p.id === id));
             
             if (!product) {
                 showStatus('❌ Producto no encontrado', 'error');
@@ -1134,10 +989,11 @@
             showStatus('⏳ Eliminando producto...', 'loading');
             
             try {
-                const res = await fetch(`${APP_SCRIPT_URL}?action=delete`, { 
+                const res = await fetch(CORS_PROXY + APP_SCRIPT_URL + '?action=delete', { 
                     method: 'POST',
                     headers: {
-                        'Content-Type': 'application/json'
+                        'Content-Type': 'application/json',
+                        'X-Requested-With': 'XMLHttpRequest'
                     }, 
                     body: JSON.stringify({ 
                         id: id, 
@@ -1166,6 +1022,41 @@
             }
         }
 
+        function editProduct(id) {
+            const product = currentProducts.find(p => (p.ID === id) || (p.id === id));
+            
+            if (!product) {
+                showStatus('❌ Producto no encontrado', 'error');
+                return;
+            }
+            
+            prodIdInput.value = product.ID || product.id || '';
+            document.getElementById('nombre').value = product.Nombre || product.nombre || '';
+            document.getElementById('descripcion').value = product.Descripción || product.descripcion || '';
+            document.getElementById('precio').value = product.Precio || product.precio || '';
+            document.getElementById('cantidad').value = product.Cantidad || product.cantidad || '';
+            document.getElementById('categoria').value = product.Categoría || product.categoria || '';
+            
+            imageUrls = [];
+            imagesPreview.innerHTML = '';
+            
+            if (product.Imagen && Array.isArray(product.Imagen)) {
+                imageUrls = product.Imagen;
+                product.Imagen.forEach(url => addImagePreview(url, 'Imagen del producto'));
+            } else if (product.Imagen) {
+                imageUrls = [product.Imagen];
+                addImagePreview(product.Imagen, 'Imagen principal');
+            }
+            
+            imagenesUrlsInput.value = imageUrls.join(',');
+            
+            isEditing = true;
+            currentEditId = product.ID || product.id;
+            
+            showStatus('📝 Editando producto: ' + (product.Nombre || product.nombre), 'success');
+            document.getElementById('prod-id').scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+
         // ===== FUNCIONES AUXILIARES =====
         function generateProductId() {
             return 'prod_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
@@ -1179,7 +1070,6 @@
             document.getElementById('cantidad').value = '';
             document.getElementById('categoria').value = '';
             
-            // Limpiar imágenes
             imagesPreview.innerHTML = '';
             imageUrls = [];
             imagenesUrlsInput.value = '';
@@ -1190,6 +1080,113 @@
             currentEditId = null;
             
             showStatus('Formulario listo para nuevo producto', 'success');
+        }
+
+        function renderProductList(products) {
+            const list = document.getElementById('list');
+            
+            if (products.length === 0) {
+                list.innerHTML = `
+                    <div class="text-center py-8 text-medium-contrast">
+                        <i class="fas fa-box-open text-4xl mb-3"></i>
+                        <p class="text-lg">No hay productos registrados</p>
+                        <p class="text-sm">Usa el formulario superior para agregar el primer producto</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            list.innerHTML = products.map(product => {
+                const id = product.ID || product.id || 'N/A';
+                const nombre = product.Nombre || product.nombre || 'Sin nombre';
+                const descripcion = product.Descripción || product.descripcion || 'Sin descripción';
+                const precio = product.Precio || product.precio || '0';
+                const cantidad = product.Cantidad || product.cantidad || 0;
+                
+                let imagen = '';
+                let imageCount = 0;
+                
+                if (product.Imagen && Array.isArray(product.Imagen) && product.Imagen.length > 0) {
+                    imagen = product.Imagen[0];
+                    imageCount = product.Imagen.length;
+                } else if (product.Imagen) {
+                    imagen = product.Imagen;
+                    imageCount = 1;
+                }
+                
+                const categoria = product.Categoría || product.categoria || 'General';
+                const hasMultipleImages = imageCount > 1;
+                
+                return `
+                    <div class="bg-white dark:bg-gray-700 p-4 rounded-lg border border-gray-200 dark:border-gray-600 product-card">
+                        <div class="flex flex-col md:flex-row md:items-center gap-4">
+                            <div class="flex-shrink-0 relative">
+                                <img src="${imagen || 'https://via.placeholder.com/100x75?text=Sin+img'}" 
+                                     alt="${nombre}" 
+                                     class="w-20 h-20 object-cover rounded-lg"
+                                     onerror="this.src='https://via.placeholder.com/100x75?text=Error'">
+                                ${hasMultipleImages ? `<span class="image-count-badge">+${imageCount-1}</span>` : ''}
+                            </div>
+                            <div class="flex-1 min-w-0">
+                                <div class="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-2">
+                                    <div>
+                                        <h3 class="font-semibold text-high-contrast truncate">${nombre}</h3>
+                                        <p class="text-sm text-medium-contrast mt-1 line-clamp-2">${descripcion}</p>
+                                        <div class="flex flex-wrap items-center gap-3 mt-2 text-sm">
+                                            <span class="bg-pink-100 dark:bg-pink-900 text-pink-800 dark:text-pink-200 px-2 py-1 rounded-full text-xs font-medium">
+                                                ${categoria}
+                                            </span>
+                                            <span class="font-bold text-green-600 dark:text-green-400">$${precio}</span>
+                                            <span class="font-medium ${cantidad > 0 ? 'text-green-600 dark:text-green-400' : 'text-red-600 dark:text-red-400'}">
+                                                ${cantidad} disponibles
+                                            </span>
+                                            <span class="text-medium-contrast">ID: ${id}</span>
+                                        </div>
+                                    </div>
+                                    <div class="flex gap-2">
+                                        <button class="edit-btn bg-gradient-to-r from-yellow-500 to-orange-500 text-white px-3 py-2 rounded-lg text-sm font-semibold hover:shadow-lg transition-all"
+                                                data-id="${id}">
+                                            <i class="fas fa-edit mr-1"></i>Editar
+                                        </button>
+                                        <button class="del-btn bg-gradient-to-r from-red-500 to-pink-600 text-white px-3 py-2 rounded-lg text-sm font-semibold hover:shadow-lg transition-all"
+                                                data-id="${id}">
+                                            <i class="fas fa-trash mr-1"></i>Eliminar
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+            
+            document.querySelectorAll('.edit-btn').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    const id = e.currentTarget.dataset.id;
+                    editProduct(id);
+                });
+            });
+            
+            document.querySelectorAll('.del-btn').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    const id = e.currentTarget.dataset.id;
+                    deleteProduct(id);
+                });
+            });
+        }
+
+        function showProductListError(err) {
+            const list = document.getElementById('list');
+            list.innerHTML = `
+                <div class="text-center py-8 text-red-500">
+                    <i class="fas fa-exclamation-triangle text-2xl mb-2"></i>
+                    <p>Error al cargar los productos: ${err.message}</p>
+                    <p class="text-sm mt-2">Verifica tu conexión a internet</p>
+                    <button onclick="loadProductList()" class="mt-4 bg-pink-500 text-white px-4 py-2 rounded-lg text-sm hover:bg-pink-600 transition">
+                        <i class="fas fa-sync-alt mr-2"></i>Reintentar
+                    </button>
+                </div>
+            `;
         }
 
         function showStatus(message, type) {
@@ -1229,17 +1226,13 @@
 
         // ===== INICIALIZACIÓN =====
         document.addEventListener('DOMContentLoaded', function() {
-            // Configurar event listeners
             document.getElementById('create-btn').addEventListener('click', saveProduct);
             document.getElementById('clear-btn').addEventListener('click', clearForm);
             document.getElementById('refresh-btn').addEventListener('click', loadProductList);
             document.getElementById('admin-password').addEventListener('keypress', function(e) {
-                if (e.key === 'Enter') {
-                    verificarPassword();
-                }
+                if (e.key === 'Enter') verificarPassword();
             });
 
-            // Inicializar modo oscuro
             const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
             const storedPreference = localStorage.getItem('lisport_dark');
             
@@ -1247,7 +1240,6 @@
                 setDark(true);
             }
             
-            // Menú móvil
             const mobileMenuBtn = document.getElementById('mobileMenuBtn');
             const closeMenu = document.getElementById('closeMenu');
             const mobileMenu = document.getElementById('mobileMenu');
@@ -1275,7 +1267,6 @@
                 link.addEventListener('click', toggleMobileMenu);
             });
             
-            // Modo oscuro toggle
             const darkToggle = document.getElementById('darkToggle');
             const body = document.body;
             
