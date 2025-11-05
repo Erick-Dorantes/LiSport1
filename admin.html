@@ -1,0 +1,1235 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Admin - LiSport</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Iconos -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <link rel="icon" type="image/x-icon" href="images/favicon.ico">
+    <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="images/favicon-16x16.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="images/apple-touch-icon.png">
+    <link rel="manifest" href="images/site.webmanifest">
+    
+    <style>
+        :root {
+            --rosa: #ff4c7a;
+            --rosa-claro: #fff6f9;
+            --bg-dark: #0b1020;
+            --gradient-primary: linear-gradient(135deg, #ff4c7a 0%, #ff6b9c 100%);
+            --gradient-dark: linear-gradient(135deg, #0b1020 0%, #1a1f38 100%);
+        }
+        
+        body {
+            background: #f8fafc;
+            transition: all 0.3s ease;
+            color: #334155;
+        }
+        
+        body.dark {
+            background: var(--gradient-dark);
+            color: #e6eef8;
+        }
+        
+        /* Efectos de tarjetas mejorados */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.95);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+        
+        .dark .glass-card {
+            background: rgba(30, 30, 50, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        /* Texto con mejor contraste */
+        .text-high-contrast {
+            color: #1e293b;
+        }
+        
+        .dark .text-high-contrast {
+            color: #f1f5f9;
+        }
+        
+        .text-medium-contrast {
+            color: #475569;
+        }
+        
+        .dark .text-medium-contrast {
+            color: #cbd5e1;
+        }
+        
+        /* Inputs con mejor visibilidad */
+        .modern-input {
+            border-radius: 12px;
+            transition: all 0.3s ease;
+            background: rgba(255, 255, 255, 0.9);
+            border: 1px solid #d1d5db;
+            color: #1e293b;
+        }
+        
+        .dark .modern-input {
+            background: rgba(30, 30, 50, 0.6);
+            border: 1px solid #4b5563;
+            color: #f1f5f9;
+        }
+        
+        .modern-input:focus {
+            box-shadow: 0 0 0 3px rgba(255, 76, 122, 0.2);
+            border-color: #ff4c7a;
+            outline: none;
+        }
+        
+        /* Logo reducido */
+        .logo-image {
+            height: 50px; /* REDUCIDO de ~50px a 25px */
+            width: auto;
+            max-width: 130px; /* Controla el ancho máximo */
+            transition: all 0.3s ease;
+        }
+        
+        .logo-image:hover {
+            transform: scale(1.05);
+        }
+        
+        /* Header más compacto */
+        .header-compact {
+            padding: 10px 20px; /* Reducido padding vertical */
+        }
+        
+        /* Menú móvil */
+        .mobile-menu {
+            transform: translateX(100%);
+            transition: transform 0.3s ease;
+            visibility: hidden;
+            opacity: 0;
+        }
+        
+        .mobile-menu.open {
+            transform: translateX(0);
+            visibility: visible;
+            opacity: 1;
+        }
+        
+        .mobile-overlay {
+            transition: opacity 0.3s ease;
+        }
+        
+        /* Utilidades */
+        .line-clamp-2 {
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+        
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border: 0;
+        }
+        
+        /* Botones con gradiente */
+        .btn-gradient {
+            background: var(--gradient-primary);
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(255, 76, 122, 0.3);
+        }
+        
+        .btn-gradient:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255, 76, 122, 0.4);
+        }
+        
+        /* Header con gradiente */
+        .header-gradient {
+            background: var(--gradient-primary);
+            box-shadow: 0 4px 20px rgba(255, 76, 122, 0.3);
+        }
+        
+        /* Labels con mejor visibilidad */
+        .form-label {
+            color: #374151;
+            font-weight: 500;
+        }
+        
+        .dark .form-label {
+            color: #e5e7eb;
+        }
+        
+        /* Placeholders visibles */
+        .modern-input::placeholder {
+            color: #6b7280;
+        }
+        
+        .dark .modern-input::placeholder {
+            color: #9ca3af;
+        }
+        
+        /* Responsive para logo */
+        @media (max-width: 768px) {
+            .logo-image {
+                height: 22px; /* Más pequeño en tablets */
+                max-width: 90px;
+            }
+            .header-compact {
+                padding: 8px 15px; /* Más compacto en tablets */
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .logo-image {
+                height: 20px; /* Más pequeño en móviles */
+                max-width: 80px;
+            }
+            .header-compact {
+                padding: 6px 12px; /* Más compacto en móviles */
+            }
+        }
+        
+        @media (max-width: 400px) {
+            .logo-image {
+                height: 18px; /* Mínimo tamaño */
+                max-width: 70px;
+            }
+        }
+        /* Estilos para múltiples imágenes */
+#upload-area.dragover {
+    border-color: #ff4c7a;
+    background-color: rgba(255, 76, 122, 0.05);
+}
+
+.image-preview {
+    position: relative;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease;
+}
+
+.image-preview:hover {
+    transform: translateY(-2px);
+}
+
+.image-preview img {
+    width: 100%;
+    height: 100px;
+    object-fit: cover;
+}
+
+.remove-image-btn {
+    position: absolute;
+    top: 4px;
+    right: 4px;
+    background: rgba(239, 68, 68, 0.9);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 12px;
+    transition: all 0.2s ease;
+}
+
+.remove-image-btn:hover {
+    background: rgb(239, 68, 68);
+    transform: scale(1.1);
+}
+
+/* Indicador de múltiples imágenes en lista */
+.image-count-badge {
+    position: absolute;
+    top: 4px;
+    right: 4px;
+    background: rgba(0, 0, 0, 0.7);
+    color: white;
+    border-radius: 4px;
+    padding: 1px 4px;
+    font-size: 10px;
+    font-weight: 600;
+}
+    </style>
+</head>
+<body class="min-h-screen transition-colors duration-200">
+    <!-- Header -->
+    <header class="header-gradient text-white sticky top-0 z-50">
+        <div class="max-w-6xl mx-auto flex items-center justify-between header-compact">
+            <div class="logo">
+               <a href="Inicio.html">
+                    <img src="images/logo.png" alt="LiSport - Ropa Deportiva para Mujer" class="logo-image">
+                </a>
+            </div>
+            
+            <!-- Menú principal -->
+            <nav class="hidden md:flex" aria-label="Menú principal">
+                <ul class="flex space-x-6">
+                    <li><a href="Inicio.html" class="hover:text-pink-200 transition py-2 relative">Inicio</a></li>
+                    <li><a href="catalogo.html" class="hover:text-pink-200 transition py-2 relative">Catálogo</a></li>
+                    <li><a href="admin.html" class="hover:text-pink-200 transition py-2 relative font-bold border-b-2 border-white">Admin</a></li>
+                    <li><a href="contacto.html" class="hover:text-pink-200 transition py-2 relative">Contacto</a></li>
+                </ul>
+            </nav>
+            
+            <div class="flex items-center gap-4">
+                <button id="darkToggle" title="Cambiar modo" class="p-2 rounded-full bg-white/20 hover:bg-white/30 transition-colors">
+                    <span id="darkIcon">🌙</span>
+                </button>
+                <button class="md:hidden p-2 rounded-full bg-white/20 hover:bg-white/30 transition-colors" id="mobileMenuBtn">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Menú móvil -->
+        <div class="mobile-menu fixed top-0 right-0 h-full w-64 bg-white text-gray-800 shadow-lg p-6 z-50" id="mobileMenu">
+            <div class="flex justify-between items-center mb-8">
+                <h3 class="font-bold text-lg text-high-contrast">MENÚ</h3>
+                <button class="p-2 rounded-full hover:bg-gray-100 transition" id="closeMenu">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <nav aria-label="Navegación móvil">
+                <ul class="space-y-4">
+                    <li><a href="Inicio.html" class="block py-2 font-medium hover:text-pink-500 transition border-b border-gray-200 text-high-contrast">INICIO</a></li>
+                    <li><a href="catalogo.html" class="block py-2 font-medium hover:text-pink-500 transition border-b border-gray-200 text-high-contrast">CATÁLOGO</a></li>
+                    <li><a href="admin.html" class="block py-2 font-bold text-pink-500 transition border-b border-gray-200">ADMIN</a></li>
+                    <li><a href="contacto.html" class="block py-2 font-medium hover:text-pink-500 transition border-b border-gray-200 text-high-contrast">CONTACTO</a></li>
+                </ul>
+            </nav>
+        </div>
+        
+        <!-- Overlay para cerrar menú -->
+        <div class="mobile-overlay fixed inset-0 bg-black bg-opacity-50 z-40 hidden" id="mobileOverlay"></div>
+    </header>
+
+    <div class="max-w-4xl mx-auto p-6">
+        <!-- Header Admin -->
+        <div class="text-center mb-8">
+            <h1 class="text-3xl font-bold text-high-contrast mb-2">
+                <i class="fas fa-cog text-pink-500 mr-2"></i>
+                Panel de Administración - LiSport
+            </h1>
+            <p class="text-medium-contrast">Gestiona los productos de tu catálogo</p>
+        </div>
+
+        <!-- Login Box -->
+        <div id="loginBox" class="glass-card p-6 rounded-2xl shadow-lg">
+            <div class="text-center mb-4">
+                <div class="inline-flex items-center justify-center w-16 h-16 rounded-full bg-gradient-to-r from-pink-500 to-purple-500 mb-3">
+                    <i class="fas fa-lock text-white text-2xl"></i>
+                </div>
+                <h2 class="text-xl font-semibold text-high-contrast">Acceso Administrativo</h2>
+                <p class="text-medium-contrast text-sm mt-1">Ingresa la contraseña para acceder al panel</p>
+            </div>
+            
+            <div class="space-y-4">
+                <div>
+                    <label for="password" class="form-label block text-sm font-medium mb-1">
+                        Contraseña
+                    </label>
+                    <input 
+                        id="password" 
+                        type="password" 
+                        placeholder="Ingresa tu contraseña" 
+                        class="modern-input w-full p-3 focus:ring-2 focus:ring-pink-500 focus:border-transparent"
+                    />
+                </div>
+                <button id="loginBtn" class="btn-gradient w-full text-white p-3 rounded-xl font-semibold">
+                    <i class="fas fa-sign-in-alt mr-2"></i>
+                    Entrar al Panel
+                </button>
+                <p id="loginMsg" class="text-sm text-center mt-2 text-medium-contrast"></p>
+            </div>
+        </div>
+
+        <!-- Admin Panel -->
+        <div id="adminPanel" class="hidden mt-8">
+            <!-- Información de sesión -->
+            <div class="glass-card rounded-2xl p-4 mb-6">
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center">
+                        <div class="w-12 h-12 rounded-full bg-gradient-to-r from-blue-500 to-purple-500 flex items-center justify-center mr-3">
+                            <i class="fas fa-user-shield text-white"></i>
+                        </div>
+                        <div>
+                            <p class="font-semibold text-blue-700 dark:text-blue-300">Sesión activa</p>
+                            <p class="text-sm text-blue-600 dark:text-blue-400">Administrador conectado</p>
+                        </div>
+                    </div>
+                    <button id="logoutBtn" class="bg-gradient-to-r from-red-500 to-pink-600 text-white px-4 py-2 rounded-xl text-sm font-semibold hover:shadow-lg transition-all">
+                        <i class="fas fa-sign-out-alt mr-1"></i>
+                        Cerrar Sesión
+                    </button>
+                </div>
+            </div>
+
+            <!-- Formulario de Productos -->
+            <div class="glass-card p-6 rounded-2xl shadow-lg mb-6">
+                <div class="flex items-center mb-4">
+                    <div class="w-10 h-10 rounded-full bg-gradient-to-r from-pink-500 to-purple-500 flex items-center justify-center mr-3">
+                        <i class="fas fa-plus-circle text-white"></i>
+                    </div>
+                    <h2 class="text-xl font-semibold text-high-contrast">Agregar / Editar Producto</h2>
+                </div>
+                
+                <!-- ID del Producto (solo lectura) -->
+                <div class="mb-4">
+                    <label for="prod-id" class="form-label block text-sm font-medium mb-1">
+                        ID del Producto (Automático)
+                    </label>
+                    <input 
+                        id="prod-id" 
+                        readonly
+                        class="modern-input w-full p-3 bg-gray-100 dark:bg-gray-700 cursor-not-allowed"
+                        placeholder="Se generará automáticamente al guardar"
+                    />
+                    <p class="text-xs text-medium-contrast mt-1">El ID se genera automáticamente y no puede ser modificado</p>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                    <div>
+                        <label for="categoria" class="form-label block text-sm font-medium mb-1">
+                            Categoría *
+                        </label>
+                        <select id="categoria" class="modern-input w-full p-3 focus:ring-2 focus:ring-pink-500 focus:border-transparent" required>
+                            <option value="">Seleccionar categoría</option>
+                            <option value="leggins">Leggings</option>
+                            <option value="tops">Tops</option>
+                            <option value="calcetas">Calcetas</option>
+                            <option value="sweaters">Sudaderas</option>
+                            <option value="conjuntos">Conjuntos</option>
+                            <option value="enterizos">Enterizos</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="nombre" class="form-label block text-sm font-medium mb-1">
+                            Nombre del Producto *
+                        </label>
+                        <input 
+                            id="nombre" 
+                            placeholder="Ej: Legging Deportivo Alto Rendimiento" 
+                            class="modern-input w-full p-3 focus:ring-2 focus:ring-pink-500 focus:border-transparent"
+                            required
+                        />
+                    </div>
+                </div>
+                
+                <div class="mb-4">
+                    <label for="descripcion" class="form-label block text-sm font-medium mb-1">
+                        Descripción
+                    </label>
+                    <textarea 
+                        id="descripcion" 
+                        placeholder="Describe las características y beneficios del producto..." 
+                        rows="3"
+                        class="modern-input w-full p-3 focus:ring-2 focus:ring-pink-500 focus:border-transparent"
+                    ></textarea>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                    <div>
+                        <label for="precio" class="form-label block text-sm font-medium mb-1">
+                            Precio (MXN) *
+                        </label>
+                        <input 
+                            id="precio" 
+                            type="number" 
+                            step="0.01"
+                            min="0"
+                            placeholder="Ej: 299.00" 
+                            class="modern-input w-full p-3 focus:ring-2 focus:ring-pink-500 focus:border-transparent"
+                            required
+                        />
+                    </div>
+                    <div>
+                        <label for="cantidad" class="form-label block text-sm font-medium mb-1">
+                            Cantidad en Stock *
+                        </label>
+                        <input 
+                            id="cantidad" 
+                            type="number" 
+                            min="0"
+                            placeholder="Ej: 10" 
+                            class="modern-input w-full p-3 focus:ring-2 focus:ring-pink-500 focus:border-transparent"
+                            required
+                        />
+                    </div>
+                </div>             
+                <!-- Sección de Múltiples Imágenes -->
+                 <div class="mb-6">
+                    <label class="form-label block text-sm font-medium mb-2">
+                        Imágenes del Producto (Múltiples)
+                    </label>
+                        <!-- Área de subida -->
+                         <div class="border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-xl p-6 text-center mb-4 cursor-pointer hover:border-pink-400 transition-colors" id="upload-area">
+                            <i class="fas fa-cloud-upload-alt text-3xl text-gray-400 mb-3"></i>
+                            <p class="text-medium-contrast mb-2">Arrastra y suelta imágenes aquí</p>
+                            <p class="text-sm text-gray-500 dark:text-gray-400 mb-3">o haz clic para seleccionar</p>
+                            <button type="button" class="bg-gradient-to-r from-blue-500 to-indigo-600 text-white px-4 py-2 rounded-lg font-semibold hover:shadow-lg transition-all">
+                                <i class="fas fa-images mr-2"></i>
+                                Seleccionar Imágenes
+                            </button>
+                            <input type="file" id="imagenes-file" multiple accept="image/*" class="hidden">
+                </div>
+                <!-- Progreso de subida -->
+                 <div id="upload-progress" class="hidden mb-4">
+                    <div class="flex justify-between text-sm text-medium-contrast mb-2">
+                        <span>Subiendo imágenes...</span>
+                        <span id="upload-count">0</span>/<span id="total-count">0</span>
+                </div>
+                <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
+                    <div id="progress-bar" class="bg-gradient-to-r from-blue-500 to-indigo-600 h-2 rounded-full transition-all duration-300" style="width: 0%"></div>
+                </div>
+            </div>
+            <!-- Vista previa de imágenes -->
+             <div id="images-preview" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3 mb-4"></div>
+             <!-- URLs de imágenes (oculto) -->
+              <input type="hidden" id="imagenes-urls" name="imagenes-urls">
+            </div>
+                
+                <div class="flex flex-col sm:flex-row gap-3">
+                    <button id="create-btn" class="btn-gradient flex-1 text-white p-3 rounded-xl font-semibold">
+                        <i class="fas fa-save mr-2"></i>
+                        Guardar Producto
+                    </button>
+                    <button id="clear-btn" class="bg-gradient-to-r from-gray-500 to-gray-600 text-white p-3 rounded-xl font-semibold hover:shadow-lg transition-all flex-1">
+                        <i class="fas fa-broom mr-2"></i>
+                        Limpiar Formulario
+                    </button>
+                </div>
+                
+                <p id="status" class="mt-4 text-sm text-center p-3 rounded-lg"></p>
+            </div>
+
+            <!-- Lista de Productos -->
+            <div class="glass-card p-6 rounded-2xl shadow-lg">
+                <div class="flex items-center justify-between mb-4">
+                    <div class="flex items-center">
+                        <div class="w-10 h-10 rounded-full bg-gradient-to-r from-pink-500 to-purple-500 flex items-center justify-center mr-3">
+                            <i class="fas fa-boxes text-white"></i>
+                        </div>
+                        <h2 class="text-xl font-semibold text-high-contrast">Productos Actuales</h2>
+                    </div>
+                    <div class="flex gap-2">
+                        <button id="refresh-btn" class="bg-gradient-to-r from-blue-500 to-indigo-600 text-white px-4 py-2 rounded-xl text-sm font-semibold hover:shadow-lg transition-all">
+                            <i class="fas fa-sync-alt mr-1"></i>
+                            Actualizar
+                        </button>
+                    </div>
+                </div>
+                
+                <div id="list" class="space-y-4">
+                    <!-- Los productos se cargarán aquí dinámicamente -->
+                    <div class="text-center py-8 text-medium-contrast" id="loading-products">
+                        <i class="fas fa-spinner fa-spin text-2xl mb-2"></i>
+                        <p>Cargando productos...</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-gradient-to-r from-gray-800 to-gray-900 text-white pt-10 pb-6 mt-12">
+        <div class="max-w-6xl mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+                <div class="footer-col">
+                    <h3 class="text-xl font-bold mb-4">LiSport</h3>
+                    <p class="text-gray-300 mb-4">Ropa deportiva de alta calidad diseñada específicamente para mujeres activas que buscan comodidad, estilo y rendimiento.</p>
+                    <div class="social-links flex space-x-4">
+                        <a href="#" class="bg-gray-700 w-10 h-10 rounded-full flex items-center justify-center hover:bg-pink-500 transition" aria-label="Facebook">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="https://www.instagram.com/li_sport_25?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" class="bg-gray-700 w-10 h-10 rounded-full flex items-center justify-center hover:bg-pink-500 transition" aria-label="Instagram">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="footer-col">
+                    <h3 class="text-xl font-bold mb-4">Enlaces Rápidos</h3>
+                    <ul class="space-y-2">
+                        <li><a href="Inicio.html" class="text-gray-300 hover:text-white transition">Inicio</a></li>
+                        <li><a href="catalogo.html" class="text-gray-300 hover:text-white transition">Catálogo</a></li>
+                        <li><a href="admin.html" class="text-gray-300 hover:text-white transition">Admin</a></li>
+                        <li><a href="contacto.html" class="text-gray-300 hover:text-white transition">Contacto</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-col">
+                    <h3 class="text-xl font-bold mb-4">Categorías</h3>
+                    <ul class="space-y-2">
+                        <li><a href="catalogo.html?category=leggins" class="text-gray-300 hover:text-white transition">Leggings</a></li>
+                        <li><a href="catalogo.html?category=tops" class="text-gray-300 hover:text-white transition">Tops</a></li>
+                        <li><a href="catalogo.html?category=calcetas" class="text-gray-300 hover:text-white transition">Calcetas</a></li>
+                        <li><a href="catalogo.html?category=sweaters" class="text-gray-300 hover:text-white transition">Sudaderas</a></li>
+                        <li><a href="catalogo.html?category=conjuntos" class="text-gray-300 hover:text-white transition">Conjuntos</a></li>
+                        <li><a href="catalogo.html?category=enterizos" class="text-gray-300 hover:text-white transition">Enterizos</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-col">
+                    <h3 class="text-xl font-bold mb-4">Contacto</h3>
+                    <ul class="space-y-2">
+                        <li class="flex items-start">
+                            <i class="fas fa-map-marker-alt mt-1 mr-2 text-pink-400"></i>
+                            <span class="text-gray-300">Chilpancingo de los Bravo, Guerrero, México</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright border-t border-gray-700 pt-6 text-center text-gray-400">
+                <p>&copy; 2025 LiSport. Todos los derechos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="config.js"></script>
+<script>
+    // Variables globales
+    let currentProducts = [];
+    let isEditing = false;
+    let currentEditId = null;
+    
+    // Elementos del DOM
+    const loginBox = document.getElementById('loginBox');
+    const adminPanel = document.getElementById('adminPanel');
+    const loginBtn = document.getElementById('loginBtn');
+    const logoutBtn = document.getElementById('logoutBtn');
+    const passwordInput = document.getElementById('password');
+    const loginMsg = document.getElementById('loginMsg');
+    const statusEl = document.getElementById('status');
+    const refreshBtn = document.getElementById('refresh-btn');
+    const prodIdInput = document.getElementById('prod-id');
+
+    // Elementos para múltiples imágenes
+    const uploadArea = document.getElementById('upload-area');
+    const fileInput = document.getElementById('imagenes-file');
+    const imagesPreview = document.getElementById('images-preview');
+    const imagenesUrlsInput = document.getElementById('imagenes-urls');
+    const uploadProgress = document.getElementById('upload-progress');
+    const uploadCount = document.getElementById('upload-count');
+    const totalCount = document.getElementById('total-count');
+    const progressBar = document.getElementById('progress-bar');
+
+    // Array para almacenar URLs de imágenes
+    let imageUrls = [];
+
+    // Modo oscuro
+    const body = document.body;
+    const darkToggle = document.getElementById('darkToggle');
+    const darkIcon = document.getElementById('darkIcon');
+    
+    function setDark(isDark) {
+        if (isDark) {
+            body.classList.add('dark');
+            darkIcon.textContent = '☀️';
+            localStorage.setItem('lisport_dark', '1');
+        } else {
+            body.classList.remove('dark');
+            darkIcon.textContent = '🌙';
+            localStorage.removeItem('lisport_dark');
+        }
+    }
+    
+    // Menú móvil
+    const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+    const closeMenu = document.getElementById('closeMenu');
+    const mobileMenu = document.getElementById('mobileMenu');
+    const mobileOverlay = document.getElementById('mobileOverlay');
+
+    function toggleMobileMenu() {
+        const isOpening = !mobileMenu.classList.contains('open');
+        
+        if (isOpening) {
+            mobileMenu.classList.add('open');
+            mobileOverlay.classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+        } else {
+            mobileMenu.classList.remove('open');
+            mobileOverlay.classList.add('hidden');
+            document.body.style.overflow = '';
+        }
+    }
+
+    // Generar ID único
+    function generateProductId() {
+        return 'prod_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+    }
+
+    // ===== FUNCIONALIDAD PARA MÚLTIPLES IMÁGENES =====
+
+    // Eventos para subir múltiples imágenes
+    uploadArea.addEventListener('click', () => fileInput.click());
+    fileInput.addEventListener('change', handleFileSelect);
+
+    // Drag and drop
+    uploadArea.addEventListener('dragover', (e) => {
+        e.preventDefault();
+        uploadArea.classList.add('border-pink-400', 'bg-pink-50', 'dark:bg-pink-900/20');
+    });
+
+    uploadArea.addEventListener('dragleave', () => {
+        uploadArea.classList.remove('border-pink-400', 'bg-pink-50', 'dark:bg-pink-900/20');
+    });
+
+    uploadArea.addEventListener('drop', (e) => {
+        e.preventDefault();
+        uploadArea.classList.remove('border-pink-400', 'bg-pink-50', 'dark:bg-pink-900/20');
+        
+        if (e.dataTransfer.files.length > 0) {
+            fileInput.files = e.dataTransfer.files;
+            handleFileSelect();
+        }
+    });
+
+    function handleFileSelect() {
+        const files = fileInput.files;
+        if (files.length === 0) return;
+        
+        // Validar número de archivos
+        if (files.length > 10) {
+            showStatus('⚠️ Máximo 10 imágenes permitidas', 'error');
+            return;
+        }
+        
+        // Validar tipos de archivo
+        const invalidFiles = Array.from(files).filter(file => !file.type.startsWith('image/'));
+        if (invalidFiles.length > 0) {
+            showStatus('❌ Solo se permiten archivos de imagen', 'error');
+            return;
+        }
+        
+        uploadImages(files);
+    }
+
+    // Subir múltiples imágenes a Cloudinary
+    async function uploadImages(files) {
+        uploadProgress.classList.remove('hidden');
+        totalCount.textContent = files.length;
+        uploadCount.textContent = '0';
+        progressBar.style.width = '0%';
+        
+        const uploadedUrls = [];
+        
+        for (let i = 0; i < files.length; i++) {
+            const file = files[i];
+            
+            // Actualizar progreso
+            uploadCount.textContent = i + 1;
+            progressBar.style.width = `${((i + 1) / files.length) * 100}%`;
+            
+            try {
+                const url = await uploadSingleImage(file);
+                if (url) {
+                    uploadedUrls.push(url);
+                    addImagePreview(url, file.name);
+                }
+            } catch (error) {
+                console.error('Error subiendo imagen:', error);
+                showStatus(`❌ Error subiendo imagen ${i + 1}: ${file.name}`, 'error');
+            }
+        }
+        
+        // Actualizar array de URLs
+        imageUrls = [...imageUrls, ...uploadedUrls];
+        imagenesUrlsInput.value = imageUrls.join(',');
+        
+        // Finalizar
+        uploadProgress.classList.add('hidden');
+        if (uploadedUrls.length > 0) {
+            showStatus(`✅ ${uploadedUrls.length} imagen(es) subida(s) correctamente`, 'success');
+        }
+        
+        // Limpiar input
+        fileInput.value = '';
+    }
+
+    // Subir una sola imagen a Cloudinary
+    async function uploadSingleImage(file) {
+        const fd = new FormData();
+        fd.append('file', file);
+        fd.append('upload_preset', UPLOAD_PRESET);
+        
+        const res = await fetch('https://api.cloudinary.com/v1_1/' + CLOUD_NAME + '/image/upload', {
+            method: 'POST',
+            body: fd
+        });
+        
+        const data = await res.json();
+        
+        if (data.secure_url) {
+            return data.secure_url;
+        } else {
+            throw new Error(data.error?.message || 'Error al subir');
+        }
+    }
+
+    // Agregar vista previa de imagen
+    function addImagePreview(url, filename = 'Imagen') {
+        const preview = document.createElement('div');
+        preview.className = 'image-preview';
+        preview.innerHTML = `
+            <img src="${url}" alt="${filename}" class="w-full h-24 object-cover" onerror="this.src='https://via.placeholder.com/150x100?text=Error'">
+            <button class="remove-image-btn" data-url="${url}">
+                <i class="fas fa-times"></i>
+            </button>
+            <div class="p-2 text-xs text-medium-contrast truncate bg-white dark:bg-gray-800">${filename.substring(0, 15)}...</div>
+        `;
+        imagesPreview.appendChild(preview);
+        
+        // Evento para eliminar
+        preview.querySelector('.remove-image-btn').addEventListener('click', (e) => {
+            e.stopPropagation();
+            removeImage(url);
+            preview.remove();
+        });
+    }
+
+    // Eliminar imagen
+    function removeImage(url) {
+        imageUrls = imageUrls.filter(imgUrl => imgUrl !== url);
+        imagenesUrlsInput.value = imageUrls.join(',');
+        showStatus('🗑️ Imagen eliminada', 'success');
+    }
+
+    // Login
+    loginBtn.addEventListener('click', () => {
+        const pw = passwordInput.value;
+        if (pw === ADMIN_PASSWORD) {
+            loginBox.classList.add('hidden');
+            adminPanel.classList.remove('hidden');
+            loadProductList();
+            showStatus('Sesión iniciada correctamente', 'success');
+            localStorage.setItem('lisport_admin_loggedin', 'true');
+            localStorage.setItem('lisport_admin_session', Date.now().toString());
+        } else {
+            loginMsg.textContent = '❌ Contraseña incorrecta';
+            passwordInput.focus();
+        }
+    });
+
+    // Logout
+    logoutBtn.addEventListener('click', () => {
+        if (confirm('¿Estás seguro de que quieres cerrar sesión?')) {
+            localStorage.removeItem('lisport_admin_loggedin');
+            localStorage.removeItem('lisport_admin_session');
+            adminPanel.classList.add('hidden');
+            loginBox.classList.remove('hidden');
+            passwordInput.value = '';
+            loginMsg.textContent = '';
+            clearForm();
+            showStatus('Sesión cerrada correctamente', 'success');
+        }
+    });
+
+    // Enter para login
+    passwordInput.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') {
+            loginBtn.click();
+        }
+    });
+
+    // Crear/Actualizar producto - MODIFICADO PARA MÚLTIPLES IMÁGENES
+    document.getElementById('create-btn').addEventListener('click', async () => {
+        const nombre = document.getElementById('nombre').value.trim();
+        const descripcion = document.getElementById('descripcion').value.trim();
+        const precio = document.getElementById('precio').value.trim();
+        const cantidad = document.getElementById('cantidad').value.trim();
+        const categoria = document.getElementById('categoria').value;
+        
+        // Validaciones
+        if (!nombre) {
+            showStatus('⚠️ El nombre del producto es obligatorio', 'error');
+            return;
+        }
+        if (!precio || isNaN(parseFloat(precio)) || parseFloat(precio) < 0) {
+            showStatus('⚠️ El precio debe ser un número válido mayor o igual a 0', 'error');
+            return;
+        }
+        if (!cantidad || isNaN(parseInt(cantidad)) || parseInt(cantidad) < 0) {
+            showStatus('⚠️ La cantidad debe ser un número válido mayor o igual a 0', 'error');
+            return;
+        }
+        if (!categoria) {
+            showStatus('⚠️ Selecciona una categoría', 'error');
+            return;
+        }
+        
+        const id = isEditing ? currentEditId : generateProductId();
+        const payload = {
+            id: id,
+            nombre: nombre,
+            descripcion: descripcion,
+            precio: parseFloat(precio).toFixed(2),
+            cantidad: parseInt(cantidad),
+            imagenes: imageUrls, // ← Array de URLs de imágenes
+            categoria: categoria,
+            token: ADMIN_PASSWORD
+        };
+        
+        const action = isEditing ? 'update' : 'create';
+        showStatus(isEditing ? '⏳ Actualizando producto...' : '⏳ Creando producto...', 'loading');
+        
+        try {
+            const res = await fetch(APP_SCRIPT_URL + '?action=' + action, {
+                method: 'POST', 
+                headers: {'Content-Type': 'application/json'}, 
+                body: JSON.stringify(payload)
+            });
+            const data = await res.json();
+            
+            if (data.ok) {
+                showStatus('✅ ' + (isEditing ? 'Producto actualizado' : 'Producto creado') + ' correctamente', 'success');
+                loadProductList();
+                clearForm();
+            } else {
+                showStatus('❌ Error: ' + (data.error || 'Error desconocido'), 'error');
+            }
+        } catch (err) { 
+            console.error('Error de conexión:', err);
+            showStatus('❌ Error de conexión', 'error');
+        }
+    });
+
+    // Limpiar formulario
+    document.getElementById('clear-btn').addEventListener('click', clearForm);
+
+    // Actualizar lista
+    refreshBtn.addEventListener('click', loadProductList);
+
+    // Cargar lista de productos
+    async function loadProductList() {
+        const list = document.getElementById('list');
+        
+        try {
+            list.innerHTML = '<div class="text-center py-4"><i class="fas fa-spinner fa-spin text-pink-500"></i> Cargando...</div>';
+            
+            const res = await fetch(APP_SCRIPT_URL + '?action=getProducts');
+            const data = await res.json();
+            
+            if (!data.ok) {
+                throw new Error('Error al cargar productos');
+            }
+            
+            currentProducts = data.products || [];
+            
+            if (currentProducts.length === 0) {
+                list.innerHTML = `
+                    <div class="text-center py-8 text-medium-contrast">
+                        <i class="fas fa-box-open text-4xl mb-3"></i>
+                        <p class="text-lg">No hay productos registrados</p>
+                        <p class="text-sm">Usa el formulario superior para agregar el primer producto</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            list.innerHTML = currentProducts.map(product => {
+                const id = product.ID || product.id || 'N/A';
+                const nombre = product.Nombre || product.nombre || 'Sin nombre';
+                const descripcion = product.Descripción || product.descripcion || 'Sin descripción';
+                const precio = product.Precio || product.precio || '0';
+                const cantidad = product.Cantidad || product.cantidad || '0';
+                // Manejar tanto imagen única como múltiples imágenes
+                let imagen = '';
+                if (product.Imagen && Array.isArray(product.Imagen) && product.Imagen.length > 0) {
+                    imagen = product.Imagen[0]; // Primera imagen del array
+                } else if (product.Imagen) {
+                    imagen = product.Imagen; // Imagen única (string)
+                }
+                const categoria = product.Categoría || product.categoria || 'General';
+                
+                // Verificar si tiene múltiples imágenes
+                const hasMultipleImages = (product.Imagen && Array.isArray(product.Imagen) && product.Imagen.length > 1);
+                const imageCount = (product.Imagen && Array.isArray(product.Imagen)) ? product.Imagen.length : 
+                                  (product.Imagen ? 1 : 0);
+                
+                return `
+                    <div class="bg-white dark:bg-gray-700 p-4 rounded-lg border border-gray-200 dark:border-gray-600 product-card">
+                        <div class="flex flex-col md:flex-row md:items-center gap-4">
+                            <div class="flex-shrink-0 relative">
+                                <img src="${imagen || 'https://via.placeholder.com/100x75?text=Sin+img'}" 
+                                     alt="${nombre}" 
+                                     class="w-20 h-20 object-cover rounded-lg"
+                                     onerror="this.src='https://via.placeholder.com/100x75?text=Error'">
+                                ${hasMultipleImages ? `<span class="image-count-badge">+${imageCount-1}</span>` : ''}
+                            </div>
+                            <div class="flex-1 min-w-0">
+                                <div class="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-2">
+                                    <div>
+                                        <h3 class="font-semibold text-high-contrast truncate">${nombre}</h3>
+                                        <p class="text-sm text-medium-contrast mt-1 line-clamp-2">${descripcion}</p>
+                                        <div class="flex flex-wrap items-center gap-3 mt-2 text-sm">
+                                            <span class="bg-pink-100 dark:bg-pink-900 text-pink-800 dark:text-pink-200 px-2 py-1 rounded-full text-xs font-medium">
+                                                ${categoria}
+                                            </span>
+                                            <span class="font-bold text-green-600 dark:text-green-400">$${precio}</span>
+                                            <span class="font-medium ${cantidad > 0 ? 'text-green-600 dark:text-green-400' : 'text-red-600 dark:text-red-400'}">
+                                                ${cantidad} disponibles
+                                            </span>
+                                            <span class="text-medium-contrast">ID: ${id}</span>
+                                        </div>
+                                    </div>
+                                    <div class="flex gap-2">
+                                        <button class="edit-btn bg-gradient-to-r from-yellow-500 to-orange-500 text-white px-3 py-2 rounded-lg text-sm font-semibold hover:shadow-lg transition-all"
+                                                data-id="${id}">
+                                            <i class="fas fa-edit mr-1"></i>Editar
+                                        </button>
+                                        <button class="del-btn bg-gradient-to-r from-red-500 to-pink-600 text-white px-3 py-2 rounded-lg text-sm font-semibold hover:shadow-lg transition-all"
+                                                data-id="${id}">
+                                            <i class="fas fa-trash mr-1"></i>Eliminar
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+            
+            // Agregar event listeners para botones de editar y eliminar
+            document.querySelectorAll('.edit-btn').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    const id = e.currentTarget.dataset.id;
+                    editProduct(id);
+                });
+            });
+            
+            document.querySelectorAll('.del-btn').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    const id = e.currentTarget.dataset.id;
+                    deleteProduct(id);
+                });
+            });
+            
+        } catch (err) {
+            console.error('Error cargando productos:', err);
+            list.innerHTML = `
+                <div class="text-center py-8 text-red-500">
+                    <i class="fas fa-exclamation-triangle text-2xl mb-2"></i>
+                    <p>Error al cargar los productos</p>
+                    <button onclick="loadProductList()" class="mt-2 bg-pink-500 text-white px-4 py-2 rounded-lg text-sm">
+                        Reintentar
+                    </button>
+                </div>
+            `;
+        }
+    }
+
+    // Editar producto - MODIFICADO PARA MÚLTIPLES IMÁGENES
+    function editProduct(id) {
+        const product = currentProducts.find(p => 
+            (p.ID === id) || (p.id === id)
+        );
+        
+        if (!product) {
+            showStatus('❌ Producto no encontrado', 'error');
+            return;
+        }
+        
+        // Llenar formulario con datos del producto
+        prodIdInput.value = product.ID || product.id || '';
+        document.getElementById('nombre').value = product.Nombre || product.nombre || '';
+        document.getElementById('descripcion').value = product.Descripción || product.descripcion || '';
+        document.getElementById('precio').value = product.Precio || product.precio || '';
+        document.getElementById('cantidad').value = product.Cantidad || product.cantidad || '';
+        document.getElementById('categoria').value = product.Categoría || product.categoria || '';
+        
+        // Cargar imágenes (maneja tanto array como string)
+        imageUrls = [];
+        imagesPreview.innerHTML = '';
+        
+        if (product.Imagen && Array.isArray(product.Imagen)) {
+            imageUrls = product.Imagen;
+            product.Imagen.forEach(url => addImagePreview(url, 'Imagen del producto'));
+        } else if (product.Imagen) {
+            imageUrls = [product.Imagen];
+            addImagePreview(product.Imagen, 'Imagen principal');
+        }
+        
+        imagenesUrlsInput.value = imageUrls.join(',');
+        
+        isEditing = true;
+        currentEditId = product.ID || product.id;
+        
+        showStatus('📝 Editando producto: ' + (product.Nombre || product.nombre), 'success');
+        
+        // Scroll al formulario
+        document.getElementById('prod-id').scrollIntoView({ 
+            behavior: 'smooth', 
+            block: 'center' 
+        });
+    }
+
+    // Eliminar producto
+    async function deleteProduct(id) {
+        const product = currentProducts.find(p => 
+            (p.ID === id) || (p.id === id)
+        );
+        
+        if (!product) {
+            showStatus('❌ Producto no encontrado', 'error');
+            return;
+        }
+        
+        const productName = product.Nombre || product.nombre || 'este producto';
+        
+        if (!confirm(`¿Estás seguro de que quieres eliminar "${productName}"? Esta acción no se puede deshacer.`)) {
+            return;
+        }
+        
+        showStatus('⏳ Eliminando producto...', 'loading');
+        
+        try {
+            const res = await fetch(APP_SCRIPT_URL + '?action=delete', { 
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'}, 
+                body: JSON.stringify({ 
+                    id: id, 
+                    token: ADMIN_PASSWORD 
+                }) 
+            });
+            const data = await res.json();
+            
+            if (data.ok) {
+                showStatus('✅ Producto eliminado correctamente', 'success');
+                loadProductList();
+                if (isEditing && currentEditId === id) {
+                    clearForm();
+                }
+            } else {
+                showStatus('❌ Error eliminando: ' + (data.error || ''), 'error');
+            }
+        } catch (err) { 
+            console.error('Error de conexión:', err);
+            showStatus('❌ Error de conexión', 'error');
+        }
+    }
+
+    // Limpiar formulario - MODIFICADO PARA MÚLTIPLES IMÁGENES
+    function clearForm() {
+        prodIdInput.value = '';
+        document.getElementById('nombre').value = '';
+        document.getElementById('descripcion').value = '';
+        document.getElementById('precio').value = '';
+        document.getElementById('cantidad').value = '';
+        document.getElementById('categoria').value = '';
+        
+        // Limpiar imágenes
+        imagesPreview.innerHTML = '';
+        imageUrls = [];
+        imagenesUrlsInput.value = '';
+        fileInput.value = '';
+        uploadProgress.classList.add('hidden');
+        
+        isEditing = false;
+        currentEditId = null;
+        
+        showStatus('Formulario listo para nuevo producto', 'success');
+    }
+
+    // Mostrar estado
+    function showStatus(message, type) {
+        statusEl.textContent = message;
+        statusEl.className = 'mt-4 text-sm text-center p-3 rounded-lg ';
+        
+        switch(type) {
+            case 'success':
+                statusEl.className += 'bg-green-100 text-green-800 border border-green-200';
+                break;
+            case 'error':
+                statusEl.className += 'bg-red-100 text-red-800 border border-red-200';
+                break;
+            case 'loading':
+                statusEl.className += 'bg-blue-100 text-blue-800 border border-blue-200';
+                break;
+            default:
+                statusEl.className += 'bg-gray-100 text-gray-800 border border-gray-200';
+        }
+        
+        // Auto-ocultar mensajes de éxito después de 5 segundos
+        if (type === 'success') {
+            setTimeout(() => {
+                if (statusEl.textContent === message) {
+                    statusEl.textContent = '';
+                    statusEl.className = 'mt-2 text-sm text-gray-600';
+                }
+            }, 5000);
+        }
+    }
+
+    // Verificar sesión expirada
+    function checkSession() {
+        const sessionTime = localStorage.getItem('lisport_admin_session');
+        if (sessionTime) {
+            const sessionAge = Date.now() - parseInt(sessionTime);
+            // Sesión expira después de 8 horas
+            if (sessionAge > 8 * 60 * 60 * 1000) {
+                localStorage.removeItem('lisport_admin_loggedin');
+                localStorage.removeItem('lisport_admin_session');
+                return false;
+            }
+        }
+        return true;
+    }
+
+    // Inicialización
+    document.addEventListener('DOMContentLoaded', function() {
+        // Inicializar modo oscuro
+        const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+        const storedPreference = localStorage.getItem('lisport_dark');
+        
+        if (storedPreference === '1' || (!storedPreference && prefersDark)) {
+            setDark(true);
+        }
+        
+        // Menú móvil
+        mobileMenuBtn.addEventListener('click', toggleMobileMenu);
+        closeMenu.addEventListener('click', toggleMobileMenu);
+        mobileOverlay.addEventListener('click', toggleMobileMenu);
+        
+        // Cerrar menú al hacer clic en enlaces
+        mobileMenu.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', toggleMobileMenu);
+        });
+        
+        // Modo oscuro toggle
+        darkToggle.addEventListener('click', () => {
+            setDark(!body.classList.contains('dark'));
+        });
+        
+        // Verificar si ya está logueado y la sesión es válida
+        if (localStorage.getItem('lisport_admin_loggedin') === 'true' && checkSession()) {
+            loginBox.classList.add('hidden');
+            adminPanel.classList.remove('hidden');
+            loadProductList();
+        } else {
+            // Limpiar sesión expirada
+            localStorage.removeItem('lisport_admin_loggedin');
+            localStorage.removeItem('lisport_admin_session');
+        }
+    });
+</script>
+</body>
+</html>

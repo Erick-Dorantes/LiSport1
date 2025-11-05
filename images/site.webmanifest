@@ -1,0 +1,19 @@
+{
+    "name": "LiSport - Ropa Deportiva para Mujer",
+    "short_name": "LiSport",
+    "icons": [
+        {
+            "src": "images/favicon-32x32.png",
+            "sizes": "32x32",
+            "type": "image/png"
+        },
+        {
+            "src": "images/apple-touch-icon.png", 
+            "sizes": "180x180",
+            "type": "image/png"
+        }
+    ],
+    "theme_color": "#e91e63",
+    "background_color": "#ffffff",
+    "display": "standalone"
+}

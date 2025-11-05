@@ -1,0 +1,22 @@
+/* Estilos extras y variables de color */
+:root{
+  --rosa: #ff6f9b;
+  --rosa-dark: #ff4c7a;
+  --bg-light: #ffffff;
+  --bg-dark: #0b1020;
+}
+
+/* Dark mode */
+body.dark{
+  background: var(--bg-dark);
+  color: #e6eef8;
+}
+
+body.dark header{ background: #0f1724; }
+body.dark .producto { background: #071026; box-shadow: 0 2px 8px rgba(0,0,0,0.6); }
+
+/* Simple util */
+.container{ max-width: 1200px; margin: 0 auto; padding: 0 1rem; }
+
+/* Tailwind will handle most layout; include small tweaks */
+a { color: inherit; }
