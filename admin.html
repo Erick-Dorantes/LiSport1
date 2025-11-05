@@ -5,8 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Admin - LiSport</title>
     
-    <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Tailwind CSS Corregido -->
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     
     <!-- Iconos -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -713,12 +713,13 @@
     </footer>
 
     <!-- Scripts -->
-    <script src="config.js"></script>
     <script>
+        // ===== CONFIGURACIÓN =====
+        const APP_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxcYnsQR4R--fF6ggRPBcbwsIWFPAlzkX9Lwt7LlJ6LbAMpfTYy72XOM3jPw5t8sfU/exec';
+        const PASSWORD_HASH = '240be518fabd2724ddb6f04eeb1da5967448d7e831c08c8fa822809f74c720a9';
+
         // ===== SISTEMA DE AUTENTICACIÓN SEGURA =====
         let isAuthenticated = false;
-
-        const PASSWORD_HASH = '240be518fabd2724ddb6f04eeb1da5967448d7e831c08c8fa822809f74c720a9'; 
 
         async function verificarPassword() {
             const inputPassword = document.getElementById('admin-password').value;
@@ -769,302 +770,42 @@
             }
         }
 
-        // Permitir login con Enter
-        document.getElementById('admin-password').addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') {
-                verificarPassword();
-            }
-        });
-
-        // ===== RESTA DEL CÓDIGO ADMIN (TU CÓDIGO ORIGINAL) =====
-        
-        // Variables globales
+        // ===== FUNCIONES PRINCIPALES MEJORADAS =====
         let currentProducts = [];
         let isEditing = false;
         let currentEditId = null;
-        
-        // Elementos del DOM
-        const statusEl = document.getElementById('status');
-        const refreshBtn = document.getElementById('refresh-btn');
-        const prodIdInput = document.getElementById('prod-id');
-
-        // Elementos para múltiples imágenes
-        const uploadArea = document.getElementById('upload-area');
-        const fileInput = document.getElementById('imagenes-file');
-        const imagesPreview = document.getElementById('images-preview');
-        const imagenesUrlsInput = document.getElementById('imagenes-urls');
-        const uploadProgress = document.getElementById('upload-progress');
-        const uploadCount = document.getElementById('upload-count');
-        const totalCount = document.getElementById('total-count');
-        const progressBar = document.getElementById('progress-bar');
-
-        // Array para almacenar URLs de imágenes
         let imageUrls = [];
 
-        // Modo oscuro
-        const body = document.body;
-        const darkToggle = document.getElementById('darkToggle');
-        const darkIcon = document.getElementById('darkIcon');
-        
-        function setDark(isDark) {
-            if (isDark) {
-                body.classList.add('dark');
-                darkIcon.textContent = '☀️';
-                localStorage.setItem('lisport_dark', '1');
-            } else {
-                body.classList.remove('dark');
-                darkIcon.textContent = '🌙';
-                localStorage.removeItem('lisport_dark');
-            }
-        }
-        
-        // Menú móvil
-        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
-        const closeMenu = document.getElementById('closeMenu');
-        const mobileMenu = document.getElementById('mobileMenu');
-        const mobileOverlay = document.getElementById('mobileOverlay');
+        // Elementos del DOM
+        const statusEl = document.getElementById('status');
+        const prodIdInput = document.getElementById('prod-id');
+        const imagesPreview = document.getElementById('images-preview');
+        const imagenesUrlsInput = document.getElementById('imagenes-urls');
+        const fileInput = document.getElementById('imagenes-file');
+        const uploadArea = document.getElementById('upload-area');
 
-        function toggleMobileMenu() {
-            const isOpening = !mobileMenu.classList.contains('open');
-            
-            if (isOpening) {
-                mobileMenu.classList.add('open');
-                mobileOverlay.classList.remove('hidden');
-                document.body.style.overflow = 'hidden';
-            } else {
-                mobileMenu.classList.remove('open');
-                mobileOverlay.classList.add('hidden');
-                document.body.style.overflow = '';
-            }
-        }
-
-        // Generar ID único
-        function generateProductId() {
-            return 'prod_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
-        }
-
-        // ===== FUNCIONALIDAD PARA MÚLTIPLES IMÁGENES =====
-
-        // Eventos para subir múltiples imágenes
-        uploadArea.addEventListener('click', () => fileInput.click());
-        fileInput.addEventListener('change', handleFileSelect);
-
-        // Drag and drop
-        uploadArea.addEventListener('dragover', (e) => {
-            e.preventDefault();
-            uploadArea.classList.add('border-pink-400', 'bg-pink-50', 'dark:bg-pink-900/20');
-        });
-
-        uploadArea.addEventListener('dragleave', () => {
-            uploadArea.classList.remove('border-pink-400', 'bg-pink-50', 'dark:bg-pink-900/20');
-        });
-
-        uploadArea.addEventListener('drop', (e) => {
-            e.preventDefault();
-            uploadArea.classList.remove('border-pink-400', 'bg-pink-50', 'dark:bg-pink-900/20');
-            
-            if (e.dataTransfer.files.length > 0) {
-                fileInput.files = e.dataTransfer.files;
-                handleFileSelect();
-            }
-        });
-
-        function handleFileSelect() {
-            const files = fileInput.files;
-            if (files.length === 0) return;
-            
-            // Validar número de archivos
-            if (files.length > 10) {
-                showStatus('⚠️ Máximo 10 imágenes permitidas', 'error');
-                return;
-            }
-            
-            // Validar tipos de archivo
-            const invalidFiles = Array.from(files).filter(file => !file.type.startsWith('image/'));
-            if (invalidFiles.length > 0) {
-                showStatus('❌ Solo se permiten archivos de imagen', 'error');
-                return;
-            }
-            
-            uploadImages(files);
-        }
-
-        // Subir múltiples imágenes a Cloudinary
-        async function uploadImages(files) {
-            uploadProgress.classList.remove('hidden');
-            totalCount.textContent = files.length;
-            uploadCount.textContent = '0';
-            progressBar.style.width = '0%';
-            
-            const uploadedUrls = [];
-            
-            for (let i = 0; i < files.length; i++) {
-                const file = files[i];
-                
-                // Actualizar progreso
-                uploadCount.textContent = i + 1;
-                progressBar.style.width = `${((i + 1) / files.length) * 100}%`;
-                
-                try {
-                    const url = await uploadSingleImage(file);
-                    if (url) {
-                        uploadedUrls.push(url);
-                        addImagePreview(url, file.name);
-                    }
-                } catch (error) {
-                    console.error('Error subiendo imagen:', error);
-                    showStatus(`❌ Error subiendo imagen ${i + 1}: ${file.name}`, 'error');
-                }
-            }
-            
-            // Actualizar array de URLs
-            imageUrls = [...imageUrls, ...uploadedUrls];
-            imagenesUrlsInput.value = imageUrls.join(',');
-            
-            // Finalizar
-            uploadProgress.classList.add('hidden');
-            if (uploadedUrls.length > 0) {
-                showStatus(`✅ ${uploadedUrls.length} imagen(es) subida(s) correctamente`, 'success');
-            }
-            
-            // Limpiar input
-            fileInput.value = '';
-        }
-
-        // Subir una sola imagen a Cloudinary
-        async function uploadSingleImage(file) {
-            const fd = new FormData();
-            fd.append('file', file);
-            fd.append('upload_preset', UPLOAD_PRESET);
-            
-            const res = await fetch('https://api.cloudinary.com/v1_1/' + CLOUD_NAME + '/image/upload', {
-                method: 'POST',
-                body: fd
-            });
-            
-            const data = await res.json();
-            
-            if (data.secure_url) {
-                return data.secure_url;
-            } else {
-                throw new Error(data.error?.message || 'Error al subir');
-            }
-        }
-
-        // Agregar vista previa de imagen
-        function addImagePreview(url, filename = 'Imagen') {
-            const preview = document.createElement('div');
-            preview.className = 'image-preview';
-            preview.innerHTML = `
-                <img src="${url}" alt="${filename}" class="w-full h-24 object-cover" onerror="this.src='https://via.placeholder.com/150x100?text=Error'">
-                <button class="remove-image-btn" data-url="${url}">
-                    <i class="fas fa-times"></i>
-                </button>
-                <div class="p-2 text-xs text-medium-contrast truncate bg-white dark:bg-gray-800">${filename.substring(0, 15)}...</div>
-            `;
-            imagesPreview.appendChild(preview);
-            
-            // Evento para eliminar
-            preview.querySelector('.remove-image-btn').addEventListener('click', (e) => {
-                e.stopPropagation();
-                removeImage(url);
-                preview.remove();
-            });
-        }
-
-        // Eliminar imagen
-        function removeImage(url) {
-            imageUrls = imageUrls.filter(imgUrl => imgUrl !== url);
-            imagenesUrlsInput.value = imageUrls.join(',');
-            showStatus('🗑️ Imagen eliminada', 'success');
-        }
-
-        // Crear/Actualizar producto - MODIFICADO PARA MÚLTIPLES IMÁGENES
-        document.getElementById('create-btn').addEventListener('click', async () => {
-            const nombre = document.getElementById('nombre').value.trim();
-            const descripcion = document.getElementById('descripcion').value.trim();
-            const precio = document.getElementById('precio').value.trim();
-            const cantidad = document.getElementById('cantidad').value.trim();
-            const categoria = document.getElementById('categoria').value;
-            
-            // Validaciones
-            if (!nombre) {
-                showStatus('⚠️ El nombre del producto es obligatorio', 'error');
-                return;
-            }
-            if (!precio || isNaN(parseFloat(precio)) || parseFloat(precio) < 0) {
-                showStatus('⚠️ El precio debe ser un número válido mayor o igual a 0', 'error');
-                return;
-            }
-            if (!cantidad || isNaN(parseInt(cantidad)) || parseInt(cantidad) < 0) {
-                showStatus('⚠️ La cantidad debe ser un número válido mayor o igual a 0', 'error');
-                return;
-            }
-            if (!categoria) {
-                showStatus('⚠️ Selecciona una categoría', 'error');
-                return;
-            }
-            
-            const id = isEditing ? currentEditId : generateProductId();
-            const payload = {
-                id: id,
-                nombre: nombre,
-                descripcion: descripcion,
-                precio: parseFloat(precio).toFixed(2),
-                cantidad: parseInt(cantidad),
-                imagenes: imageUrls,
-                categoria: categoria,
-                token: PASSWORD_HASH // Usamos el hash como token
-            };
-            
-            const action = isEditing ? 'update' : 'create';
-            showStatus(isEditing ? '⏳ Actualizando producto...' : '⏳ Creando producto...', 'loading');
-            
-            try {
-                const res = await fetch(APP_SCRIPT_URL + '?action=' + action, {
-                    method: 'POST', 
-                    headers: {'Content-Type': 'application/json'}, 
-                    body: JSON.stringify(payload)
-                });
-                const data = await res.json();
-                
-                if (data.ok) {
-                    showStatus('✅ ' + (isEditing ? 'Producto actualizado' : 'Producto creado') + ' correctamente', 'success');
-                    loadProductList();
-                    clearForm();
-                } else {
-                    showStatus('❌ Error: ' + (data.error || 'Error desconocido'), 'error');
-                }
-            } catch (err) { 
-                console.error('Error de conexión:', err);
-                showStatus('❌ Error de conexión', 'error');
-            }
-        });
-
-        // Limpiar formulario
-        document.getElementById('clear-btn').addEventListener('click', clearForm);
-
-        // Actualizar lista
-        refreshBtn.addEventListener('click', loadProductList);
-
-        // Inicializar el panel admin
-        function inicializarPanelAdmin() {
-            console.log('Panel admin inicializado');
-            loadProductList();
-        }
-
-        // Cargar lista de productos
+        // ===== FUNCIÓN MEJORADA PARA CARGAR PRODUCTOS =====
         async function loadProductList() {
             const list = document.getElementById('list');
             
             try {
                 list.innerHTML = '<div class="text-center py-4"><i class="fas fa-spinner fa-spin text-pink-500"></i> Cargando...</div>';
                 
-                const res = await fetch(APP_SCRIPT_URL + '?action=getProducts');
+                // Usar fetch con manejo de CORS mejorado
+                const res = await fetch(`${APP_SCRIPT_URL}?action=getProducts&timestamp=${Date.now()}`, {
+                    method: 'GET',
+                    mode: 'cors',
+                    cache: 'no-cache'
+                });
+                
+                if (!res.ok) {
+                    throw new Error(`Error HTTP: ${res.status}`);
+                }
+                
                 const data = await res.json();
                 
                 if (!data.ok) {
-                    throw new Error('Error al cargar productos');
+                    throw new Error(data.error || 'Error al cargar productos');
                 }
                 
                 currentProducts = data.products || [];
@@ -1086,19 +827,21 @@
                     const descripcion = product.Descripción || product.descripcion || 'Sin descripción';
                     const precio = product.Precio || product.precio || '0';
                     const cantidad = product.Cantidad || product.cantidad || '0';
-                    // Manejar tanto imagen única como múltiples imágenes
+                    
+                    // Manejar múltiples imágenes
                     let imagen = '';
+                    let imageCount = 0;
+                    
                     if (product.Imagen && Array.isArray(product.Imagen) && product.Imagen.length > 0) {
                         imagen = product.Imagen[0];
+                        imageCount = product.Imagen.length;
                     } else if (product.Imagen) {
                         imagen = product.Imagen;
+                        imageCount = 1;
                     }
-                    const categoria = product.Categoría || product.categoria || 'General';
                     
-                    // Verificar si tiene múltiples imágenes
-                    const hasMultipleImages = (product.Imagen && Array.isArray(product.Imagen) && product.Imagen.length > 1);
-                    const imageCount = (product.Imagen && Array.isArray(product.Imagen)) ? product.Imagen.length : 
-                                      (product.Imagen ? 1 : 0);
+                    const categoria = product.Categoría || product.categoria || 'General';
+                    const hasMultipleImages = imageCount > 1;
                     
                     return `
                         <div class="bg-white dark:bg-gray-700 p-4 rounded-lg border border-gray-200 dark:border-gray-600 product-card">
@@ -1143,7 +886,7 @@
                     `;
                 }).join('');
                 
-                // Agregar event listeners para botones de editar y eliminar
+                // Agregar event listeners
                 document.querySelectorAll('.edit-btn').forEach(btn => {
                     btn.addEventListener('click', (e) => {
                         const id = e.currentTarget.dataset.id;
@@ -1163,61 +906,86 @@
                 list.innerHTML = `
                     <div class="text-center py-8 text-red-500">
                         <i class="fas fa-exclamation-triangle text-2xl mb-2"></i>
-                        <p>Error al cargar los productos</p>
-                        <button onclick="loadProductList()" class="mt-2 bg-pink-500 text-white px-4 py-2 rounded-lg text-sm">
-                            Reintentar
+                        <p>Error al cargar los productos: ${err.message}</p>
+                        <p class="text-sm mt-2">Verifica tu conexión a internet</p>
+                        <button onclick="loadProductList()" class="mt-4 bg-pink-500 text-white px-4 py-2 rounded-lg text-sm hover:bg-pink-600 transition">
+                            <i class="fas fa-sync-alt mr-2"></i>Reintentar
                         </button>
                     </div>
                 `;
             }
         }
 
-        // Editar producto - MODIFICADO PARA MÚLTIPLES IMÁGENES
-        function editProduct(id) {
-            const product = currentProducts.find(p => 
-                (p.ID === id) || (p.id === id)
-            );
+        // ===== FUNCIÓN MEJORADA PARA CREAR/ACTUALIZAR PRODUCTOS =====
+        async function saveProduct() {
+            const nombre = document.getElementById('nombre').value.trim();
+            const descripcion = document.getElementById('descripcion').value.trim();
+            const precio = document.getElementById('precio').value.trim();
+            const cantidad = document.getElementById('cantidad').value.trim();
+            const categoria = document.getElementById('categoria').value;
             
-            if (!product) {
-                showStatus('❌ Producto no encontrado', 'error');
+            // Validaciones
+            if (!nombre) {
+                showStatus('⚠️ El nombre del producto es obligatorio', 'error');
+                return;
+            }
+            if (!precio || isNaN(parseFloat(precio)) || parseFloat(precio) < 0) {
+                showStatus('⚠️ El precio debe ser un número válido mayor o igual a 0', 'error');
+                return;
+            }
+            if (!cantidad || isNaN(parseInt(cantidad)) || parseInt(cantidad) < 0) {
+                showStatus('⚠️ La cantidad debe ser un número válido mayor o igual a 0', 'error');
+                return;
+            }
+            if (!categoria) {
+                showStatus('⚠️ Selecciona una categoría', 'error');
                 return;
             }
             
-            // Llenar formulario con datos del producto
-            prodIdInput.value = product.ID || product.id || '';
-            document.getElementById('nombre').value = product.Nombre || product.nombre || '';
-            document.getElementById('descripcion').value = product.Descripción || product.descripcion || '';
-            document.getElementById('precio').value = product.Precio || product.precio || '';
-            document.getElementById('cantidad').value = product.Cantidad || product.cantidad || '';
-            document.getElementById('categoria').value = product.Categoría || product.categoria || '';
+            const id = isEditing ? currentEditId : generateProductId();
+            const payload = {
+                id: id,
+                nombre: nombre,
+                descripcion: descripcion,
+                precio: parseFloat(precio).toFixed(2),
+                cantidad: parseInt(cantidad),
+                imagenes: imageUrls,
+                categoria: categoria,
+                token: PASSWORD_HASH
+            };
             
-            // Cargar imágenes (maneja tanto array como string)
-            imageUrls = [];
-            imagesPreview.innerHTML = '';
+            const action = isEditing ? 'update' : 'create';
+            showStatus(isEditing ? '⏳ Actualizando producto...' : '⏳ Creando producto...', 'loading');
             
-            if (product.Imagen && Array.isArray(product.Imagen)) {
-                imageUrls = product.Imagen;
-                product.Imagen.forEach(url => addImagePreview(url, 'Imagen del producto'));
-            } else if (product.Imagen) {
-                imageUrls = [product.Imagen];
-                addImagePreview(product.Imagen, 'Imagen principal');
+            try {
+                const res = await fetch(`${APP_SCRIPT_URL}?action=${action}`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(payload)
+                });
+                
+                if (!res.ok) {
+                    throw new Error(`Error HTTP: ${res.status}`);
+                }
+                
+                const data = await res.json();
+                
+                if (data.ok) {
+                    showStatus('✅ ' + (isEditing ? 'Producto actualizado' : 'Producto creado') + ' correctamente', 'success');
+                    loadProductList();
+                    clearForm();
+                } else {
+                    showStatus('❌ Error: ' + (data.error || 'Error desconocido'), 'error');
+                }
+            } catch (err) { 
+                console.error('Error de conexión:', err);
+                showStatus('❌ Error de conexión: ' + err.message, 'error');
             }
-            
-            imagenesUrlsInput.value = imageUrls.join(',');
-            
-            isEditing = true;
-            currentEditId = product.ID || product.id;
-            
-            showStatus('📝 Editando producto: ' + (product.Nombre || product.nombre), 'success');
-            
-            // Scroll al formulario
-            document.getElementById('prod-id').scrollIntoView({ 
-                behavior: 'smooth', 
-                block: 'center' 
-            });
         }
 
-        // Eliminar producto
+        // ===== FUNCIÓN MEJORADA PARA ELIMINAR PRODUCTOS =====
         async function deleteProduct(id) {
             const product = currentProducts.find(p => 
                 (p.ID === id) || (p.id === id)
@@ -1237,14 +1005,21 @@
             showStatus('⏳ Eliminando producto...', 'loading');
             
             try {
-                const res = await fetch(APP_SCRIPT_URL + '?action=delete', { 
+                const res = await fetch(`${APP_SCRIPT_URL}?action=delete`, { 
                     method: 'POST',
-                    headers: {'Content-Type': 'application/json'}, 
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }, 
                     body: JSON.stringify({ 
                         id: id, 
                         token: PASSWORD_HASH 
                     }) 
                 });
+                
+                if (!res.ok) {
+                    throw new Error(`Error HTTP: ${res.status}`);
+                }
+                
                 const data = await res.json();
                 
                 if (data.ok) {
@@ -1258,13 +1033,17 @@
                 }
             } catch (err) { 
                 console.error('Error de conexión:', err);
-                showStatus('❌ Error de conexión', 'error');
+                showStatus('❌ Error de conexión: ' + err.message, 'error');
             }
         }
 
-        // Limpiar formulario - MODIFICADO PARA MÚLTIPLES IMÁGENES
+        // ===== FUNCIONES AUXILIARES =====
+        function generateProductId() {
+            return 'prod_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+        }
+
         function clearForm() {
-            prodIdInput.value = '';
+            document.getElementById('prod-id').value = '';
             document.getElementById('nombre').value = '';
             document.getElementById('descripcion').value = '';
             document.getElementById('precio').value = '';
@@ -1276,7 +1055,6 @@
             imageUrls = [];
             imagenesUrlsInput.value = '';
             fileInput.value = '';
-            uploadProgress.classList.add('hidden');
             
             isEditing = false;
             currentEditId = null;
@@ -1284,8 +1062,8 @@
             showStatus('Formulario listo para nuevo producto', 'success');
         }
 
-        // Mostrar estado
         function showStatus(message, type) {
+            const statusEl = document.getElementById('status');
             statusEl.textContent = message;
             statusEl.className = 'mt-4 text-sm text-center p-3 rounded-lg ';
             
@@ -1303,7 +1081,6 @@
                     statusEl.className += 'bg-gray-100 text-gray-800 border border-gray-200';
             }
             
-            // Auto-ocultar mensajes de éxito después de 5 segundos
             if (type === 'success') {
                 setTimeout(() => {
                     if (statusEl.textContent === message) {
@@ -1314,8 +1091,23 @@
             }
         }
 
-        // Inicialización
+        function inicializarPanelAdmin() {
+            console.log('Panel admin inicializado');
+            loadProductList();
+        }
+
+        // ===== INICIALIZACIÓN =====
         document.addEventListener('DOMContentLoaded', function() {
+            // Configurar event listeners
+            document.getElementById('create-btn').addEventListener('click', saveProduct);
+            document.getElementById('clear-btn').addEventListener('click', clearForm);
+            document.getElementById('refresh-btn').addEventListener('click', loadProductList);
+            document.getElementById('admin-password').addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    verificarPassword();
+                }
+            });
+
             // Inicializar modo oscuro
             const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
             const storedPreference = localStorage.getItem('lisport_dark');
@@ -1325,20 +1117,56 @@
             }
             
             // Menú móvil
+            const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+            const closeMenu = document.getElementById('closeMenu');
+            const mobileMenu = document.getElementById('mobileMenu');
+            const mobileOverlay = document.getElementById('mobileOverlay');
+
+            function toggleMobileMenu() {
+                const isOpening = !mobileMenu.classList.contains('open');
+                
+                if (isOpening) {
+                    mobileMenu.classList.add('open');
+                    mobileOverlay.classList.remove('hidden');
+                    document.body.style.overflow = 'hidden';
+                } else {
+                    mobileMenu.classList.remove('open');
+                    mobileOverlay.classList.add('hidden');
+                    document.body.style.overflow = '';
+                }
+            }
+
             mobileMenuBtn.addEventListener('click', toggleMobileMenu);
             closeMenu.addEventListener('click', toggleMobileMenu);
             mobileOverlay.addEventListener('click', toggleMobileMenu);
             
-            // Cerrar menú al hacer clic en enlaces
             mobileMenu.querySelectorAll('a').forEach(link => {
                 link.addEventListener('click', toggleMobileMenu);
             });
             
             // Modo oscuro toggle
+            const darkToggle = document.getElementById('darkToggle');
+            const body = document.body;
+            
             darkToggle.addEventListener('click', () => {
                 setDark(!body.classList.contains('dark'));
             });
         });
+
+        function setDark(isDark) {
+            const body = document.body;
+            const darkIcon = document.getElementById('darkIcon');
+            
+            if (isDark) {
+                body.classList.add('dark');
+                darkIcon.textContent = '☀️';
+                localStorage.setItem('lisport_dark', '1');
+            } else {
+                body.classList.remove('dark');
+                darkIcon.textContent = '🌙';
+                localStorage.removeItem('lisport_dark');
+            }
+        }
     </script>
 </body>
 </html>
