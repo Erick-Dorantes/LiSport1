@@ -708,7 +708,7 @@
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script>
         // ===== DECLARAR LAS VARIABLES PRIMERO =====
-        let supabase;
+        let supabaseClient;
         let isAuthenticated = false;
         let currentProducts = [];
         let isEditing = false;
@@ -724,10 +724,10 @@
             const SUPABASE_URL = 'https://qlkbqotipjtitrlskacv.supabase.co';
             const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFsa2Jxb3RpcGp0aXRybHNrYWN2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjI0MjE5NDAsImV4cCI6MjA3Nzk5Nzk0MH0.oYFxx5y1-KlQ4Fqjn_Cub4Dyd-2wC17m59EWyWLKCDA';
             
-            // Inicializar Supabase
-            supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+            // Inicializar Supabase con un nombre diferente
+            supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
             
-            console.log('Supabase inicializado correctamente');
+            console.log('Supabase inicializado correctamente', supabaseClient);
 
             // ===== CONFIGURACIÓN DE EVENT LISTENERS =====
             document.getElementById('create-btn').addEventListener('click', saveProduct);
@@ -737,7 +737,7 @@
                 if (e.key === 'Enter') verificarPassword();
             });
 
-            // Configuración del modo oscuro y menú móvil
+            // ===== CONFIGURACIÓN DEL MODO OSCURO =====
             const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
             const storedPreference = localStorage.getItem('lisport_dark');
             
@@ -745,6 +745,7 @@
                 setDark(true);
             }
             
+            // ===== CONFIGURACIÓN DEL MENÚ MÓVIL =====
             const mobileMenuBtn = document.getElementById('mobileMenuBtn');
             const closeMenu = document.getElementById('closeMenu');
             const mobileMenu = document.getElementById('mobileMenu');
@@ -764,21 +765,40 @@
                 }
             }
 
-            mobileMenuBtn.addEventListener('click', toggleMobileMenu);
-            closeMenu.addEventListener('click', toggleMobileMenu);
-            mobileOverlay.addEventListener('click', toggleMobileMenu);
-            
-            mobileMenu.querySelectorAll('a').forEach(link => {
-                link.addEventListener('click', toggleMobileMenu);
-            });
-            
+            if (mobileMenuBtn && closeMenu && mobileMenu && mobileOverlay) {
+                mobileMenuBtn.addEventListener('click', toggleMobileMenu);
+                closeMenu.addEventListener('click', toggleMobileMenu);
+                mobileOverlay.addEventListener('click', toggleMobileMenu);
+                
+                mobileMenu.querySelectorAll('a').forEach(link => {
+                    link.addEventListener('click', toggleMobileMenu);
+                });
+            }
+
+            // ===== CONFIGURACIÓN DEL BOTÓN MODO OSCURO =====
             const darkToggle = document.getElementById('darkToggle');
-            const body = document.body;
-            
-            darkToggle.addEventListener('click', () => {
-                setDark(!body.classList.contains('dark'));
-            });
+            if (darkToggle) {
+                darkToggle.addEventListener('click', () => {
+                    setDark(!document.body.classList.contains('dark'));
+                });
+            }
         });
+
+        // ===== FUNCIÓN MODO OSCURO CORREGIDA =====
+        function setDark(isDark) {
+            const body = document.body;
+            const darkIcon = document.getElementById('darkIcon');
+            
+            if (isDark) {
+                body.classList.add('dark');
+                if (darkIcon) darkIcon.textContent = '☀️';
+                localStorage.setItem('lisport_dark', '1');
+            } else {
+                body.classList.remove('dark');
+                if (darkIcon) darkIcon.textContent = '🌙';
+                localStorage.removeItem('lisport_dark');
+            }
+        }
 
         // ===== SISTEMA DE AUTENTICACIÓN CON HASH =====
         async function verificarPassword() {
@@ -835,6 +855,8 @@
 
         // ===== SISTEMA DE IMÁGENES =====
         function inicializarSistemaImagenes() {
+            if (!uploadArea || !fileInput) return;
+            
             uploadArea.addEventListener('click', () => fileInput.click());
             fileInput.addEventListener('change', handleFileSelect);
 
@@ -879,6 +901,7 @@
         }
 
         function mostrarPreviews() {
+            if (!imagesPreview) return;
             imagesPreview.innerHTML = '';
             imageFiles.forEach((file, index) => {
                 const url = URL.createObjectURL(file);
@@ -887,6 +910,8 @@
         }
 
         function addImagePreview(url, filename, index) {
+            if (!imagesPreview) return;
+            
             const preview = document.createElement('div');
             preview.className = 'image-preview';
             preview.innerHTML = `
@@ -925,14 +950,14 @@
                     const filePath = `productos/${fileName}`;
                     
                     // Subir a Supabase Storage
-                    const { data, error } = await supabase.storage
+                    const { data, error } = await supabaseClient.storage
                         .from('images')
                         .upload(filePath, file);
                     
                     if (error) throw error;
                     
                     // Obtener URL pública
-                    const { data: { publicUrl } } = supabase.storage
+                    const { data: { publicUrl } } = supabaseClient.storage
                         .from('images')
                         .getPublicUrl(filePath);
                     
@@ -951,16 +976,16 @@
         // ===== OPERACIONES CRUD CON SUPABASE =====
         async function saveProduct() {
             // Verificar que supabase esté inicializado
-            if (!supabase) {
+            if (!supabaseClient) {
                 showStatus('❌ Error: Base de datos no inicializada', 'error');
                 return;
             }
 
-            const nombre = document.getElementById('nombre').value.trim();
-            const descripcion = document.getElementById('descripcion').value.trim();
-            const precio = document.getElementById('precio').value.trim();
-            const cantidad = document.getElementById('cantidad').value.trim();
-            const categoria = document.getElementById('categoria').value;
+            const nombre = document.getElementById('nombre')?.value.trim();
+            const descripcion = document.getElementById('descripcion')?.value.trim();
+            const precio = document.getElementById('precio')?.value.trim();
+            const cantidad = document.getElementById('cantidad')?.value.trim();
+            const categoria = document.getElementById('categoria')?.value;
             
             // Validaciones
             if (!nombre) {
@@ -999,13 +1024,13 @@
                 
                 if (isEditing) {
                     // Actualizar producto existente
-                    result = await supabase
+                    result = await supabaseClient
                         .from('productos')
                         .update(productData)
                         .eq('id', currentEditId);
                 } else {
                     // Crear nuevo producto
-                    result = await supabase
+                    result = await supabaseClient
                         .from('productos')
                         .insert([productData]);
                 }
@@ -1026,11 +1051,19 @@
 
         async function loadProductList() {
             const list = document.getElementById('list');
+            if (!list) return;
+            
+            // Verificar que supabaseClient esté inicializado
+            if (!supabaseClient) {
+                console.error('supabaseClient no está inicializado');
+                showProductListError(new Error('Conexión a base de datos no disponible'));
+                return;
+            }
             
             try {
                 list.innerHTML = '<div class="text-center py-4"><i class="fas fa-spinner fa-spin text-pink-500"></i> Cargando productos...</div>';
                 
-                const { data: products, error } = await supabase
+                const { data: products, error } = await supabaseClient
                     .from('productos')
                     .select('*')
                     .order('creado_en', { ascending: false });
@@ -1063,7 +1096,7 @@
             showStatus('⏳ Eliminando producto...', 'loading');
             
             try {
-                const { error } = await supabase
+                const { error } = await supabaseClient
                     .from('productos')
                     .delete()
                     .eq('id', id);
@@ -1091,16 +1124,16 @@
                 return;
             }
             
-            prodIdInput.value = product.id;
-            document.getElementById('nombre').value = product.nombre || '';
-            document.getElementById('descripcion').value = product.descripcion || '';
-            document.getElementById('precio').value = product.precio || '';
-            document.getElementById('cantidad').value = product.cantidad || '';
-            document.getElementById('categoria').value = product.categoria || '';
+            if (prodIdInput) prodIdInput.value = product.id;
+            if (document.getElementById('nombre')) document.getElementById('nombre').value = product.nombre || '';
+            if (document.getElementById('descripcion')) document.getElementById('descripcion').value = product.descripcion || '';
+            if (document.getElementById('precio')) document.getElementById('precio').value = product.precio || '';
+            if (document.getElementById('cantidad')) document.getElementById('cantidad').value = product.cantidad || '';
+            if (document.getElementById('categoria')) document.getElementById('categoria').value = product.categoria || '';
             
             // Limpiar imágenes previas
             imageFiles = [];
-            imagesPreview.innerHTML = '';
+            if (imagesPreview) imagesPreview.innerHTML = '';
             
             // Mostrar imágenes existentes como preview (solo visual)
             if (product.imagenes && product.imagenes.length > 0) {
@@ -1113,21 +1146,23 @@
             currentEditId = product.id;
             
             showStatus('📝 Editando producto: ' + product.nombre, 'success');
-            document.getElementById('prod-id').scrollIntoView({ behavior: 'smooth', block: 'center' });
+            if (document.getElementById('prod-id')) {
+                document.getElementById('prod-id').scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
         }
 
         // ===== FUNCIONES AUXILIARES =====
         function clearForm() {
-            document.getElementById('prod-id').value = '';
-            document.getElementById('nombre').value = '';
-            document.getElementById('descripcion').value = '';
-            document.getElementById('precio').value = '';
-            document.getElementById('cantidad').value = '';
-            document.getElementById('categoria').value = '';
+            if (prodIdInput) prodIdInput.value = '';
+            if (document.getElementById('nombre')) document.getElementById('nombre').value = '';
+            if (document.getElementById('descripcion')) document.getElementById('descripcion').value = '';
+            if (document.getElementById('precio')) document.getElementById('precio').value = '';
+            if (document.getElementById('cantidad')) document.getElementById('cantidad').value = '';
+            if (document.getElementById('categoria')) document.getElementById('categoria').value = '';
             
-            imagesPreview.innerHTML = '';
+            if (imagesPreview) imagesPreview.innerHTML = '';
             imageFiles = [];
-            fileInput.value = '';
+            if (fileInput) fileInput.value = '';
             
             isEditing = false;
             currentEditId = null;
@@ -1137,6 +1172,7 @@
 
         function renderProductList(products) {
             const list = document.getElementById('list');
+            if (!list) return;
             
             if (products.length === 0) {
                 list.innerHTML = `
@@ -1215,6 +1251,8 @@
 
         function showProductListError(err) {
             const list = document.getElementById('list');
+            if (!list) return;
+            
             list.innerHTML = `
                 <div class="text-center py-8 text-red-500 bg-red-50 dark:bg-red-900/20 p-4 rounded-lg">
                     <i class="fas fa-exclamation-triangle text-2xl mb-3"></i>
@@ -1234,6 +1272,8 @@
 
         function showStatus(message, type) {
             const statusEl = document.getElementById('status');
+            if (!statusEl) return;
+            
             statusEl.textContent = message;
             statusEl.className = 'mt-4 text-sm text-center p-3 rounded-lg ';
             
@@ -1271,21 +1311,6 @@
             } catch (error) {
                 console.error('Error inicializando panel:', error);
                 showStatus('Error al cargar productos. Verifica tu conexión a internet.', 'error');
-            }
-        }
-
-        function setDark(isDark) {
-            const body = document.body;
-            const darkIcon = document.getElementById('darkIcon');
-            
-            if (isDark) {
-                body.classList.add('dark');
-                darkIcon.textContent = '☀️';
-                localStorage.setItem('lisport_dark', '1');
-            } else {
-                body.classList.remove('dark');
-                darkIcon.textContent = '🌙';
-                localStorage.removeItem('lisport_dark');
             }
         }
     </script>
