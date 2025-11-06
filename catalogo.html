@@ -62,7 +62,7 @@
             transition: opacity 0.3s ease;
         }
         
-        /* Productos - Estilo SHEIN */
+        /* Productos - Estilo Simplificado */
         .product-card {
             transition: transform 0.3s ease, box-shadow 0.3s ease;
             border-radius: 8px;
@@ -105,44 +105,6 @@
             transform: scale(1.05);
         }
         
-        .product-badge {
-            position: absolute;
-            top: 8px;
-            left: 8px;
-            background: var(--rosa);
-            color: white;
-            font-size: 0.75rem;
-            font-weight: 600;
-            padding: 4px 8px;
-            border-radius: 4px;
-            z-index: 2;
-        }
-        
-        .product-wishlist {
-            position: absolute;
-            top: 8px;
-            right: 8px;
-            background: rgba(255, 255, 255, 0.9);
-            width: 32px;
-            height: 32px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            z-index: 2;
-            transition: all 0.3s ease;
-        }
-        
-        .dark .product-wishlist {
-            background: rgba(30, 41, 59, 0.9);
-        }
-        
-        .product-wishlist:hover {
-            background: var(--rosa);
-            color: white;
-        }
-        
         .product-info {
             padding: 12px;
         }
@@ -159,72 +121,44 @@
             height: 2.8em;
         }
         
-        .product-price {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            margin-bottom: 4px;
+        .product-description {
+            font-size: 0.75rem;
+            color: #6b7280;
+            margin-bottom: 8px;
+            line-height: 1.4;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            height: 2.8em;
         }
         
-        .current-price {
+        .dark .product-description {
+            color: #9ca3af;
+        }
+        
+        .product-price {
             font-weight: 700;
             color: var(--rosa);
             font-size: 1.125rem;
-        }
-        
-        .original-price {
-            font-size: 0.875rem;
-            text-decoration: line-through;
-            color: #9ca3af;
-        }
-        
-        .discount {
-            font-size: 0.75rem;
-            font-weight: 600;
-            color: var(--rosa);
-            background: rgba(255, 76, 122, 0.1);
-            padding: 2px 6px;
-            border-radius: 4px;
-        }
-        
-        .product-rating {
-            display: flex;
-            align-items: center;
-            gap: 4px;
             margin-bottom: 4px;
         }
         
-        .stars {
-            color: #fbbf24;
-            font-size: 0.75rem;
-        }
-        
-        .rating-count {
+        .product-stock {
             font-size: 0.75rem;
             color: #6b7280;
         }
         
-        .dark .rating-count {
+        .dark .product-stock {
             color: #9ca3af;
         }
         
-        .product-tag {
-            font-size: 0.75rem;
-            color: #6b7280;
-            margin-bottom: 4px;
+        .in-stock {
+            color: #10b981;
         }
         
-        .dark .product-tag {
-            color: #9ca3af;
-        }
-        
-        .sold-count {
-            font-size: 0.75rem;
-            color: #6b7280;
-        }
-        
-        .dark .sold-count {
-            color: #9ca3af;
+        .out-of-stock {
+            color: #ef4444;
         }
         
         /* Utilidades */
@@ -589,43 +523,10 @@
             }
         }
         
-        /* Botón para mostrar/ocultar filtros en móviles */
-        .filters-toggle {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            width: 100%;
-            background: var(--rosa);
-            color: white;
-            border: none;
-            border-radius: 8px;
-            padding: 12px 16px;
-            font-weight: 600;
-            margin-bottom: 1rem;
-            cursor: pointer;
-        }
-        
-        @media (min-width: 1024px) {
-            .filters-toggle {
-                display: none;
-            }
-        }
-        
-        /* Contenedor de filtros para móviles */
-        .filters-mobile-container {
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.3s ease;
-        }
-        
-        .filters-mobile-container.open {
-            max-height: 1000px;
-        }
-        
-        @media (min-width: 1024px) {
-            .filters-mobile-container {
-                max-height: none;
-                overflow: visible;
+        /* Ocultar filtros en móviles - SOLO BOTÓN FLOTANTE */
+        @media (max-width: 1023px) {
+            .filters-toggle, .filters-mobile-container {
+                display: none !important;
             }
         }
         
@@ -648,7 +549,7 @@
                 font-size: 0.8rem;
             }
             
-            .current-price {
+            .product-price {
                 font-size: 1rem;
             }
         }
@@ -855,20 +756,6 @@
         .view-all:hover {
             text-decoration: underline;
         }
-        
-        /* Estilos para productos más vendidos */
-        .bestseller-badge {
-            position: absolute;
-            top: 8px;
-            left: 8px;
-            background: #ff6b6b;
-            color: white;
-            font-size: 0.7rem;
-            font-weight: 600;
-            padding: 3px 6px;
-            border-radius: 4px;
-            z-index: 2;
-        }
     </style>
 </head>
 
@@ -936,20 +823,13 @@
         <section class="recommended-section">
             <div class="section-header">
                 <h2 class="section-title">Recomendados</h2>
-                <a href="#" class="view-all">Ver todo</a>
             </div>
             
             <!-- Filtros y productos -->
             <div class="filters-section">
                 <div class="filters-container">
-                    <!-- Botón para mostrar/ocultar filtros en móviles -->
-                    <button class="filters-toggle lg:hidden" id="filtersToggle">
-                        <span>FILTROS</span>
-                        <i class="fas fa-chevron-down transition-transform" id="filtersToggleIcon"></i>
-                    </button>
-                    
-                    <!-- Contenedor de filtros para móviles -->
-                    <div class="filters-mobile-container lg:!max-h-none" id="filtersMobileContainer">
+                    <!-- SOLO MOSTRAR FILTROS EN DESKTOP -->
+                    <div class="hidden lg:block">
                         <!-- Columna de Filtros -->
                         <aside class="filters-sidebar lg:col-span-1">
                             <div class="filters-header flex justify-between items-center mb-6 pb-4 border-b border-gray-200 dark:border-gray-700">
@@ -1355,14 +1235,13 @@
             
             noResultsElement.classList.add('hidden');
             
-            container.innerHTML = filteredProducts.map((product, index) => {
+            container.innerHTML = filteredProducts.map(product => {
                 const nombre = product.nombre || "Producto sin nombre";
                 const descripcion = product.descripcion || "Sin descripción disponible";
                 const precio = product.precio || "0";
                 const categoria = product.categoria || "General";
                 const cantidad = product.cantidad || 0;
                 
-                              
                 // Manejar múltiples imágenes
                 let imagenes = [];
                 if (product.imagenes && Array.isArray(product.imagenes)) {
@@ -1386,21 +1265,14 @@
                                 onerror="this.src='https://via.placeholder.com/400x500?text=Sin+imagen'"
                                 data-images='${JSON.stringify(imagenes)}'
                             >
-                            <div class="product-badge">-${discount}%</div>
-                            ${isBestseller ? '<div class="bestseller-badge">#${index+1} Más vendido</div>' : ''}
-                            <div class="product-wishlist">
-                                <i class="far fa-heart"></i>
-                            </div>
                         </div>
                         <div class="product-info">
                             <h3 class="product-title">${nombre}</h3>
-                            <div class="product-price">
-                                <span class="current-price">$${precio}</span>
+                            <p class="product-description">${descripcion}</p>
+                            <div class="product-price">$${precio}</div>
+                            <div class="product-stock ${cantidad > 0 ? 'in-stock' : 'out-of-stock'}">
+                                ${cantidad > 0 ? `${cantidad} disponibles` : 'Agotado'}
                             </div>
-                            <div class="product-rating">
-        
-                            <div class="product-tag">${categoria}</div>
-                            
                         </div>
                     </div>
                 `;
@@ -1408,21 +1280,6 @@
             
             // Agregar event listeners para el modal de imágenes
             addImageModalListeners();
-            
-            // Agregar event listeners para wishlist
-            document.querySelectorAll('.product-wishlist').forEach(btn => {
-                btn.addEventListener('click', function(e) {
-                    e.stopPropagation();
-                    const icon = this.querySelector('i');
-                    if (icon.classList.contains('far')) {
-                        icon.classList.remove('far');
-                        icon.classList.add('fas', 'text-red-500');
-                    } else {
-                        icon.classList.remove('fas', 'text-red-500');
-                        icon.classList.add('far');
-                    }
-                });
-            });
         }
         
         // ===== BÚSQUEDA PREDICTIVA =====
@@ -1858,19 +1715,6 @@
                 
                 mobileMenu.querySelectorAll('a').forEach(link => {
                     link.addEventListener('click', toggleMobileMenu);
-                });
-            }
-
-            // Filtros móviles
-            const filtersToggle = document.getElementById('filtersToggle');
-            const filtersMobileContainer = document.getElementById('filtersMobileContainer');
-            const filtersToggleIcon = document.getElementById('filtersToggleIcon');
-            
-            if (filtersToggle && filtersMobileContainer) {
-                filtersToggle.addEventListener('click', () => {
-                    filtersMobileContainer.classList.toggle('open');
-                    filtersToggleIcon.classList.toggle('fa-chevron-down');
-                    filtersToggleIcon.classList.toggle('fa-chevron-up');
                 });
             }
 
