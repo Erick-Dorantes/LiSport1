@@ -27,9 +27,9 @@
         
         /* Logo reducido */
         .logo-image {
-            height: 60px; /* REDUCIDO de ~50px a 25px */
+            height: 60px;
             width: auto;
-            max-width: 130px; /* Controla el ancho máximo */
+            max-width: 130px;
             transition: all 0.3s ease;
         }
         
@@ -39,7 +39,7 @@
         
         /* Header más compacto */
         .header-compact {
-            padding: 10px 20px; /* Reducido padding vertical */
+            padding: 10px 20px;
         }
         
         body.dark {
@@ -439,28 +439,131 @@
         /* Responsive para logo */
         @media (max-width: 768px) {
             .logo-image {
-                height: 22px; /* Más pequeño en tablets */
+                height: 22px;
                 max-width: 90px;
             }
             .header-compact {
-                padding: 8px 15px; /* Más compacto en tablets */
+                padding: 8px 15px;
             }
         }
         
         @media (max-width: 576px) {
             .logo-image {
-                height: 20px; /* Más pequeño en móviles */
+                height: 20px;
                 max-width: 80px;
             }
             .header-compact {
-                padding: 6px 12px; /* Más compacto en móviles */
+                padding: 6px 12px;
             }
         }
         
         @media (max-width: 400px) {
             .logo-image {
-                height: 18px; /* Mínimo tamaño */
+                height: 18px;
                 max-width: 70px;
+            }
+        }
+        
+        /* NUEVOS ESTILOS PARA MEJORAR RESPONSIVIDAD */
+        
+        /* Filtros responsivos */
+        .filters-container {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        @media (min-width: 1024px) {
+            .filters-container {
+                display: grid;
+                grid-template-columns: 1fr 3fr;
+                gap: 2rem;
+            }
+        }
+        
+        /* Botón para mostrar/ocultar filtros en móviles */
+        .filters-toggle {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+            background: var(--rosa);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 12px 16px;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            cursor: pointer;
+        }
+        
+        @media (min-width: 1024px) {
+            .filters-toggle {
+                display: none;
+            }
+        }
+        
+        /* Contenedor de filtros para móviles */
+        .filters-mobile-container {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+        
+        .filters-mobile-container.open {
+            max-height: 1000px;
+        }
+        
+        @media (min-width: 1024px) {
+            .filters-mobile-container {
+                max-height: none;
+                overflow: visible;
+            }
+        }
+        
+        /* Centrar imágenes de productos */
+        .product-image-wrapper {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 200px;
+            overflow: hidden;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+        }
+        
+        .product-image {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+        }
+        
+        /* Ajustes para pantallas pequeñas */
+        @media (max-width: 640px) {
+            .products-grid {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+            
+            .product-card {
+                padding: 1rem;
+            }
+            
+            .product-image-wrapper {
+                height: 180px;
+            }
+        }
+        
+        @media (min-width: 641px) and (max-width: 1023px) {
+            .products-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 1.5rem;
+            }
+        }
+        
+        @media (min-width: 1024px) {
+            .products-grid {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 2rem;
             }
         }
     </style>
@@ -528,102 +631,111 @@
 
         <!-- Filtros y productos -->
         <section class="filters-section">
-            <div class="filters-container grid grid-cols-1 lg:grid-cols-4 gap-8">
-                <!-- Columna de Filtros -->
-                <aside class="filters-sidebar lg:col-span-1">
-                    <div class="filters-header flex justify-between items-center mb-6 pb-4 border-b border-gray-200 dark:border-gray-700">
-                        <h3 class="text-lg font-bold">FILTROS</h3>
-                        <button class="clear-filters text-sm text-pink-500 hover:text-pink-600 font-medium" id="clearFilters">
-                            Limpiar todo
-                        </button>
-                    </div>
-
-                    <!-- Barra de Búsqueda -->
-                    <div class="filter-group mb-6">
-                        <div class="filter-title mb-4">
-                            <h4 class="font-semibold text-gray-700 dark:text-gray-300">BUSCAR</h4>
-                        </div>
-                        <div class="search-box">
-                            <i class="fas fa-search search-icon text-gray-400"></i>
-                            <input type="text" id="searchInput" placeholder="Buscar productos..." class="search-input">
-                            <button class="search-clear" id="searchClear">
-                                <i class="fas fa-times"></i>
+            <div class="filters-container">
+                <!-- Botón para mostrar/ocultar filtros en móviles -->
+                <button class="filters-toggle lg:hidden" id="filtersToggle">
+                    <span>FILTROS</span>
+                    <i class="fas fa-chevron-down transition-transform" id="filtersToggleIcon"></i>
+                </button>
+                
+                <!-- Contenedor de filtros para móviles -->
+                <div class="filters-mobile-container lg:!max-h-none" id="filtersMobileContainer">
+                    <!-- Columna de Filtros -->
+                    <aside class="filters-sidebar lg:col-span-1">
+                        <div class="filters-header flex justify-between items-center mb-6 pb-4 border-b border-gray-200 dark:border-gray-700">
+                            <h3 class="text-lg font-bold">FILTROS</h3>
+                            <button class="clear-filters text-sm text-pink-500 hover:text-pink-600 font-medium" id="clearFilters">
+                                Limpiar todo
                             </button>
                         </div>
-                    </div>
 
-                    <!-- Filtro por Categoría -->
-                    <div class="filter-group mb-6">
-                        <div class="filter-title flex justify-between items-center mb-4">
-                            <h4 class="font-semibold text-gray-700 dark:text-gray-300">CATEGORÍA</h4>
-                            <span class="filter-count bg-pink-500 text-white text-xs px-2 py-1 rounded-full">6</span>
+                        <!-- Barra de Búsqueda -->
+                        <div class="filter-group mb-6">
+                            <div class="filter-title mb-4">
+                                <h4 class="font-semibold text-gray-700 dark:text-gray-300">BUSCAR</h4>
+                            </div>
+                            <div class="search-box">
+                                <i class="fas fa-search search-icon text-gray-400"></i>
+                                <input type="text" id="searchInput" placeholder="Buscar productos..." class="search-input">
+                                <button class="search-clear" id="searchClear">
+                                    <i class="fas fa-times"></i>
+                                </button>
+                            </div>
                         </div>
-                        <div class="filter-options space-y-2">
-                            <label class="filter-option">
-                                <input type="checkbox" name="category" value="leggins" class="hidden">
-                                <span class="checkmark"></span>
-                                <span class="filter-text">Leggings</span>
-                            </label>
-                            <label class="filter-option">
-                                <input type="checkbox" name="category" value="tops" class="hidden">
-                                <span class="checkmark"></span>
-                                <span class="filter-text">Tops</span>
-                            </label>
-                            <label class="filter-option">
-                                <input type="checkbox" name="category" value="calcetas" class="hidden">
-                                <span class="checkmark"></span>
-                                <span class="filter-text">Calcetas</span>
-                            </label>
-                            <label class="filter-option">
-                                <input type="checkbox" name="category" value="sweaters" class="hidden">
-                                <span class="checkmark"></span>
-                                <span class="filter-text">Sudaderas</span>
-                            </label>
-                            <label class="filter-option">
-                                <input type="checkbox" name="category" value="conjuntos" class="hidden">
-                                <span class="checkmark"></span>
-                                <span class="filter-text">Conjuntos</span>
-                            </label>
-                            <label class="filter-option">
-                                <input type="checkbox" name="category" value="enterizos" class="hidden">
-                                <span class="checkmark"></span>
-                                <span class="filter-text">Enterizos</span>
-                            </label>
-                        </div>
-                    </div>
 
-                    <!-- Filtro por Talla -->
-                    <div class="filter-group">
-                        <div class="filter-title mb-4">
-                            <h4 class="font-semibold text-gray-700 dark:text-gray-300">TALLA</h4>
+                        <!-- Filtro por Categoría -->
+                        <div class="filter-group mb-6">
+                            <div class="filter-title flex justify-between items-center mb-4">
+                                <h4 class="font-semibold text-gray-700 dark:text-gray-300">CATEGORÍA</h4>
+                                <span class="filter-count bg-pink-500 text-white text-xs px-2 py-1 rounded-full">6</span>
+                            </div>
+                            <div class="filter-options space-y-2">
+                                <label class="filter-option">
+                                    <input type="checkbox" name="category" value="leggins" class="hidden">
+                                    <span class="checkmark"></span>
+                                    <span class="filter-text">Leggings</span>
+                                </label>
+                                <label class="filter-option">
+                                    <input type="checkbox" name="category" value="tops" class="hidden">
+                                    <span class="checkmark"></span>
+                                    <span class="filter-text">Tops</span>
+                                </label>
+                                <label class="filter-option">
+                                    <input type="checkbox" name="category" value="calcetas" class="hidden">
+                                    <span class="checkmark"></span>
+                                    <span class="filter-text">Calcetas</span>
+                                </label>
+                                <label class="filter-option">
+                                    <input type="checkbox" name="category" value="sweaters" class="hidden">
+                                    <span class="checkmark"></span>
+                                    <span class="filter-text">Sudaderas</span>
+                                </label>
+                                <label class="filter-option">
+                                    <input type="checkbox" name="category" value="conjuntos" class="hidden">
+                                    <span class="checkmark"></span>
+                                    <span class="filter-text">Conjuntos</span>
+                                </label>
+                                <label class="filter-option">
+                                    <input type="checkbox" name="category" value="enterizos" class="hidden">
+                                    <span class="checkmark"></span>
+                                    <span class="filter-text">Enterizos</span>
+                                </label>
+                            </div>
                         </div>
-                        <div class="size-filters">
-                            <label class="size-option">
-                                <input type="checkbox" name="size" value="XS" class="hidden">
-                                <span class="size-tag">XS</span>
-                            </label>
-                            <label class="size-option">
-                                <input type="checkbox" name="size" value="S" class="hidden">
-                                <span class="size-tag">S</span>
-                            </label>
-                            <label class="size-option">
-                                <input type="checkbox" name="size" value="M" class="hidden">
-                                <span class="size-tag">M</span>
-                            </label>
-                            <label class="size-option">
-                                <input type="checkbox" name="size" value="L" class="hidden">
-                                <span class="size-tag">L</span>
-                            </label>
-                            <label class="size-option">
-                                <input type="checkbox" name="size" value="XL" class="hidden">
-                                <span class="size-tag">XL</span>
-                            </label>
+
+                        <!-- Filtro por Talla -->
+                        <div class="filter-group">
+                            <div class="filter-title mb-4">
+                                <h4 class="font-semibold text-gray-700 dark:text-gray-300">TALLA</h4>
+                            </div>
+                            <div class="size-filters">
+                                <label class="size-option">
+                                    <input type="checkbox" name="size" value="XS" class="hidden">
+                                    <span class="size-tag">XS</span>
+                                </label>
+                                <label class="size-option">
+                                    <input type="checkbox" name="size" value="S" class="hidden">
+                                    <span class="size-tag">S</span>
+                                </label>
+                                <label class="size-option">
+                                    <input type="checkbox" name="size" value="M" class="hidden">
+                                    <span class="size-tag">M</span>
+                                </label>
+                                <label class="size-option">
+                                    <input type="checkbox" name="size" value="L" class="hidden">
+                                    <span class="size-tag">L</span>
+                                </label>
+                                <label class="size-option">
+                                    <input type="checkbox" name="size" value="XL" class="hidden">
+                                    <span class="size-tag">XL</span>
+                                </label>
+                            </div>
                         </div>
-                    </div>
-                </aside>
+                    </aside>
+                </div>
 
                 <!-- Columna de Productos -->
-                <main class="products-main lg:col-span-3">
+                <main class="products-main lg:col-span-3 mt-6 lg:mt-0">
                     <div class="products-header bg-white dark:bg-gray-800 p-4 rounded-lg shadow-sm mb-6 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
                         <div class="results-info">
                             <span id="resultsCount" class="font-medium text-gray-700 dark:text-gray-300">Cargando productos...</span>
@@ -640,7 +752,7 @@
                         </div>
                     </div>
 
-                    <div class="products-grid grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6" id="productsGrid">
+                    <div class="products-grid" id="productsGrid">
                         <!-- Estado de carga -->
                         <div class="col-span-full text-center py-12" id="loading-products">
                             <i class="fas fa-spinner fa-spin text-pink-500 text-3xl mb-4"></i>
@@ -842,11 +954,11 @@
                 
                 return `
                     <div class="product-card bg-white dark:bg-gray-700 rounded-lg shadow p-4 flex flex-col h-full">
-                        <div class="product-image-container mb-4">
+                        <div class="product-image-wrapper">
                             <img 
                                 src="${imagenPrincipal}" 
                                 alt="${nombre}" 
-                                class="w-full h-48 object-cover rounded-md" 
+                                class="product-image" 
                                 loading="lazy"
                                 onerror="this.src='https://via.placeholder.com/400x300?text=Sin+imagen'"
                                 data-images='${JSON.stringify(imagenes)}'
@@ -887,7 +999,7 @@
         
         // ===== SISTEMA DE MODAL PARA MÚLTIPLES IMÁGENES =====
         function addImageModalListeners() {
-            const productImages = document.querySelectorAll('.product-image-container img');
+            const productImages = document.querySelectorAll('.product-image');
             
             productImages.forEach(img => {
                 img.addEventListener('click', function() {
@@ -1179,6 +1291,19 @@
                 
                 mobileMenu.querySelectorAll('a').forEach(link => {
                     link.addEventListener('click', toggleMobileMenu);
+                });
+            }
+
+            // Filtros móviles
+            const filtersToggle = document.getElementById('filtersToggle');
+            const filtersMobileContainer = document.getElementById('filtersMobileContainer');
+            const filtersToggleIcon = document.getElementById('filtersToggleIcon');
+            
+            if (filtersToggle && filtersMobileContainer) {
+                filtersToggle.addEventListener('click', () => {
+                    filtersMobileContainer.classList.toggle('open');
+                    filtersToggleIcon.classList.toggle('fa-chevron-down');
+                    filtersToggleIcon.classList.toggle('fa-chevron-up');
                 });
             }
 
