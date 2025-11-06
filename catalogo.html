@@ -1362,14 +1362,7 @@
                 const categoria = product.categoria || "General";
                 const cantidad = product.cantidad || 0;
                 
-                // Generar datos aleatorios para simular el estilo SHEIN
-                const originalPrice = (parseFloat(precio) * 1.5).toFixed(2);
-                const discount = Math.floor(Math.random() * 40) + 10; // 10-50% de descuento
-                const rating = (Math.random() * 1 + 4).toFixed(1); // 4.0-5.0 estrellas
-                const ratingCount = Math.floor(Math.random() * 500) + 50; // 50-550 reseñas
-                const soldCount = Math.floor(Math.random() * 1000) + 100; // 100-1100 vendidos
-                const isBestseller = index < 3; // Los primeros 3 son más vendidos
-                
+                              
                 // Manejar múltiples imágenes
                 let imagenes = [];
                 if (product.imagenes && Array.isArray(product.imagenes)) {
@@ -1403,17 +1396,11 @@
                             <h3 class="product-title">${nombre}</h3>
                             <div class="product-price">
                                 <span class="current-price">$${precio}</span>
-                                <span class="original-price">$${originalPrice}</span>
-                                <span class="discount">-${discount}%</span>
                             </div>
                             <div class="product-rating">
-                                <div class="stars">
-                                    ${'★'.repeat(Math.floor(rating))}${rating % 1 >= 0.5 ? '½' : ''}${'☆'.repeat(5 - Math.ceil(rating))}
-                                </div>
-                                <span class="rating-count">(${ratingCount})</span>
-                            </div>
+        
                             <div class="product-tag">${categoria}</div>
-                            <div class="sold-count">${soldCount}+ vendidos</div>
+                            
                         </div>
                     </div>
                 `;
