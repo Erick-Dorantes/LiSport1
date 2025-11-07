@@ -1,61 +1,63 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>LiSport - Ropa Deportiva para Mujer</title>
-    
-    <meta name="description" content="Descubre ropa deportiva para mujer de alta calidad, estilo y comodidad. Leggins, tops, sudaderas y más. LiSport te acompaña en cada movimiento.">
-    
+
+    <meta name="description"
+        content="Descubre ropa deportiva para mujer de alta calidad, estilo y comodidad. Leggins, tops, sudaderas y más. LiSport te acompaña en cada movimiento.">
+
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    
+
     <!-- Iconos -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
+
     <!-- Favicons -->
     <link rel="icon" type="image/x-icon" href="images/favicon.ico">
     <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="images/favicon-16x16.png">
     <link rel="apple-touch-icon" sizes="180x180" href="images/apple-touch-icon.png">
     <link rel="manifest" href="images/site.webmanifest">
-    
+
     <style>
         :root {
             --rosa: #ff4c7a;
             --rosa-claro: #fff6f9;
             --bg-dark: #0b1020;
         }
-        
+
         body.dark {
             background: var(--bg-dark);
             color: #e6eef8;
         }
-        
+
         body.dark header {
             background: #0f1724;
         }
-        
+
         body.dark .producto {
             background: #071026;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.6);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.6);
         }
 
         /* Logo reducido */
         .logo-image {
-            height: 60px; /* REDUCIDO de ~50px a 25px */
+            height: 60px;
             width: auto;
-            max-width: 130px; /* Controla el ancho máximo */
+            max-width: 130px;
             transition: all 0.3s ease;
         }
-        
+
         .logo-image:hover {
             transform: scale(1.05);
         }
-        
+
         /* Header más compacto */
         .header-compact {
-            padding: 10px 20px; /* Reducido padding vertical */
+            padding: 10px 20px;
         }
 
         /* Carrusel Hero */
@@ -64,7 +66,7 @@
             min-height: 70vh;
             overflow: hidden;
         }
-        
+
         .carousel-container {
             position: absolute;
             top: 0;
@@ -72,7 +74,7 @@
             width: 100%;
             height: 100%;
         }
-        
+
         .carousel-slide {
             position: absolute;
             top: 0;
@@ -85,11 +87,11 @@
             background-position: center;
             background-repeat: no-repeat;
         }
-        
+
         .carousel-slide.active {
             opacity: 1;
         }
-        
+
         .carousel-slide::after {
             content: '';
             position: absolute;
@@ -99,12 +101,12 @@
             height: 100%;
             background: linear-gradient(135deg, rgba(0, 0, 0, 0.377) 0%, rgba(0, 0, 0, 0.395) 100%);
         }
-        
+
         .hero-content {
             position: relative;
             z-index: 20;
         }
-        
+
         .carousel-indicators {
             position: absolute;
             bottom: 30px;
@@ -114,7 +116,7 @@
             gap: 10px;
             z-index: 30;
         }
-        
+
         .carousel-indicator {
             width: 12px;
             height: 12px;
@@ -123,12 +125,12 @@
             cursor: pointer;
             transition: all 0.3s ease;
         }
-        
+
         .carousel-indicator.active {
             background: white;
             transform: scale(1.2);
         }
-        
+
         .carousel-nav {
             position: absolute;
             top: 50%;
@@ -146,15 +148,15 @@
             transition: all 0.3s ease;
             z-index: 30;
         }
-        
+
         .carousel-nav:hover {
             background: rgba(255, 255, 255, 0.3);
         }
-        
+
         .carousel-prev {
             left: 20px;
         }
-        
+
         .carousel-next {
             right: 20px;
         }
@@ -163,70 +165,71 @@
         .dark .bg-gray-50 {
             background-color: #1f2937 !important;
         }
-        
+
         .dark .bg-white {
             background-color: #1e293b !important;
         }
-        
+
         .dark .text-gray-600 {
             color: #d1d5db !important;
         }
-        
+
         .dark .text-gray-800 {
             color: #f3f4f6 !important;
         }
-        
+
         .dark .border-gray-200 {
             border-color: #374151 !important;
         }
-        
+
         .dark .bg-pink-100 {
             background-color: #831843 !important;
         }
-        
+
         .dark .text-pink-500 {
             color: #f472b6 !important;
         }
-        
+
         /* Animaciones */
         @keyframes fadeIn {
-            from { 
-                opacity: 0; 
-                transform: translateY(20px); 
+            from {
+                opacity: 0;
+                transform: translateY(20px);
             }
-            to { 
-                opacity: 1; 
-                transform: translateY(0); 
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
             }
         }
-        
+
         .fade-in {
             animation: fadeIn 0.6s ease-out;
         }
-        
+
         /* Estilos personalizados */
         .product-card {
             transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
-        
+
         .product-card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
         }
-        
+
         .dark .product-card:hover {
-            box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
         }
-        
+
         .category-filter {
             transition: all 0.3s ease;
         }
-        
+
         .category-filter.active {
             background-color: var(--rosa);
             color: white;
         }
-        
+
         /* Menú móvil CORREGIDO */
         .mobile-menu {
             transform: translateX(100%);
@@ -234,17 +237,17 @@
             visibility: hidden;
             opacity: 0;
         }
-        
+
         .mobile-menu.open {
             transform: translateX(0);
             visibility: visible;
             opacity: 1;
         }
-        
+
         .mobile-overlay {
             transition: opacity 0.3s ease;
         }
-        
+
         /* Utilidades */
         .line-clamp-2 {
             display: -webkit-box;
@@ -252,7 +255,7 @@
             -webkit-box-orient: vertical;
             overflow: hidden;
         }
-        
+
         .sr-only {
             position: absolute;
             width: 1px;
@@ -264,14 +267,14 @@
             white-space: nowrap;
             border: 0;
         }
-        
+
         /* Estados de carga */
         .loading {
             opacity: 0.7;
             pointer-events: none;
             position: relative;
         }
-        
+
         .loading::after {
             content: '';
             position: absolute;
@@ -284,13 +287,18 @@
             border-radius: 50%;
             animation: spin 1s linear infinite;
         }
-        
+
         @keyframes spin {
-            0% { transform: translate(-50%, -50%) rotate(0deg); }
-            100% { transform: translate(-50%, -50%) rotate(360deg); }
+            0% {
+                transform: translate(-50%, -50%) rotate(0deg);
+            }
+
+            100% {
+                transform: translate(-50%, -50%) rotate(360deg);
+            }
         }
 
-        /* Modal para múltiples imágenes */
+        /* ===== MODAL CORREGIDO PARA CENTRAR PERFECTAMENTE ===== */
         .image-modal {
             display: none;
             position: fixed;
@@ -311,61 +319,74 @@
             justify-content: center;
         }
 
-        .modal-content {
+        .modal-carousel {
             position: relative;
-            max-width: 90%;
-            max-height: 90%;
-            width: auto;
-            height: auto;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .carousel-container-modal {
+            position: relative;
+            width: 100%;
+            max-width: 90vw;
+            max-height: 90vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .carousel-slide-modal {
+            display: none;
+            text-align: center;
+            width: 100%;
+            height: 100%;
+        }
+
+        .carousel-slide-modal.active {
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         .modal-image {
             max-width: 100%;
-            max-height: 80vh;
+            max-height: 90vh;
+            width: auto;
+            height: auto;
             object-fit: contain;
             border-radius: 8px;
+            margin: auto;
         }
 
         .modal-close {
-            position: absolute;
-            top: -40px;
-            right: 0;
+            position: fixed;
+            top: 20px;
+            right: 20px;
             background: none;
             border: none;
             color: white;
             font-size: 2rem;
             cursor: pointer;
             padding: 5px;
+            z-index: 1001;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            transition: background-color 0.3s ease;
         }
 
         .modal-close:hover {
-            color: #ff4c7a;
-        }
-
-        /* Carrusel dentro del modal */
-        .modal-carousel {
-            position: relative;
-            width: 100%;
-            height: 100%;
-        }
-
-        .carousel-container-modal {
-            position: relative;
-            width: 100%;
-            height: 100%;
-        }
-
-        .carousel-slide-modal {
-            display: none;
-            text-align: center;
-        }
-
-        .carousel-slide-modal.active {
-            display: block;
+            background-color: rgba(255, 255, 255, 0.1);
         }
 
         .carousel-nav-modal {
-            position: absolute;
+            position: fixed;
             top: 50%;
             transform: translateY(-50%);
             background: rgba(255, 255, 255, 0.2);
@@ -395,7 +416,7 @@
         }
 
         .carousel-indicators-modal {
-            position: absolute;
+            position: fixed;
             bottom: 20px;
             left: 50%;
             transform: translateX(-50%);
@@ -443,64 +464,90 @@
             transform: scale(1.02);
         }
 
+        /* Badge para productos destacados */
+        .featured-badge {
+            background: linear-gradient(135deg, #ffd700, #ffed4e);
+            color: #8b6914;
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 0.7rem;
+            font-weight: bold;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            margin-left: 8px;
+        }
+
         /* Responsive para modal */
         @media (max-width: 768px) {
             .carousel-nav-modal {
                 width: 40px;
                 height: 40px;
             }
-            
+
             .carousel-prev-modal {
                 left: 10px;
             }
-            
+
             .carousel-next-modal {
                 right: 10px;
             }
-            
-            .modal-content {
-                max-width: 95%;
+
+            .carousel-container-modal {
+                max-width: 95vw;
+            }
+
+            .modal-close {
+                top: 10px;
+                right: 10px;
+                font-size: 1.5rem;
             }
         }
-        
+
         /* Responsive para logo */
         @media (max-width: 768px) {
             .logo-image {
-                height: 22px; /* Más pequeño en tablets */
+                height: 22px;
                 max-width: 90px;
             }
+
             .header-compact {
-                padding: 8px 15px; /* Más compacto en tablets */
+                padding: 8px 15px;
             }
+
             .carousel-nav {
                 width: 40px;
                 height: 40px;
             }
+
             .carousel-prev {
                 left: 10px;
             }
+
             .carousel-next {
                 right: 10px;
             }
         }
-        
+
         @media (max-width: 576px) {
             .logo-image {
-                height: 20px; /* Más pequeño en móviles */
+                height: 20px;
                 max-width: 80px;
             }
+
             .header-compact {
-                padding: 6px 12px; /* Más compacto en móviles */
+                padding: 6px 12px;
             }
+
             .carousel-nav {
                 width: 35px;
                 height: 35px;
             }
         }
-        
+
         @media (max-width: 400px) {
             .logo-image {
-                height: 18px; /* Mínimo tamaño */
+                height: 18px;
                 max-width: 70px;
             }
         }
@@ -516,29 +563,33 @@
                     <img src="images/logo.png" alt="LiSport - Ropa Deportiva para Mujer" class="logo-image">
                 </a>
             </div>
-            
+
             <!-- Menú principal -->
             <nav class="hidden md:flex" aria-label="Menú principal">
                 <ul class="flex space-x-6">
                     <li><a href="Inicio.html" class="hover:text-pink-200 transition py-2 relative">Inicio</a></li>
                     <li><a href="catalogo.html" class="hover:text-pink-200 transition py-2 relative">Catálogo</a></li>
-                    <li><a href="sobre-nosotros.html" class="hover:text-pink-200 transition py-2 relative">Nosotros</a></li>
+                    <li><a href="sobre-nosotros.html" class="hover:text-pink-200 transition py-2 relative">Nosotros</a>
+                    </li>
                     <li><a href="contacto.html" class="hover:text-pink-200 transition py-2 relative">Contacto</a></li>
                 </ul>
             </nav>
-            
+
             <div class="flex items-center gap-4">
-                <button id="darkToggle" title="Cambiar modo" class="p-2 rounded-full bg-white/20 hover:bg-white/30 transition-colors">
+                <button id="darkToggle" title="Cambiar modo"
+                    class="p-2 rounded-full bg-white/20 hover:bg-white/30 transition-colors">
                     <span id="darkIcon">🌙</span>
                 </button>
-                <button class="md:hidden p-2 rounded-full bg-white/20 hover:bg-white/30 transition-colors" id="mobileMenuBtn">
+                <button class="md:hidden p-2 rounded-full bg-white/20 hover:bg-white/30 transition-colors"
+                    id="mobileMenuBtn">
                     <i class="fas fa-bars"></i>
                 </button>
             </div>
         </div>
 
         <!-- Menú móvil CORREGIDO -->
-        <div class="mobile-menu fixed top-0 right-0 h-full w-64 bg-white text-gray-800 shadow-lg p-6 z-50 dark:bg-gray-800 dark:text-white" id="mobileMenu">
+        <div class="mobile-menu fixed top-0 right-0 h-full w-64 bg-white text-gray-800 shadow-lg p-6 z-50 dark:bg-gray-800 dark:text-white"
+            id="mobileMenu">
             <div class="flex justify-between items-center mb-8">
                 <h3 class="font-bold text-lg">MENÚ</h3>
                 <button class="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700 transition" id="closeMenu">
@@ -547,14 +598,22 @@
             </div>
             <nav aria-label="Navegación móvil">
                 <ul class="space-y-4">
-                    <li><a href="Inicio.html" class="block py-2 font-medium hover:text-pink-500 transition border-b border-gray-200 dark:border-gray-600">INICIO</a></li>
-                    <li><a href="catalogo.html" class="block py-2 font-medium hover:text-pink-500 transition border-b border-gray-200 dark:border-gray-600">CATÁLOGO</a></li>
-                    <li><a href="sobre-nosotros.html" class="block py-2 font-medium hover:text-pink-500 transition border-b border-gray-200 dark:border-gray-600">NOSOTROS</a></li>
-                    <li><a href="contacto.html" class="block py-2 font-medium hover:text-pink-500 transition border-b border-gray-200 dark:border-gray-600">CONTACTO</a></li>
+                    <li><a href="Inicio.html"
+                            class="block py-2 font-medium hover:text-pink-500 transition border-b border-gray-200 dark:border-gray-600">INICIO</a>
+                    </li>
+                    <li><a href="catalogo.html"
+                            class="block py-2 font-medium hover:text-pink-500 transition border-b border-gray-200 dark:border-gray-600">CATÁLOGO</a>
+                    </li>
+                    <li><a href="sobre-nosotros.html"
+                            class="block py-2 font-medium hover:text-pink-500 transition border-b border-gray-200 dark:border-gray-600">NOSOTROS</a>
+                    </li>
+                    <li><a href="contacto.html"
+                            class="block py-2 font-medium hover:text-pink-500 transition border-b border-gray-200 dark:border-gray-600">CONTACTO</a>
+                    </li>
                 </ul>
             </nav>
         </div>
-        
+
         <!-- Overlay para cerrar menú -->
         <div class="mobile-overlay fixed inset-0 bg-black bg-opacity-50 z-40 hidden" id="mobileOverlay"></div>
     </header>
@@ -565,12 +624,12 @@
         <section class="hero-carousel text-white">
             <!-- Carrusel de imágenes -->
             <div class="carousel-container">
-                <div class="carousel-slide active" style="background-image: url('https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80')"></div>
-                <div class="carousel-slide" style="background-image: url('https://images.unsplash.com/photo-1594736797933-d0ea3ff8db41?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80')"></div>
-                <div class="carousel-slide" style="background-image: url('https://images.unsplash.com/photo-1591361878476-8a4b7049004e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80')"></div>
-                <div class="carousel-slide" style="background-image: url('https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80')"></div>
+                <div class="carousel-slide active" style="background-image: url('./images/Portada.png')"></div>
+                <div class="carousel-slide" style="background-image: url('./images/Tops.jpg')"></div>
+                <div class="carousel-slide" style="background-image: url('./images/Leggins.jpg')"></div>
+                <div class="carousel-slide" style="background-image: url('./images/enterizo.jpg')"></div>
             </div>
-            
+
             <!-- Controles del carrusel -->
             <button class="carousel-nav carousel-prev" aria-label="Imagen anterior">
                 <i class="fas fa-chevron-left"></i>
@@ -578,7 +637,7 @@
             <button class="carousel-nav carousel-next" aria-label="Siguiente imagen">
                 <i class="fas fa-chevron-right"></i>
             </button>
-            
+
             <!-- Indicadores -->
             <div class="carousel-indicators">
                 <button class="carousel-indicator active" data-slide="0" aria-label="Ir a imagen 1"></button>
@@ -586,13 +645,16 @@
                 <button class="carousel-indicator" data-slide="2" aria-label="Ir a imagen 3"></button>
                 <button class="carousel-indicator" data-slide="3" aria-label="Ir a imagen 4"></button>
             </div>
-            
+
             <!-- Contenido del hero -->
-            <div class="max-w-6xl mx-auto px-4 text-center fade-in hero-content flex items-center justify-center min-h-[70vh]">
+            <div
+                class="max-w-6xl mx-auto px-4 text-center fade-in hero-content flex items-center justify-center min-h-[70vh]">
                 <div>
                     <h1 class="text-4xl md:text-5xl font-bold mb-4">RENDIMIENTO Y ESTILO EN CADA MOVIMIENTO</h1>
-                    <p class="text-xl mb-8 max-w-2xl mx-auto">Descubre nuestra colección exclusiva de ropa deportiva diseñada para mujeres activas</p>
-                    <a href="catalogo.html" class="bg-white text-pink-500 px-8 py-3 rounded-full font-bold hover:bg-gray-100 transition inline-block focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-pink-500">
+                    <p class="text-xl mb-8 max-w-2xl mx-auto">Descubre nuestra colección exclusiva de ropa deportiva
+                        diseñada para mujeres activas</p>
+                    <a href="catalogo.html"
+                        class="bg-white text-pink-500 px-8 py-3 rounded-full font-bold hover:bg-gray-100 transition inline-block focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-pink-500">
                         Nuestro Catálogo
                     </a>
                 </div>
@@ -604,38 +666,50 @@
             <div class="max-w-6xl mx-auto px-4">
                 <h2 class="text-3xl font-bold text-center mb-10 dark:text-white">EXPLORA NUESTRAS CATEGORÍAS</h2>
                 <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
-                    <a href="catalogo.html?category=leggins" class="category-card bg-white dark:bg-gray-700 p-4 rounded-lg shadow text-center hover:shadow-md transition focus:outline-none focus:ring-2 focus:ring-pink-500">
-                        <div class="w-16 h-16 bg-pink-100 dark:bg-pink-900 rounded-full flex items-center justify-center mx-auto mb-2">
+                    <a href="catalogo.html?category=leggins"
+                        class="category-card bg-white dark:bg-gray-700 p-4 rounded-lg shadow text-center hover:shadow-md transition focus:outline-none focus:ring-2 focus:ring-pink-500">
+                        <div
+                            class="w-16 h-16 bg-pink-100 dark:bg-pink-900 rounded-full flex items-center justify-center mx-auto mb-2">
                             <i class="fas fa-tshirt text-pink-500 dark:text-pink-400"></i>
                         </div>
                         <span class="font-medium dark:text-white">Leggings</span>
                     </a>
-                    <a href="catalogo.html?category=tops" class="category-card bg-white dark:bg-gray-700 p-4 rounded-lg shadow text-center hover:shadow-md transition focus:outline-none focus:ring-2 focus:ring-pink-500">
-                        <div class="w-16 h-16 bg-pink-100 dark:bg-pink-900 rounded-full flex items-center justify-center mx-auto mb-2">
+                    <a href="catalogo.html?category=tops"
+                        class="category-card bg-white dark:bg-gray-700 p-4 rounded-lg shadow text-center hover:shadow-md transition focus:outline-none focus:ring-2 focus:ring-pink-500">
+                        <div
+                            class="w-16 h-16 bg-pink-100 dark:bg-pink-900 rounded-full flex items-center justify-center mx-auto mb-2">
                             <i class="fas fa-vest text-pink-500 dark:text-pink-400"></i>
                         </div>
                         <span class="font-medium dark:text-white">Tops</span>
                     </a>
-                    <a href="catalogo.html?category=calcetas" class="category-card bg-white dark:bg-gray-700 p-4 rounded-lg shadow text-center hover:shadow-md transition focus:outline-none focus:ring-2 focus:ring-pink-500">
-                        <div class="w-16 h-16 bg-pink-100 dark:bg-pink-900 rounded-full flex items-center justify-center mx-auto mb-2">
+                    <a href="catalogo.html?category=calcetas"
+                        class="category-card bg-white dark:bg-gray-700 p-4 rounded-lg shadow text-center hover:shadow-md transition focus:outline-none focus:ring-2 focus:ring-pink-500">
+                        <div
+                            class="w-16 h-16 bg-pink-100 dark:bg-pink-900 rounded-full flex items-center justify-center mx-auto mb-2">
                             <i class="fas fa-socks text-pink-500 dark:text-pink-400"></i>
                         </div>
                         <span class="font-medium dark:text-white">Calcetas</span>
                     </a>
-                    <a href="catalogo.html?category=sweaters" class="category-card bg-white dark:bg-gray-700 p-4 rounded-lg shadow text-center hover:shadow-md transition focus:outline-none focus:ring-2 focus:ring-pink-500">
-                        <div class="w-16 h-16 bg-pink-100 dark:bg-pink-900 rounded-full flex items-center justify-center mx-auto mb-2">
+                    <a href="catalogo.html?category=sweaters"
+                        class="category-card bg-white dark:bg-gray-700 p-4 rounded-lg shadow text-center hover:shadow-md transition focus:outline-none focus:ring-2 focus:ring-pink-500">
+                        <div
+                            class="w-16 h-16 bg-pink-100 dark:bg-pink-900 rounded-full flex items-center justify-center mx-auto mb-2">
                             <i class="fas fa-hoodie text-pink-500 dark:text-pink-400"></i>
                         </div>
                         <span class="font-medium dark:text-white">Sudaderas</span>
                     </a>
-                    <a href="catalogo.html?category=conjuntos" class="category-card bg-white dark:bg-gray-700 p-4 rounded-lg shadow text-center hover:shadow-md transition focus:outline-none focus:ring-2 focus:ring-pink-500">
-                        <div class="w-16 h-16 bg-pink-100 dark:bg-pink-900 rounded-full flex items-center justify-center mx-auto mb-2">
+                    <a href="catalogo.html?category=conjuntos"
+                        class="category-card bg-white dark:bg-gray-700 p-4 rounded-lg shadow text-center hover:shadow-md transition focus:outline-none focus:ring-2 focus:ring-pink-500">
+                        <div
+                            class="w-16 h-16 bg-pink-100 dark:bg-pink-900 rounded-full flex items-center justify-center mx-auto mb-2">
                             <i class="fas fa-tshirt text-pink-500 dark:text-pink-400"></i>
                         </div>
                         <span class="font-medium dark:text-white">Conjuntos</span>
                     </a>
-                    <a href="catalogo.html?category=enterizos" class="category-card bg-white dark:bg-gray-700 p-4 rounded-lg shadow text-center hover:shadow-md transition focus:outline-none focus:ring-2 focus:ring-pink-500">
-                        <div class="w-16 h-16 bg-pink-100 dark:bg-pink-900 rounded-full flex items-center justify-center mx-auto mb-2">
+                    <a href="catalogo.html?category=enterizos"
+                        class="category-card bg-white dark:bg-gray-700 p-4 rounded-lg shadow text-center hover:shadow-md transition focus:outline-none focus:ring-2 focus:ring-pink-500">
+                        <div
+                            class="w-16 h-16 bg-pink-100 dark:bg-pink-900 rounded-full flex items-center justify-center mx-auto mb-2">
                             <i class="fas fa-female text-pink-500 dark:text-pink-400"></i>
                         </div>
                         <span class="font-medium dark:text-white">Enterizos</span>
@@ -643,7 +717,7 @@
                 </div>
             </div>
         </section>
-        
+
         <!-- Productos destacados -->
         <section class="py-12 dark:bg-gray-900" id="products">
             <div class="max-w-6xl mx-auto px-4">
@@ -653,11 +727,12 @@
                     <!-- Estado de carga -->
                     <div class="col-span-full text-center py-8" id="loading-products">
                         <i class="fas fa-spinner fa-spin text-pink-500 text-2xl mb-2"></i>
-                        <p class="text-gray-600 dark:text-gray-400">Cargando productos...</p>
+                        <p class="text-gray-600 dark:text-gray-400">Cargando productos destacados...</p>
                     </div>
                 </div>
                 <div class="text-center mt-10">
-                    <a href="catalogo.html" class="bg-pink-500 text-white px-6 py-3 rounded-full font-medium hover:bg-pink-600 transition inline-block focus:outline-none focus:ring-2 focus:ring-pink-500 focus:ring-offset-2 dark:focus:ring-offset-gray-900">
+                    <a href="catalogo.html"
+                        class="bg-pink-500 text-white px-6 py-3 rounded-full font-medium hover:bg-pink-600 transition inline-block focus:outline-none focus:ring-2 focus:ring-pink-500 focus:ring-offset-2 dark:focus:ring-offset-gray-900">
                         Ver todos los productos
                     </a>
                 </div>
@@ -671,7 +746,8 @@
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
                     <div class="bg-white dark:bg-gray-700 p-6 rounded-lg shadow">
                         <div class="flex items-center mb-4">
-                            <div class="w-12 h-12 bg-pink-100 dark:bg-pink-900 rounded-full flex items-center justify-center mr-4">
+                            <div
+                                class="w-12 h-12 bg-pink-100 dark:bg-pink-900 rounded-full flex items-center justify-center mr-4">
                                 <i class="fas fa-user text-pink-500 dark:text-pink-400"></i>
                             </div>
                             <div>
@@ -685,11 +761,13 @@
                                 </div>
                             </div>
                         </div>
-                        <p class="text-gray-600 dark:text-gray-300">"Los leggings de LiSport son increíblemente cómodos y se ajustan perfectamente. ¡Los uso para todas mis rutinas de ejercicio!"</p>
+                        <p class="text-gray-600 dark:text-gray-300">"Los leggings de LiSport son increíblemente cómodos
+                            y se ajustan perfectamente. ¡Los uso para todas mis rutinas de ejercicio!"</p>
                     </div>
                     <div class="bg-white dark:bg-gray-700 p-6 rounded-lg shadow">
                         <div class="flex items-center mb-4">
-                            <div class="w-12 h-12 bg-pink-100 dark:bg-pink-900 rounded-full flex items-center justify-center mr-4">
+                            <div
+                                class="w-12 h-12 bg-pink-100 dark:bg-pink-900 rounded-full flex items-center justify-center mr-4">
                                 <i class="fas fa-user text-pink-500 dark:text-pink-400"></i>
                             </div>
                             <div>
@@ -703,11 +781,13 @@
                                 </div>
                             </div>
                         </div>
-                        <p class="text-gray-600 dark:text-gray-300">"La calidad de la tela es excelente y los diseños son muy modernos. Me encanta cómo se ven y cómo me siento al usarlos."</p>
+                        <p class="text-gray-600 dark:text-gray-300">"La calidad de la tela es excelente y los diseños
+                            son muy modernos. Me encanta cómo se ven y cómo me siento al usarlos."</p>
                     </div>
                     <div class="bg-white dark:bg-gray-700 p-6 rounded-lg shadow">
                         <div class="flex items-center mb-4">
-                            <div class="w-12 h-12 bg-pink-100 dark:bg-pink-900 rounded-full flex items-center justify-center mr-4">
+                            <div
+                                class="w-12 h-12 bg-pink-100 dark:bg-pink-900 rounded-full flex items-center justify-center mr-4">
                                 <i class="fas fa-user text-pink-500 dark:text-pink-400"></i>
                             </div>
                             <div>
@@ -721,7 +801,8 @@
                                 </div>
                             </div>
                         </div>
-                        <p class="text-gray-600 dark:text-gray-300">"Compré un conjunto completo y quedé encantada. La atención al cliente fue excelente y el envío fue muy rápido."</p>
+                        <p class="text-gray-600 dark:text-gray-300">"Compré un conjunto completo y quedé encantada. La
+                            atención al cliente fue excelente y el envío fue muy rápido."</p>
                     </div>
                 </div>
             </div>
@@ -734,12 +815,17 @@
             <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
                 <div class="footer-col">
                     <h3 class="text-xl font-bold mb-4">LiSport</h3>
-                    <p class="text-gray-300 mb-4">Ropa deportiva de alta calidad diseñada específicamente para mujeres activas que buscan comodidad, estilo y rendimiento.</p>
+                    <p class="text-gray-300 mb-4">Ropa deportiva de alta calidad diseñada específicamente para mujeres
+                        activas que buscan comodidad, estilo y rendimiento.</p>
                     <div class="social-links flex space-x-4">
-                        <a href="#" class="bg-gray-700 w-10 h-10 rounded-full flex items-center justify-center hover:bg-pink-500 transition focus:outline-none focus:ring-2 focus:ring-pink-500" aria-label="Facebook">
+                        <a href="#"
+                            class="bg-gray-700 w-10 h-10 rounded-full flex items-center justify-center hover:bg-pink-500 transition focus:outline-none focus:ring-2 focus:ring-pink-500"
+                            aria-label="Facebook">
                             <i class="fab fa-facebook-f"></i>
                         </a>
-                        <a href="https://www.instagram.com/li_sport_25?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" class="bg-gray-700 w-10 h-10 rounded-full flex items-center justify-center hover:bg-pink-500 transition focus:outline-none focus:ring-2 focus:ring-pink-500" aria-label="Instagram">
+                        <a href="https://www.instagram.com/li_sport_25?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw=="
+                            class="bg-gray-700 w-10 h-10 rounded-full flex items-center justify-center hover:bg-pink-500 transition focus:outline-none focus:ring-2 focus:ring-pink-500"
+                            aria-label="Instagram">
                             <i class="fab fa-instagram"></i>
                         </a>
                     </div>
@@ -748,22 +834,42 @@
                 <div class="footer-col">
                     <h3 class="text-xl font-bold mb-4">Enlaces Rápidos</h3>
                     <ul class="space-y-2">
-                        <li><a href="Inicio.html" class="text-gray-300 hover:text-white transition focus:outline-none focus:text-white">Inicio</a></li>
-                        <li><a href="catalogo.html" class="text-gray-300 hover:text-white transition focus:outline-none focus:text-white">Catálogo</a></li>
-                        <li><a href="sobre-nosotros.html" class="text-gray-300 hover:text-white transition focus:outline-none focus:text-white">Sobre Nosotros</a></li>
-                        <li><a href="contacto.html" class="text-gray-300 hover:text-white transition focus:outline-none focus:text-white">Contacto</a></li>
+                        <li><a href="Inicio.html"
+                                class="text-gray-300 hover:text-white transition focus:outline-none focus:text-white">Inicio</a>
+                        </li>
+                        <li><a href="catalogo.html"
+                                class="text-gray-300 hover:text-white transition focus:outline-none focus:text-white">Catálogo</a>
+                        </li>
+                        <li><a href="sobre-nosotros.html"
+                                class="text-gray-300 hover:text-white transition focus:outline-none focus:text-white">Sobre
+                                Nosotros</a></li>
+                        <li><a href="contacto.html"
+                                class="text-gray-300 hover:text-white transition focus:outline-none focus:text-white">Contacto</a>
+                        </li>
                     </ul>
                 </div>
 
                 <div class="footer-col">
                     <h3 class="text-xl font-bold mb-4">Categorías</h3>
                     <ul class="space-y-2">
-                        <li><a href="catalogo.html?category=leggins" class="text-gray-300 hover:text-white transition focus:outline-none focus:text-white">Leggings</a></li>
-                        <li><a href="catalogo.html?category=tops" class="text-gray-300 hover:text-white transition focus:outline-none focus:text-white">Tops</a></li>
-                        <li><a href="catalogo.html?category=calcetas" class="text-gray-300 hover:text-white transition focus:outline-none focus:text-white">Calcetas</a></li>
-                        <li><a href="catalogo.html?category=sweaters" class="text-gray-300 hover:text-white transition focus:outline-none focus:text-white">Sudaderas</a></li>
-                        <li><a href="catalogo.html?category=conjuntos" class="text-gray-300 hover:text-white transition focus:outline-none focus:text-white">Conjuntos</a></li>
-                        <li><a href="catalogo.html?category=enterizos" class="text-gray-300 hover:text-white transition focus:outline-none focus:text-white">Enterizos</a></li>
+                        <li><a href="catalogo.html?category=leggins"
+                                class="text-gray-300 hover:text-white transition focus:outline-none focus:text-white">Leggings</a>
+                        </li>
+                        <li><a href="catalogo.html?category=tops"
+                                class="text-gray-300 hover:text-white transition focus:outline-none focus:text-white">Tops</a>
+                        </li>
+                        <li><a href="catalogo.html?category=calcetas"
+                                class="text-gray-300 hover:text-white transition focus:outline-none focus:text-white">Calcetas</a>
+                        </li>
+                        <li><a href="catalogo.html?category=sweaters"
+                                class="text-gray-300 hover:text-white transition focus:outline-none focus:text-white">Sudaderas</a>
+                        </li>
+                        <li><a href="catalogo.html?category=conjuntos"
+                                class="text-gray-300 hover:text-white transition focus:outline-none focus:text-white">Conjuntos</a>
+                        </li>
+                        <li><a href="catalogo.html?category=enterizos"
+                                class="text-gray-300 hover:text-white transition focus:outline-none focus:text-white">Enterizos</a>
+                        </li>
                     </ul>
                 </div>
 
@@ -783,25 +889,25 @@
         </div>
     </footer>
 
-    <!-- Modal para múltiples imágenes -->
+    <!-- ===== MODAL CORREGIDO PARA CENTRAR PERFECTAMENTE ===== -->
     <div id="imageModal" class="image-modal">
         <div class="modal-carousel">
             <button class="modal-close" id="modalClose">
                 <i class="fas fa-times"></i>
             </button>
-            
+
             <div class="carousel-container-modal">
                 <div id="modalCarouselSlides" class="carousel-slides-container">
                     <!-- Las imágenes se cargarán dinámicamente aquí -->
                 </div>
-                
+
                 <button class="carousel-nav-modal carousel-prev-modal" id="modalPrev">
                     <i class="fas fa-chevron-left"></i>
                 </button>
                 <button class="carousel-nav-modal carousel-next-modal" id="modalNext">
                     <i class="fas fa-chevron-right"></i>
                 </button>
-                
+
                 <div class="carousel-indicators-modal" id="modalIndicators">
                     <!-- Los indicadores se cargarán dinámicamente aquí -->
                 </div>
@@ -818,7 +924,7 @@
         let supabaseClient;
 
         // ===== INICIALIZACIÓN =====
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function () {
             // Inicializar Supabase
             supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
             console.log('Supabase inicializado para página principal');
@@ -833,44 +939,45 @@
         async function loadFeaturedProducts() {
             const container = document.getElementById('featuredProducts');
             const loadingElement = document.getElementById('loading-products');
-            
+
             try {
                 // Mostrar estado de carga
                 if (loadingElement) {
                     container.classList.add('loading');
                 }
-                
-                // Obtener productos de Supabase
+
+                // Obtener SOLO productos destacados de Supabase
                 const { data: products, error } = await supabaseClient
                     .from('productos')
                     .select('*')
+                    .eq('destacado', true) // FILTRAR SOLO PRODUCTOS DESTACADOS
                     .order('creado_en', { ascending: false })
                     .limit(8); // Limitar a 8 productos para la página principal
 
                 if (error) throw error;
-                
+
                 // Limpiar contenedor
                 container.innerHTML = '';
-                
+
                 if (!products || products.length === 0) {
                     container.innerHTML = `
                         <div class="col-span-full text-center py-8">
-                            <i class="fas fa-box-open text-gray-400 text-4xl mb-4"></i>
-                            <p class="text-gray-600 dark:text-gray-400">No hay productos disponibles en este momento</p>
-                            <p class="text-sm text-gray-500 dark:text-gray-500 mt-2">Agrega productos desde el panel de administración</p>
+                            <i class="fas fa-star text-gray-400 text-4xl mb-4"></i>
+                            <p class="text-gray-600 dark:text-gray-400">No hay productos destacados en este momento</p>
+                            <p class="text-sm text-gray-500 dark:text-gray-500 mt-2">Marca productos como destacados desde el panel de administración</p>
                         </div>
                     `;
                     return;
                 }
-                
-                // Mostrar productos
+
+                // Mostrar productos destacados
                 products.forEach(product => {
                     const nombre = product.nombre || "Producto sin nombre";
                     const descripcion = product.descripcion || "Sin descripción disponible";
                     const precio = product.precio || "0";
                     const categoria = product.categoria || "General";
                     const cantidad = product.cantidad || 0;
-                    
+
                     // Manejar múltiples imágenes
                     let imagenes = [];
                     if (product.imagenes && Array.isArray(product.imagenes)) {
@@ -880,9 +987,9 @@
                     } else {
                         imagenes = [];
                     }
-                    
+
                     const imagenPrincipal = imagenes.length > 0 ? imagenes[0] : 'https://via.placeholder.com/400x300?text=Sin+imagen';
-                    
+
                     const card = document.createElement('div');
                     card.className = 'product-card bg-white dark:bg-gray-700 rounded-lg shadow p-4 flex flex-col h-full';
                     card.innerHTML = `
@@ -898,6 +1005,9 @@
                             <span class="absolute top-2 left-2 text-xs bg-pink-100 dark:bg-pink-900 text-pink-800 dark:text-pink-200 px-2 py-1 rounded-full">
                                 ${categoria}
                             </span>
+                            <span class="featured-badge absolute top-2 right-2">
+                                <i class="fas fa-star mr-1"></i>Destacado
+                            </span>
                             ${imagenes.length > 1 ? `
                                 <span class="multiple-images-indicator">
                                     <i class="fas fa-images mr-1"></i>${imagenes.length}
@@ -911,29 +1021,29 @@
                             </p>
                             <div class="flex justify-between items-center mt-auto">
                                 <p class="text-pink-500 font-bold text-lg">$${precio}</p>
-                                ${cantidad > 0 ? 
-                                    `<span class="text-sm text-green-600 dark:text-green-400 font-medium">
+                                ${cantidad > 0 ?
+                            `<span class="text-sm text-green-600 dark:text-green-400 font-medium">
                                         ${cantidad} disponibles
                                     </span>` :
-                                    `<span class="text-sm text-red-600 dark:text-red-400 font-medium">
+                            `<span class="text-sm text-red-600 dark:text-red-400 font-medium">
                                         Agotado
                                     </span>`
-                                }
+                        }
                             </div>
                         </div>
                     `;
                     container.appendChild(card);
                 });
-                
+
                 // Agregar event listeners para el modal de imágenes
                 addImageModalListeners();
-                
-            } catch(err) {
-                console.error('Error al cargar productos:', err);
+
+            } catch (err) {
+                console.error('Error al cargar productos destacados:', err);
                 container.innerHTML = `
                     <div class="col-span-full text-center py-8">
                         <i class="fas fa-exclamation-triangle text-red-500 text-4xl mb-4"></i>
-                        <p class="text-gray-600 dark:text-gray-400">Error al cargar los productos</p>
+                        <p class="text-gray-600 dark:text-gray-400">Error al cargar los productos destacados</p>
                         <p class="text-sm text-gray-500 dark:text-gray-500 mb-4">${err.message}</p>
                         <button 
                             onclick="loadFeaturedProducts()" 
@@ -948,12 +1058,12 @@
             }
         }
 
-        // ===== SISTEMA DE MODAL PARA MÚLTIPLES IMÁGENES =====
+        // ===== SISTEMA DE MODAL CORREGIDO PARA CENTRAR PERFECTAMENTE =====
         function addImageModalListeners() {
             const productImages = document.querySelectorAll('.product-image-container img');
-            
+
             productImages.forEach(img => {
-                img.addEventListener('click', function() {
+                img.addEventListener('click', function () {
                     const imagesData = this.getAttribute('data-images');
                     if (imagesData) {
                         const images = JSON.parse(imagesData);
@@ -974,15 +1084,15 @@
                 this.indicatorsContainer = document.getElementById('modalIndicators');
                 this.prevBtn = document.getElementById('modalPrev');
                 this.nextBtn = document.getElementById('modalNext');
-                
+
                 this.init();
             }
-            
+
             init() {
                 // Limpiar contenedores
                 this.slidesContainer.innerHTML = '';
                 this.indicatorsContainer.innerHTML = '';
-                
+
                 // Crear slides e indicadores
                 this.images.forEach((image, index) => {
                     // Crear slide
@@ -992,7 +1102,7 @@
                         <img src="${image}" alt="Imagen ${index + 1}" class="modal-image">
                     `;
                     this.slidesContainer.appendChild(slide);
-                    
+
                     // Crear indicador
                     const indicator = document.createElement('button');
                     indicator.className = `carousel-indicator-modal ${index === 0 ? 'active' : ''}`;
@@ -1000,11 +1110,11 @@
                     indicator.setAttribute('aria-label', `Ver imagen ${index + 1}`);
                     this.indicatorsContainer.appendChild(indicator);
                 });
-                
+
                 // Event listeners
                 this.prevBtn.addEventListener('click', () => this.prevSlide());
                 this.nextBtn.addEventListener('click', () => this.nextSlide());
-                
+
                 // Event listeners para indicadores
                 this.indicatorsContainer.querySelectorAll('.carousel-indicator-modal').forEach(indicator => {
                     indicator.addEventListener('click', (e) => {
@@ -1012,50 +1122,50 @@
                         this.goToSlide(index);
                     });
                 });
-                
+
                 // Event listeners para teclado
                 document.addEventListener('keydown', (e) => this.handleKeydown(e));
             }
-            
+
             showSlide(index) {
                 // Ocultar slide actual
                 const currentSlide = this.slidesContainer.querySelector('.carousel-slide-modal.active');
                 const currentIndicator = this.indicatorsContainer.querySelector('.carousel-indicator-modal.active');
-                
+
                 if (currentSlide) currentSlide.classList.remove('active');
                 if (currentIndicator) currentIndicator.classList.remove('active');
-                
+
                 // Actualizar índice actual
                 this.currentIndex = index;
-                
+
                 // Mostrar nuevo slide
                 const newSlide = this.slidesContainer.querySelectorAll('.carousel-slide-modal')[index];
                 const newIndicator = this.indicatorsContainer.querySelectorAll('.carousel-indicator-modal')[index];
-                
+
                 if (newSlide) newSlide.classList.add('active');
                 if (newIndicator) newIndicator.classList.add('active');
             }
-            
+
             nextSlide() {
                 const nextIndex = (this.currentIndex + 1) % this.images.length;
                 this.showSlide(nextIndex);
             }
-            
+
             prevSlide() {
                 const prevIndex = (this.currentIndex - 1 + this.images.length) % this.images.length;
                 this.showSlide(prevIndex);
             }
-            
+
             goToSlide(index) {
                 if (index >= 0 && index < this.images.length) {
                     this.showSlide(index);
                 }
             }
-            
+
             handleKeydown(e) {
                 if (!this.modal.classList.contains('active')) return;
-                
-                switch(e.key) {
+
+                switch (e.key) {
                     case 'ArrowLeft':
                         this.prevSlide();
                         break;
@@ -1067,7 +1177,7 @@
                         break;
                 }
             }
-            
+
             destroy() {
                 // Limpiar event listeners
                 this.prevBtn.replaceWith(this.prevBtn.cloneNode(true));
@@ -1080,12 +1190,12 @@
 
         function openImageModal(images) {
             const modal = document.getElementById('imageModal');
-            
+
             if (images.length === 0) return;
-            
+
             // Crear nuevo carrusel
             currentModalCarousel = new ImageModalCarousel(images);
-            
+
             // Mostrar modal
             modal.classList.add('active');
             document.body.style.overflow = 'hidden';
@@ -1093,10 +1203,10 @@
 
         function closeImageModal() {
             const modal = document.getElementById('imageModal');
-            
+
             modal.classList.remove('active');
             document.body.style.overflow = '';
-            
+
             // Destruir carrusel actual
             if (currentModalCarousel) {
                 currentModalCarousel.destroy();
@@ -1106,7 +1216,7 @@
 
         // Event listeners para el modal
         document.getElementById('modalClose').addEventListener('click', closeImageModal);
-        document.getElementById('imageModal').addEventListener('click', function(e) {
+        document.getElementById('imageModal').addEventListener('click', function (e) {
             if (e.target === this) {
                 closeImageModal();
             }
@@ -1193,16 +1303,16 @@
             const body = document.body;
             const darkToggle = document.getElementById('darkToggle');
             const darkIcon = document.getElementById('darkIcon');
-            
+
             const storedPreference = localStorage.getItem('lisport_dark');
             const systemPreference = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
-            
+
             if (storedPreference === '1' || (!storedPreference && systemPreference)) {
                 setDark(true);
             } else {
                 setDark(false);
             }
-            
+
             darkToggle.addEventListener('click', () => {
                 setDark(!body.classList.contains('dark'));
             });
@@ -1211,7 +1321,7 @@
         function setDark(isDark) {
             const body = document.body;
             const darkIcon = document.getElementById('darkIcon');
-            
+
             if (isDark) {
                 body.classList.add('dark');
                 darkIcon.textContent = '☀️';
@@ -1231,7 +1341,7 @@
 
         function toggleMobileMenu() {
             const isOpening = !mobileMenu.classList.contains('open');
-            
+
             if (isOpening) {
                 mobileMenu.classList.add('open');
                 mobileOverlay.classList.remove('hidden');
@@ -1247,7 +1357,7 @@
             mobileMenuBtn.addEventListener('click', toggleMobileMenu);
             closeMenu.addEventListener('click', toggleMobileMenu);
             mobileOverlay.addEventListener('click', toggleMobileMenu);
-            
+
             mobileMenu.querySelectorAll('a').forEach(link => {
                 link.addEventListener('click', toggleMobileMenu);
             });
@@ -1268,4 +1378,5 @@
         });
     </script>
 </body>
+
 </html>
