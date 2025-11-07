@@ -6,17 +6,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Catálogo - LiSport</title>
 
-    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
 
-    <!-- Iconos -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="icon" type="image/x-icon" href="images/favicon.ico">
     <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="images/favicon-16x16.png">
     <link rel="apple-touch-icon" sizes="180x180" href="images/apple-touch-icon.png">
     <link rel="manifest" href="images/site.webmanifest">
-    <!-- Supabase -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
     <style>
@@ -24,6 +21,7 @@
             --rosa: #ff4c7a;
             --rosa-claro: #fff6f9;
             --bg-dark: #0b1020;
+            --panel-width: 400px;
         }
 
         body.dark {
@@ -176,15 +174,11 @@
         }
 
         /* Estilos para filtros */
-        /* Añadir estilo para el checkmark cuando está marcado */
         .filter-option input:checked+.checkmark {
             background-color: var(--rosa);
-            /* Fondo rosa */
             border-color: var(--rosa);
-            /* Borde rosa */
         }
 
-        /* El ícono de check dentro del checkmark */
         .checkmark::after {
             content: '';
             position: absolute;
@@ -196,13 +190,11 @@
             transform: rotate(45deg);
         }
 
-        /* Mostrar el ícono de check cuando está marcado */
         .filter-option input:checked+.checkmark::after {
             display: block;
         }
 
         .checkmark {
-            /* ... Tus estilos anteriores para checkmark ... */
             width: 18px;
             height: 18px;
             border: 2px solid #ddd;
@@ -212,13 +204,10 @@
             justify-content: center;
             transition: all 0.3s ease;
             position: relative;
-            /* Esencial para posicionar el icono de check */
         }
 
-        /* Estilo para checkmark en modo oscuro */
         .dark .checkmark {
             border-color: #4b5563;
-            /* Borde más oscuro */
         }
 
         .dark .filter-option input:checked+.checkmark {
@@ -263,21 +252,14 @@
             color: var(--rosa);
         }
 
-        .checkmark {
-            width: 18px;
-            height: 18px;
-            border: 2px solid #ddd;
-            border-radius: 3px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.3s ease;
-        }
-
         .size-filters {
             display: flex;
             flex-wrap: wrap;
             gap: 8px;
+        }
+
+        .size-option {
+            position: relative;
         }
 
         .size-option span {
@@ -344,6 +326,22 @@
 
             .filters-sidebar {
                 display: none;
+            }
+            
+            .filters-sidebar.mobile-open {
+                display: block;
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                z-index: 90;
+                overflow-y: auto;
+                background: white;
+            }
+            
+            .dark .filters-sidebar.mobile-open {
+                background: #1e293b;
             }
         }
 
@@ -418,7 +416,7 @@
             }
         }
 
-        /* ===== MODAL MEJORADO CON DESCRIPCIÓN ===== */
+        /* ===== MODAL GENERAL (Contenedor de Carrusel y Paneles) ===== */
         .image-modal {
             display: none;
             position: fixed;
@@ -490,7 +488,8 @@
             align-items: center;
             justify-content: center;
         }
-
+        
+        /* CORRECCIÓN 1 (Desktop): Ajuste del contenedor de imagen */
         .carousel-container-modal {
             position: relative;
             width: 100%;
@@ -499,6 +498,10 @@
             display: flex;
             align-items: center;
             justify-content: center;
+            
+            /* COMPENSACIÓN: Deja espacio para el panel lateral de 400px */
+            margin-right: var(--panel-width); 
+            transition: margin-right 0.3s ease;
         }
 
         .carousel-slide-modal {
@@ -539,15 +542,17 @@
         .carousel-prev-modal {
             left: 20px;
         }
-
+        
+        /* CORRECCIÓN 2 (Desktop): Posición de la flecha derecha */
         .carousel-next-modal {
-            right: 20px;
+            right: calc(var(--panel-width) + 20px); 
         }
 
         .carousel-indicators-modal {
             position: fixed;
             bottom: 20px;
-            left: 50%;
+            /* CORRECCIÓN 3 (Desktop): Centrado de indicadores */
+            left: calc(50% - (var(--panel-width) / 2)); 
             transform: translateX(-50%);
             display: flex;
             gap: 10px;
@@ -569,29 +574,30 @@
             transform: scale(1.2);
         }
 
-        /* ===== PANEL DE INFORMACIÓN DEL PRODUCTO ===== */
+        /* ===== PANEL DE INFORMACIÓN DEL PRODUCTO (Desktop) ===== */
         .product-info-panel {
             position: fixed;
             right: 0;
             top: 0;
-            width: 400px;
+            width: var(--panel-width);
             height: 100%;
             background: white;
             z-index: 1002;
             padding: 30px;
             overflow-y: auto;
-            transform: translateX(100%);
+            /* Usamos transform: translateX(100%) para ocultar en desktop si no está 'active' */
+            transform: translateX(100%); 
             transition: transform 0.3s ease;
             box-shadow: -5px 0 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .product-info-panel.active {
+            transform: translateX(0);
         }
 
         .dark .product-info-panel {
             background: #1e293b;
             color: #e6eef8;
-        }
-
-        .product-info-panel.active {
-            transform: translateX(0);
         }
 
         .product-info-header {
@@ -695,41 +701,159 @@
             flex-wrap: wrap;
             gap: 8px;
         }
+        
+        /* NUEVO ESTILO: Botón de Detalles - Más elegante y pequeño (45px) */
+        .modal-details-button {
+            position: fixed;
+            bottom: 20px;
+            left: 20px; 
+            background: rgba(255, 76, 122, 0.9); /* Rosa semi-transparente */
+            color: white;
+            border: 2px solid white; /* Borde para sofisticación */
+            width: 45px; /* Reducido */
+            height: 45px; /* Reducido */
+            border-radius: 50%;
+            display: none; /* Oculto por defecto, se muestra solo en móvil */
+            align-items: center;
+            justify-content: center;
+            font-size: 1.1rem;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            z-index: 1003; 
+            transition: transform 0.2s ease, background 0.3s ease;
+        }
+        .modal-details-button:active {
+            transform: scale(0.95);
+        }
 
+        /* NUEVO ESTILO: Contenedor del Diálogo flotante (Solo Móvil) */
+        #productInfoDialog {
+            position: fixed;
+            bottom: 80px; /* Sobre el botón de detalles */
+            left: 20px;
+            max-width: 90%;
+            width: 300px;
+            background: white;
+            border-radius: 8px;
+            padding: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            z-index: 1004;
+            opacity: 0;
+            transform: translateY(20px);
+            visibility: hidden;
+            transition: opacity 0.3s ease, transform 0.3s ease, visibility 0.3s ease;
+        }
+
+        #productInfoDialog.active {
+            opacity: 1;
+            transform: translateY(0);
+            visibility: visible;
+        }
+
+        .dark #productInfoDialog {
+            background: #1e293b;
+            color: #e6eef8;
+        }
+
+        .dialog-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 5px;
+            color: var(--rosa);
+        }
+
+
+        /* Responsive mejorado (MOBILE) */
         @media (max-width: 768px) {
+            
+            /* CORRECCIÓN 5: Desactiva el panel grande y la compensación en móvil */
             .product-info-panel {
-                width: 100%;
-                padding: 20px;
+                display: none; /* Ocultar completamente el panel grande en móvil */
+                transform: translateX(100%) !important;
             }
-            
-            .carousel-nav-modal {
-                width: 40px;
-                height: 40px;
-            }
-            
-            .carousel-prev-modal {
-                left: 10px;
-            }
-            
-            .carousel-next-modal {
-                right: 10px;
-            }
-            
             .carousel-container-modal {
+                margin-right: 0; 
                 max-width: 95vw;
             }
             
-            .modal-close {
-                top: 10px;
-                right: 10px;
-                font-size: 1.5rem;
+            /* Posicionamiento en móvil */
+            .carousel-next-modal {
+                right: 10px; 
             }
+            .carousel-indicators-modal {
+                left: 50%;
+                transform: translateX(-50%);
+            }
+            
+            /* Mostrar el botón de detalles en móvil */
+            .modal-details-button {
+                display: flex; 
+            }
+        }
+
+        @media (max-width: 480px) {
+            .products-grid {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+            
+            .products-header {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .sort-options {
+                width: 100%;
+                justify-content: space-between;
+            }
+        }
+
+        /* Autocomplete mejorado */
+        #autocomplete-results {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: white;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            z-index: 50;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+
+        .dark #autocomplete-results {
+            background: #374151;
+            border-color: #4b5563;
+        }
+
+        .autocomplete-item {
+            padding: 8px 12px;
+            cursor: pointer;
+            border-bottom: 1px solid #f3f4f6;
+        }
+
+        .dark .autocomplete-item {
+            border-bottom-color: #4b5563;
+            color: #e5e7eb;
+        }
+
+        .autocomplete-item:hover {
+            background-color: #f9fafb;
+        }
+
+        .dark .autocomplete-item:hover {
+            background-color: #4b5563;
+        }
+
+        .autocomplete-item:last-child {
+            border-bottom: none;
         }
     </style>
 </head>
 
 <body class="font-sans bg-white text-gray-800 transition-colors duration-200">
-    <!-- Header -->
     <header class="bg-pink-500 text-white shadow-md sticky top-0 z-50">
         <div class="max-w-6xl mx-auto flex items-center justify-between py-3 px-4">
             <div class="logo">
@@ -738,7 +862,6 @@
                 </a>
             </div>
 
-            <!-- Menú principal -->
             <nav class="hidden md:flex" aria-label="Menú principal">
                 <ul class="flex space-x-6">
                     <li><a href="Inicio.html" class="hover:text-pink-200 transition py-2 relative">Inicio</a></li>
@@ -759,29 +882,29 @@
         </div>
     </header>
 
-    <!-- Contenido principal -->
     <main class="max-w-6xl mx-auto p-4">
-        <!-- Encabezado del catálogo -->
         <div class="mb-8 text-center">
             <h1 class="text-4xl font-bold mb-2">Recomendados</h1>
         </div>
 
-        <!-- Sección de recomendados -->
         <section class="recommended-section">
-            <!-- Filtros y productos -->
             <div class="catalog-layout">
-                <!-- Columna de Filtros (IZQUIERDA) -->
-                <aside class="filters-sidebar">
+                <aside class="filters-sidebar" id="filtersSidebar">
                     <div
                         class="filters-header flex justify-between items-center mb-6 pb-4 border-b border-gray-200 dark:border-gray-700">
                         <h3 class="text-lg font-bold">FILTROS</h3>
-                        <button class="clear-filters text-sm text-pink-500 hover:text-pink-600 font-medium"
-                            id="clearFilters">
-                            Limpiar todo
-                        </button>
+                        <div class="flex gap-2">
+                            <button class="clear-filters text-sm text-pink-500 hover:text-pink-600 font-medium"
+                                id="clearFilters">
+                                Limpiar todo
+                            </button>
+                            <button class="close-filters text-sm text-gray-500 hover:text-gray-700 font-medium md:hidden"
+                                id="closeFilters">
+                                <i class="fas fa-times"></i>
+                            </button>
+                        </div>
                     </div>
 
-                    <!-- Barra de Búsqueda -->
                     <div class="filter-group mb-6" style="position: relative;">
                         <div class="filter-title mb-4">
                             <h4 class="font-semibold text-gray-700 dark:text-gray-300">BUSCAR</h4>
@@ -791,13 +914,10 @@
                             <input type="text" id="searchInput" placeholder="Buscar productos..." class="search-input"
                                 autocomplete="off">
                         </div>
-                        <div id="autocomplete-results"
-                            class="absolute z-10 w-full bg-white dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-md shadow-lg mt-1"
-                            style="max-height: 200px; overflow-y: auto;">
-                        </div>
+                        <div id="autocomplete-results" class="hidden">
+                            </div>
                     </div>
 
-                    <!-- Filtro por Categoría -->
                     <div class="filter-group mb-6">
                         <div class="filter-title flex justify-between items-center mb-4">
                             <h4 class="font-semibold text-gray-700 dark:text-gray-300">CATEGORÍA</h4>
@@ -835,9 +955,36 @@
                             </label>
                         </div>
                     </div>
+
+                    <div class="filter-group">
+                        <div class="filter-title mb-4">
+                            <h4 class="font-semibold text-gray-700 dark:text-gray-300">TALLA</h4>
+                        </div>
+                        <div class="size-filters">
+                            <label class="size-option">
+                                <input type="checkbox" name="size" value="XS" class="hidden">
+                                <span class="size-tag">XS</span>
+                            </label>
+                            <label class="size-option">
+                                <input type="checkbox" name="size" value="S" class="hidden">
+                                <span class="size-tag">S</span>
+                            </label>
+                            <label class="size-option">
+                                <input type="checkbox" name="size" value="M" class="hidden">
+                                <span class="size-tag">M</span>
+                            </label>
+                            <label class="size-option">
+                                <input type="checkbox" name="size" value="L" class="hidden">
+                                <span class="size-tag">L</span>
+                            </label>
+                            <label class="size-option">
+                                <input type="checkbox" name="size" value="XL" class="hidden">
+                                <span class="size-tag">XL</span>
+                            </label>
+                        </div>
+                    </div>
                 </aside>
 
-                <!-- Columna de Productos (DERECHA) -->
                 <main class="products-main">
                     <div
                         class="products-header bg-white dark:bg-gray-800 p-4 rounded-lg shadow-sm mb-6 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
@@ -859,14 +1006,12 @@
                     </div>
 
                     <div class="products-grid grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4" id="productsGrid">
-                        <!-- Estado de carga -->
                         <div class="col-span-full text-center py-12" id="loading-products">
                             <i class="fas fa-spinner fa-spin text-pink-500 text-3xl mb-4"></i>
                             <p class="text-gray-600 dark:text-gray-400">Cargando productos...</p>
                         </div>
                     </div>
 
-                    <!-- Mensaje cuando no hay resultados -->
                     <div id="noResults" class="hidden text-center py-12">
                         <i class="fas fa-search text-5xl text-gray-300 mb-4"></i>
                         <h3 class="text-xl font-bold mb-2">No se encontraron productos</h3>
@@ -881,13 +1026,11 @@
         </section>
     </main>
 
-    <!-- Botón flotante para filtros en móviles -->
     <button class="floating-filters-button lg:hidden" id="floatingFiltersButton">
         <i class="fas fa-sliders-h"></i>
         <span>Filtros</span>
     </button>
 
-    <!-- ===== MODAL MEJORADO CON DESCRIPCIÓN ===== -->
     <div id="imageModal" class="image-modal">
         <div class="modal-carousel">
             <button class="modal-close" id="modalClose">
@@ -896,8 +1039,7 @@
 
             <div class="carousel-container-modal">
                 <div id="modalCarouselSlides" class="carousel-slides-container">
-                    <!-- Las imágenes se cargarán dinámicamente aquí -->
-                </div>
+                    </div>
 
                 <button class="carousel-nav-modal carousel-prev-modal" id="modalPrev">
                     <i class="fas fa-chevron-left"></i>
@@ -907,12 +1049,10 @@
                 </button>
 
                 <div class="carousel-indicators-modal" id="modalIndicators">
-                    <!-- Los indicadores se cargarán dinámicamente aquí -->
-                </div>
+                    </div>
             </div>
         </div>
         
-        <!-- ===== PANEL DE INFORMACIÓN DEL PRODUCTO ===== -->
         <div class="product-info-panel" id="productInfoPanel">
             <div class="product-info-header">
                 <h2 class="product-info-title" id="productInfoTitle">Nombre del Producto</h2>
@@ -937,13 +1077,25 @@
             <div class="product-info-sizes">
                 <h3 class="sizes-title">Tallas Disponibles</h3>
                 <div class="sizes-container-modal" id="productInfoSizes">
-                    <!-- Las tallas se cargarán dinámicamente aquí -->
-                </div>
+                    </div>
+            </div>
+        </div>
+        
+        <button class="modal-details-button" id="modalDetailsButton" aria-label="Ver detalles del producto">
+            <i class="fas fa-info"></i>
+        </button>
+
+        <div id="productInfoDialog">
+            <h4 class="dialog-title" id="dialogTitle"></h4>
+            <div class="product-info-price" id="dialogPrice"></div>
+            <p class="text-sm text-gray-600 dark:text-gray-400 mb-2 line-clamp-3" id="dialogDescription"></p>
+            <div class="flex items-center gap-2 text-sm">
+                <span class="font-medium text-gray-700 dark:text-gray-300">Tallas:</span>
+                <div class="flex flex-wrap gap-1" id="dialogSizes"></div>
             </div>
         </div>
     </div>
 
-    <!-- Footer -->
     <footer class="bg-gray-800 text-white pt-10 pb-6 mt-12">
         <div class="max-w-6xl mx-auto px-4">
             <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
@@ -1003,61 +1155,287 @@
         let filteredProducts = [];
         let currentModalCarousel = null;
         let currentProduct = null;
+        
+        // Función auxiliar para obtener el estado de móvil
+        function isMobileView() {
+            return window.matchMedia('(max-width: 768px)').matches;
+        }
 
-        // ===== INICIALIZACIÓN =====
-        document.addEventListener('DOMContentLoaded', function () {
-            // Inicializar Supabase
-            supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-            console.log('Supabase inicializado para catálogo');
+        // ===== LÓGICA DEL MODAL (Funciones declaradas para evitar el error "is not defined") =====
+        
+        function generateSizesHTML(product, isDialog = false) {
+            let tallas = product.tallas_disponibles;
 
-            // Inicializar componentes
-            initDarkMode();
-            setupEventListeners();
-            loadAllProducts();
-        });
+            if (typeof tallas === 'string') {
+                try {
+                    tallas = JSON.parse(tallas);
+                } catch (e) {
+                    tallas = null;
+                }
+            }
 
-        // ===== CARGAR PRODUCTOS DESDE SUPABASE =====
-        async function loadAllProducts() {
+            if (tallas && Array.isArray(tallas)) {
+                const availableSizes = tallas.map(s => s.toUpperCase());
+                const allSizes = ['XS', 'S', 'M', 'L', 'XL', '2XL'];
+                let sizesHTML = '';
+                
+                allSizes.forEach(size => {
+                    const isAvailable = availableSizes.includes(size);
+                    const tagClass = `size-tag ${isAvailable ? 'available' : 'unavailable'}`;
+                    const style = isDialog ? 'padding: 1px 4px; font-size: 0.65rem;' : '';
+                    sizesHTML += `<span class="${tagClass}" style="${style}">${size}</span>`;
+                });
+                
+                return sizesHTML;
+            } else if (product.talla) {
+                const style = isDialog ? 'padding: 1px 4px; font-size: 0.65rem;' : '';
+                return `<span class="size-tag available" style="${style}">${product.talla}</span>`;
+            }
+
+            return 'N/A';
+        }
+
+        function updateProductInfo(product) {
+            
+            // 1. Actualizar Panel de Desktop
+            document.getElementById('productInfoTitle').textContent = product.nombre || "Producto sin nombre";
+            document.getElementById('productInfoPrice').textContent = `$${product.precio || "0"}`;
+            document.getElementById('productInfoCategory').textContent = product.categoria || "General";
+            
+            // Actualizar stock
+            const stockElement = document.getElementById('productInfoStock');
+            const stockText = document.getElementById('stockText');
+            const cantidad = product.cantidad || 0;
+            
+            if (cantidad > 0) {
+                stockElement.className = 'product-info-stock in-stock';
+                stockText.textContent = `${cantidad} disponibles`;
+            } else {
+                stockElement.className = 'product-info-stock out-of-stock';
+                stockText.textContent = 'Agotado';
+            }
+            
+            // Actualizar descripción
+            const descripcion = product.descripcion || "Sin descripción disponible";
+            document.getElementById('productInfoDescription').textContent = descripcion;
+            
+            // Actualizar tallas
+            document.getElementById('productInfoSizes').innerHTML = generateSizesHTML(product);
+
+
+            // 2. Actualizar Diálogo Móvil
+            document.getElementById('dialogTitle').textContent = product.nombre || "Detalles";
+            document.getElementById('dialogPrice').textContent = `$${product.precio || "0"}`;
+            document.getElementById('dialogDescription').textContent = descripcion;
+            document.getElementById('dialogSizes').innerHTML = generateSizesHTML(product, true); 
+        }
+
+        function closeImageModal() {
+            const modal = document.getElementById('imageModal');
+            const infoPanel = document.getElementById('productInfoPanel');
+            const infoDialog = document.getElementById('productInfoDialog');
+
+            modal.classList.remove('active');
+            infoPanel.classList.remove('active');
+            infoDialog.classList.remove('active');
+            document.body.style.overflow = '';
+
+            if (currentModalCarousel) {
+                currentModalCarousel.destroy();
+                currentModalCarousel = null;
+            }
+            
+            currentProduct = null;
+        }
+
+        function toggleProductInfoDialog() {
+            const infoDialog = document.getElementById('productInfoDialog');
+            if (!isMobileView()) return;
+            
+            infoDialog.classList.toggle('active');
+        }
+
+        function openImageModal(images, product) {
+            const modal = document.getElementById('imageModal');
+            const infoPanel = document.getElementById('productInfoPanel');
+            const infoDialog = document.getElementById('productInfoDialog');
+            
+            if (images.length === 0) return;
+
+            currentProduct = product;
+            currentModalCarousel = new ImageModalCarousel(images);
+            updateProductInfo(product);
+
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+            
+            if (!isMobileView()) {
+                infoPanel.classList.add('active');
+            } else {
+                infoPanel.classList.remove('active');
+                infoDialog.classList.remove('active');
+            }
+        }
+        
+        function addImageModalListeners() {
+            const productCards = document.querySelectorAll('.product-card');
+
+            productCards.forEach(card => {
+                card.addEventListener('click', function () {
+                    const productData = this.getAttribute('data-product');
+                    const productImage = this.querySelector('.product-image');
+                    const imagesData = productImage.getAttribute('data-images');
+                    
+                    if (productData && imagesData) {
+                        const product = JSON.parse(productData);
+                        const images = JSON.parse(imagesData);
+                        if (images.length > 0) {
+                            openImageModal(images, product);
+                        }
+                    }
+                });
+            });
+        }
+        
+        // La clase puede permanecer igual
+        class ImageModalCarousel {
+            constructor(images) {
+                this.images = images;
+                this.currentIndex = 0;
+                this.modal = document.getElementById('imageModal');
+                this.slidesContainer = document.getElementById('modalCarouselSlides');
+                this.indicatorsContainer = document.getElementById('modalIndicators');
+                this.prevBtn = document.getElementById('modalPrev');
+                this.nextBtn = document.getElementById('modalNext');
+
+                this.init();
+            }
+            // ... (Resto de métodos de ImageModalCarousel) ...
+            init() {
+                this.slidesContainer.innerHTML = '';
+                this.indicatorsContainer.innerHTML = '';
+                this.images.forEach((image, index) => {
+                    const slide = document.createElement('div');
+                    slide.className = `carousel-slide-modal ${index === 0 ? 'active' : ''}`;
+                    slide.innerHTML = `
+                        <img src="${image}" alt="Imagen ${index + 1}" class="modal-image">
+                    `;
+                    this.slidesContainer.appendChild(slide);
+
+                    const indicator = document.createElement('button');
+                    indicator.className = `carousel-indicator-modal ${index === 0 ? 'active' : ''}`;
+                    indicator.setAttribute('data-index', index);
+                    indicator.setAttribute('aria-label', `Ver imagen ${index + 1}`);
+                    this.indicatorsContainer.appendChild(indicator);
+                });
+
+                this.prevBtn.addEventListener('click', () => this.prevSlide());
+                this.nextBtn.addEventListener('click', () => this.nextSlide());
+
+                this.indicatorsContainer.querySelectorAll('.carousel-indicator-modal').forEach(indicator => {
+                    indicator.addEventListener('click', (e) => {
+                        const index = parseInt(e.target.getAttribute('data-index'));
+                        this.goToSlide(index);
+                    });
+                });
+                document.addEventListener('keydown', (e) => this.handleKeydown(e));
+            }
+
+            showSlide(index) {
+                const currentSlide = this.slidesContainer.querySelector('.carousel-slide-modal.active');
+                const currentIndicator = this.indicatorsContainer.querySelector('.carousel-indicator-modal.active');
+                if (currentSlide) currentSlide.classList.remove('active');
+                if (currentIndicator) currentIndicator.classList.remove('active');
+                this.currentIndex = index;
+                const newSlide = this.slidesContainer.querySelectorAll('.carousel-slide-modal')[index];
+                const newIndicator = this.indicatorsContainer.querySelectorAll('.carousel-indicator-modal')[index];
+                if (newSlide) newSlide.classList.add('active');
+                if (newIndicator) newIndicator.classList.add('active');
+            }
+
+            nextSlide() {
+                const nextIndex = (this.currentIndex + 1) % this.images.length;
+                this.showSlide(nextIndex);
+            }
+
+            prevSlide() {
+                const prevIndex = (this.currentIndex - 1 + this.images.length) % this.images.length;
+                this.showSlide(prevIndex);
+            }
+
+            goToSlide(index) {
+                if (index >= 0 && index < this.images.length) {
+                    this.showSlide(index);
+                }
+            }
+
+            handleKeydown(e) {
+                if (!this.modal.classList.contains('active')) return;
+                switch (e.key) {
+                    case 'ArrowLeft':
+                        this.prevSlide();
+                        break;
+                    case 'ArrowRight':
+                        this.nextSlide();
+                        break;
+                    case 'Escape':
+                        closeImageModal();
+                        break;
+                }
+            }
+
+            destroy() {
+                this.prevBtn.replaceWith(this.prevBtn.cloneNode(true));
+                this.nextBtn.replaceWith(this.nextBtn.cloneNode(true));
+            }
+        }
+        
+        // ===== CARGA Y FILTROS (Funciones declaradas para evitar el error "is not defined") =====
+        
+        function loadAllProducts() {
             const container = document.getElementById('productsGrid');
             const loadingElement = document.getElementById('loading-products');
             const noResultsElement = document.getElementById('noResults');
 
-            try {
-                container.classList.add('loading');
+            // Convertir a async si se necesita
+            (async function() {
+                try {
+                    container.classList.add('loading');
+                    const { data: products, error } = await supabaseClient
+                        .from('productos')
+                        .select('*')
+                        .order('creado_en', { ascending: false });
 
-                // Obtener productos de Supabase
-                const { data: products, error } = await supabaseClient
-                    .from('productos')
-                    .select('*')
-                    .order('creado_en', { ascending: false });
+                    if (error) {
+                        console.error('Error de Supabase:', error);
+                        throw error;
+                    }
 
-                if (error) throw error;
+                    allProducts = products || [];
+                    filteredProducts = [...allProducts];
 
-                allProducts = products || [];
-                filteredProducts = [...allProducts];
+                    updateResultsCount();
+                    renderProducts();
 
-                updateResultsCount();
-                renderProducts();
-
-            } catch (err) {
-                console.error('Error al cargar productos:', err);
-                container.innerHTML = `
-                    <div class="col-span-full text-center py-12">
-                        <i class="fas fa-exclamation-triangle text-red-500 text-4xl mb-4"></i>
-                        <p class="text-gray-600 dark:text-gray-400 mb-4">Error al cargar los productos</p>
-                        <p class="text-sm text-gray-500 dark:text-gray-500 mb-4">${err.message}</p>
-                        <button onclick="loadAllProducts()" class="bg-pink-500 text-white px-6 py-2 rounded-lg hover:bg-pink-600 transition">
-                            Reintentar
-                        </button>
-                    </div>
-                `;
-            } finally {
-                container.classList.remove('loading');
-                if (loadingElement) loadingElement.style.display = 'none';
-            }
+                } catch (err) {
+                    console.error('Error al cargar productos:', err);
+                    container.innerHTML = `
+                        <div class="col-span-full text-center py-12">
+                            <i class="fas fa-exclamation-triangle text-red-500 text-4xl mb-4"></i>
+                            <p class="text-gray-600 dark:text-gray-400 mb-4">Error al cargar los productos</p>
+                            <p class="text-sm text-gray-500 dark:text-gray-500 mb-4">${err.message}</p>
+                            <button onclick="loadAllProducts()" class="bg-pink-500 text-white px-6 py-2 rounded-lg hover:bg-pink-600 transition">
+                                Reintentar
+                            </button>
+                        </div>
+                    `;
+                } finally {
+                    container.classList.remove('loading');
+                    if (loadingElement) loadingElement.style.display = 'none';
+                }
+            })();
         }
-
-        // ===== RENDERIZAR PRODUCTOS =====
+        
         function renderProducts() {
             const container = document.getElementById('productsGrid');
             const noResultsElement = document.getElementById('noResults');
@@ -1067,18 +1445,12 @@
                 noResultsElement.classList.remove('hidden');
                 return;
             }
-
             noResultsElement.classList.add('hidden');
 
             container.innerHTML = filteredProducts.map(product => {
                 const nombre = product.nombre || "Producto sin nombre";
-                const descripcion = product.descripcion || "Sin descripción disponible";
                 const precio = product.precio || "0";
-                const categoria = product.categoria || "General";
                 const cantidad = product.cantidad || 0;
-                const talla = product.talla || "Talla única";
-
-                // Manejar múltiples imágenes
                 let imagenes = [];
                 if (product.imagenes && Array.isArray(product.imagenes)) {
                     imagenes = product.imagenes;
@@ -1089,8 +1461,6 @@
                 }
 
                 const imagenPrincipal = imagenes.length > 0 ? imagenes[0] : 'https://via.placeholder.com/400x500?text=Sin+imagen';
-
-                // Generar etiquetas de tallas disponibles
                 const sizesHTML = generateSizesHTML(product);
 
                 return `
@@ -1117,275 +1487,9 @@
                 `;
             }).join('');
 
-            // Agregar event listeners para el modal de imágenes
             addImageModalListeners();
         }
 
-        // ===== GENERAR HTML PARA TALLAS DISPONIBLES (MODIFICADO) =====
-        function generateSizesHTML(product) {
-            let tallas = product.tallas_disponibles;
-
-            // 1. Intentar parsear el JSON si es una cadena (común en bases de datos)
-            if (typeof tallas === 'string') {
-                try {
-                    tallas = JSON.parse(tallas);
-                } catch (e) {
-                    console.warn("Error al parsear tallas_disponibles para el producto:", product.id);
-                    tallas = null; // Fallar a la lógica de talla única o nada
-                }
-            }
-
-            // 2. Comprobar si tallas es ahora un array válido
-            if (tallas && Array.isArray(tallas)) {
-                const availableSizes = tallas.map(s => s.toUpperCase()); // Asegurar mayúsculas
-                let sizesHTML = '<span class="sizes-label">Tallas disponibles:</span><div class="product-sizes">';
-
-                // Define todas las tallas posibles que quieres mostrar
-                const allSizes = ['XS', 'S', 'M', 'L', 'XL', '2XL'];
-
-                allSizes.forEach(size => {
-                    // Verificar si la talla está en el array de tallas disponibles del producto
-                    const isAvailable = availableSizes.includes(size);
-                    sizesHTML += `<span class="size-tag ${isAvailable ? 'available' : 'unavailable'}">${size}</span>`;
-                });
-
-                sizesHTML += '</div>';
-                return sizesHTML;
-            }
-
-            // 3. Lógica de respaldo: mostrar la talla general si existe y no hay tallas detalladas
-            else if (product.talla) {
-                return `<div class="product-sizes"><span class="sizes-label">Talla:</span><span class="size-tag available">${product.talla}</span></div>`;
-            }
-
-            return '';
-        }
-
-        // ===== SISTEMA DE MODAL MEJORADO CON DESCRIPCIÓN =====
-        function addImageModalListeners() {
-            const productCards = document.querySelectorAll('.product-card');
-
-            productCards.forEach(card => {
-                card.addEventListener('click', function () {
-                    const productData = this.getAttribute('data-product');
-                    const productImage = this.querySelector('.product-image');
-                    const imagesData = productImage.getAttribute('data-images');
-                    
-                    if (productData && imagesData) {
-                        const product = JSON.parse(productData);
-                        const images = JSON.parse(imagesData);
-                        if (images.length > 0) {
-                            openImageModal(images, product);
-                        }
-                    }
-                });
-            });
-        }
-
-        class ImageModalCarousel {
-            constructor(images) {
-                this.images = images;
-                this.currentIndex = 0;
-                this.modal = document.getElementById('imageModal');
-                this.slidesContainer = document.getElementById('modalCarouselSlides');
-                this.indicatorsContainer = document.getElementById('modalIndicators');
-                this.prevBtn = document.getElementById('modalPrev');
-                this.nextBtn = document.getElementById('modalNext');
-
-                this.init();
-            }
-
-            init() {
-                // Limpiar contenedores
-                this.slidesContainer.innerHTML = '';
-                this.indicatorsContainer.innerHTML = '';
-
-                // Crear slides e indicadores
-                this.images.forEach((image, index) => {
-                    // Crear slide
-                    const slide = document.createElement('div');
-                    slide.className = `carousel-slide-modal ${index === 0 ? 'active' : ''}`;
-                    slide.innerHTML = `
-                        <img src="${image}" alt="Imagen ${index + 1}" class="modal-image">
-                    `;
-                    this.slidesContainer.appendChild(slide);
-
-                    // Crear indicador
-                    const indicator = document.createElement('button');
-                    indicator.className = `carousel-indicator-modal ${index === 0 ? 'active' : ''}`;
-                    indicator.setAttribute('data-index', index);
-                    indicator.setAttribute('aria-label', `Ver imagen ${index + 1}`);
-                    this.indicatorsContainer.appendChild(indicator);
-                });
-
-                // Event listeners
-                this.prevBtn.addEventListener('click', () => this.prevSlide());
-                this.nextBtn.addEventListener('click', () => this.nextSlide());
-
-                // Event listeners para indicadores
-                this.indicatorsContainer.querySelectorAll('.carousel-indicator-modal').forEach(indicator => {
-                    indicator.addEventListener('click', (e) => {
-                        const index = parseInt(e.target.getAttribute('data-index'));
-                        this.goToSlide(index);
-                    });
-                });
-
-                // Event listeners para teclado
-                document.addEventListener('keydown', (e) => this.handleKeydown(e));
-            }
-
-            showSlide(index) {
-                // Ocultar slide actual
-                const currentSlide = this.slidesContainer.querySelector('.carousel-slide-modal.active');
-                const currentIndicator = this.indicatorsContainer.querySelector('.carousel-indicator-modal.active');
-
-                if (currentSlide) currentSlide.classList.remove('active');
-                if (currentIndicator) currentIndicator.classList.remove('active');
-
-                // Actualizar índice actual
-                this.currentIndex = index;
-
-                // Mostrar nuevo slide
-                const newSlide = this.slidesContainer.querySelectorAll('.carousel-slide-modal')[index];
-                const newIndicator = this.indicatorsContainer.querySelectorAll('.carousel-indicator-modal')[index];
-
-                if (newSlide) newSlide.classList.add('active');
-                if (newIndicator) newIndicator.classList.add('active');
-            }
-
-            nextSlide() {
-                const nextIndex = (this.currentIndex + 1) % this.images.length;
-                this.showSlide(nextIndex);
-            }
-
-            prevSlide() {
-                const prevIndex = (this.currentIndex - 1 + this.images.length) % this.images.length;
-                this.showSlide(prevIndex);
-            }
-
-            goToSlide(index) {
-                if (index >= 0 && index < this.images.length) {
-                    this.showSlide(index);
-                }
-            }
-
-            handleKeydown(e) {
-                if (!this.modal.classList.contains('active')) return;
-
-                switch (e.key) {
-                    case 'ArrowLeft':
-                        this.prevSlide();
-                        break;
-                    case 'ArrowRight':
-                        this.nextSlide();
-                        break;
-                    case 'Escape':
-                        closeImageModal();
-                        break;
-                }
-            }
-
-            destroy() {
-                // Limpiar event listeners
-                this.prevBtn.replaceWith(this.prevBtn.cloneNode(true));
-                this.nextBtn.replaceWith(this.nextBtn.cloneNode(true));
-                document.removeEventListener('keydown', this.handleKeydown);
-            }
-        }
-
-        function openImageModal(images, product) {
-            const modal = document.getElementById('imageModal');
-            const infoPanel = document.getElementById('productInfoPanel');
-
-            if (images.length === 0) return;
-
-            // Guardar producto actual
-            currentProduct = product;
-
-            // Crear nuevo carrusel
-            currentModalCarousel = new ImageModalCarousel(images);
-
-            // Actualizar información del producto en el panel
-            updateProductInfo(product);
-
-            // Mostrar modal y panel de información
-            modal.classList.add('active');
-            infoPanel.classList.add('active');
-            document.body.style.overflow = 'hidden';
-        }
-
-        function updateProductInfo(product) {
-            document.getElementById('productInfoTitle').textContent = product.nombre || "Producto sin nombre";
-            document.getElementById('productInfoPrice').textContent = `$${product.precio || "0"}`;
-            document.getElementById('productInfoCategory').textContent = product.categoria || "General";
-            
-            // Actualizar stock
-            const stockElement = document.getElementById('productInfoStock');
-            const stockText = document.getElementById('stockText');
-            const cantidad = product.cantidad || 0;
-            
-            if (cantidad > 0) {
-                stockElement.className = 'product-info-stock in-stock';
-                stockText.textContent = `${cantidad} disponibles`;
-            } else {
-                stockElement.className = 'product-info-stock out-of-stock';
-                stockText.textContent = 'Agotado';
-            }
-            
-            // Actualizar descripción
-            const descripcion = product.descripcion || "Sin descripción disponible";
-            document.getElementById('productInfoDescription').textContent = descripcion;
-            
-            // Actualizar tallas
-            const sizesContainer = document.getElementById('productInfoSizes');
-            sizesContainer.innerHTML = '';
-            
-            let tallas = product.tallas_disponibles;
-            if (typeof tallas === 'string') {
-                try {
-                    tallas = JSON.parse(tallas);
-                } catch (e) {
-                    tallas = null;
-                }
-            }
-            
-            if (tallas && Array.isArray(tallas)) {
-                const availableSizes = tallas.map(s => s.toUpperCase());
-                const allSizes = ['XS', 'S', 'M', 'L', 'XL', '2XL'];
-                
-                allSizes.forEach(size => {
-                    const isAvailable = availableSizes.includes(size);
-                    const sizeElement = document.createElement('span');
-                    sizeElement.className = `size-tag ${isAvailable ? 'available' : 'unavailable'}`;
-                    sizeElement.textContent = size;
-                    sizesContainer.appendChild(sizeElement);
-                });
-            } else if (product.talla) {
-                const sizeElement = document.createElement('span');
-                sizeElement.className = 'size-tag available';
-                sizeElement.textContent = product.talla;
-                sizesContainer.appendChild(sizeElement);
-            }
-        }
-
-        function closeImageModal() {
-            const modal = document.getElementById('imageModal');
-            const infoPanel = document.getElementById('productInfoPanel');
-
-            modal.classList.remove('active');
-            infoPanel.classList.remove('active');
-            document.body.style.overflow = '';
-
-            // Destruir carrusel actual
-            if (currentModalCarousel) {
-                currentModalCarousel.destroy();
-                currentModalCarousel = null;
-            }
-            
-            currentProduct = null;
-        }
-
-        // ===== FILTROS Y BÚSQUEDA =====
         function updateResultsCount() {
             const countElement = document.getElementById('resultsCount');
             const count = filteredProducts.length;
@@ -1399,48 +1503,50 @@
             const sortValue = document.getElementById('sortSelect').value;
 
             filteredProducts = allProducts.filter(product => {
-                // Filtro por búsqueda
                 const nombre = (product.nombre || "").toLowerCase();
                 const descripcion = (product.descripcion || "").toLowerCase();
                 const matchesSearch = !searchTerm ||
                     nombre.includes(searchTerm) ||
                     descripcion.includes(searchTerm);
 
-                // Filtro por categoría
                 const productCategory = product.categoria || "";
                 const matchesCategory = selectedCategories.length === 0 ||
                     selectedCategories.includes(productCategory.toLowerCase());
 
-                // Filtro por talla - usando el campo 'talla' de la base de datos
-                const productSize = product.talla || "";
+                let productSizes = product.tallas_disponibles;
+                if (typeof productSizes === 'string') {
+                    try {
+                        productSizes = JSON.parse(productSizes);
+                    } catch (e) {
+                        productSizes = product.talla ? [product.talla] : [];
+                    }
+                }
+                
                 const matchesSize = selectedSizes.length === 0 ||
-                    selectedSizes.includes(productSize);
+                    (productSizes && productSizes.some(size => 
+                        selectedSizes.includes(size.toUpperCase())
+                    ));
 
                 return matchesSearch && matchesCategory && matchesSize;
             });
 
-            // Ordenar productos
             sortProducts(sortValue);
-
             updateResultsCount();
             renderProducts();
         }
-        
-        // ===== AUTOCOMPLETAR PREDICCIÓN =====
+
         function generateAutocomplete() {
             const inputElement = document.getElementById('searchInput');
             const resultsContainer = document.getElementById('autocomplete-results');
             const searchTerm = inputElement.value.toLowerCase().trim();
 
-            // Limpiar resultados anteriores
             resultsContainer.innerHTML = '';
-            resultsContainer.style.display = 'none';
+            resultsContainer.classList.add('hidden');
 
-            if (searchTerm.length < 2) { // Solo si el usuario ha escrito al menos 2 caracteres
+            if (searchTerm.length < 2) {
                 return;
             }
 
-            // 1. Obtener términos únicos de los productos (nombres, categorías)
             const uniqueTerms = new Set();
             allProducts.forEach(product => {
                 if (product.nombre) {
@@ -1451,55 +1557,43 @@
                 }
             });
 
-            // 2. Filtrar términos que coinciden con la búsqueda
             const matchingTerms = Array.from(uniqueTerms)
-                .filter(term => term.startsWith(searchTerm)) // Predicción estricta (empieza por)
-                .slice(0, 7); // Mostrar máximo 7 sugerencias
+                .filter(term => term.includes(searchTerm))
+                .slice(0, 7);
 
-            // 3. Renderizar las sugerencias
             if (matchingTerms.length > 0) {
                 let html = '';
                 matchingTerms.forEach(term => {
-                    // Reemplaza la parte de la búsqueda para resaltarla
                     const highlightedTerm = term.replace(
-                        new RegExp('^' + searchTerm, 'i'),
-                        `<span class="font-semibold text-pink-500">${searchTerm}</span>`
+                        new RegExp(searchTerm, 'gi'),
+                        match => `<span class="font-semibold text-pink-500">${match}</span>`
                     );
 
                     html += `
-                <div class="autocomplete-item px-3 py-2 cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-600 text-gray-700 dark:text-white" 
-                     data-value="${term}">
-                    ${highlightedTerm}
-                </div>
-            `;
+                        <div class="autocomplete-item" data-value="${term}">
+                            ${highlightedTerm}
+                        </div>
+                    `;
                 });
 
                 resultsContainer.innerHTML = html;
-                resultsContainer.style.display = 'block';
+                resultsContainer.classList.remove('hidden');
 
-                // Agregar evento de clic a cada sugerencia
                 resultsContainer.querySelectorAll('.autocomplete-item').forEach(item => {
                     item.addEventListener('click', function () {
-                        inputElement.value = this.getAttribute('data-value'); // Rellenar input
-                        resultsContainer.style.display = 'none'; // Ocultar
-                        filterProducts(); // Ejecutar el filtro con el nuevo valor
+                        inputElement.value = this.getAttribute('data-value');
+                        resultsContainer.classList.add('hidden');
+                        filterProducts();
                     });
                 });
             }
         }
 
-        // Función para limpiar la lista de autocompletado
         function clearAutocomplete() {
-            document.getElementById('autocomplete-results').innerHTML = '';
-            document.getElementById('autocomplete-results').style.display = 'none';
+            const resultsContainer = document.getElementById('autocomplete-results');
+            resultsContainer.innerHTML = '';
+            resultsContainer.classList.add('hidden');
         }
-
-        // Para ocultar las sugerencias si el usuario hace clic fuera
-        document.addEventListener('click', function (e) {
-            if (!e.target.closest('.filter-group')) {
-                clearAutocomplete();
-            }
-        });
         
         function sortProducts(sortBy) {
             switch (sortBy) {
@@ -1513,11 +1607,9 @@
                     filteredProducts.sort((a, b) => (a.nombre || "").localeCompare(b.nombre || ""));
                     break;
                 case 'newest':
-                    // Ordenar por fecha de creación (más nuevos primero)
                     filteredProducts.sort((a, b) => new Date(b.creado_en) - new Date(a.creado_en));
                     break;
                 default:
-                    // Recomendados - orden original
                     break;
             }
         }
@@ -1526,10 +1618,11 @@
             document.getElementById('searchInput').value = '';
             document.querySelectorAll('input[type="checkbox"]').forEach(cb => cb.checked = false);
             document.getElementById('sortSelect').value = 'recommended';
+            clearAutocomplete();
             filterProducts();
         }
 
-        // ===== MODO OSCURO =====
+        // ===== MODO OSCURO (sin cambios) =====
         function initDarkMode() {
             const body = document.body;
             const darkToggle = document.getElementById('darkToggle');
@@ -1562,51 +1655,82 @@
             }
         }
 
-        // ===== FILTROS MÓVILES =====
-        const floatingFiltersButton = document.getElementById('floatingFiltersButton');
-
+        // ===== FILTROS MÓVILES (sin cambios) =====
         function toggleMobileFilters() {
-            const filtersSidebar = document.querySelector('.filters-sidebar');
+            const filtersSidebar = document.getElementById('filtersSidebar');
             filtersSidebar.classList.toggle('mobile-open');
-
+            
             if (filtersSidebar.classList.contains('mobile-open')) {
-                filtersSidebar.style.display = 'block';
                 document.body.style.overflow = 'hidden';
             } else {
-                filtersSidebar.style.display = 'none';
                 document.body.style.overflow = '';
             }
         }
 
-        // ===== CONFIGURAR EVENT LISTENERS =====
+        // ===== CONFIGURAR EVENT LISTENERS (Añadido botón de diálogo) =====
         function setupEventListeners() {
-            // Panel de filtros móviles
+            const floatingFiltersButton = document.getElementById('floatingFiltersButton');
+            const closeFiltersButton = document.getElementById('closeFilters');
+            const modalDetailsButton = document.getElementById('modalDetailsButton');
+            const imageModal = document.getElementById('imageModal');
+            const infoDialog = document.getElementById('productInfoDialog');
+
             if (floatingFiltersButton) {
                 floatingFiltersButton.addEventListener('click', toggleMobileFilters);
             }
-
-            // Filtros
+            if (closeFiltersButton) {
+                closeFiltersButton.addEventListener('click', toggleMobileFilters);
+            }
+            if (modalDetailsButton) {
+                modalDetailsButton.addEventListener('click', toggleProductInfoDialog);
+            }
+            
             document.getElementById('searchInput').addEventListener('input', function () {
-                generateAutocomplete(); // Generar las sugerencias predictivas
-                filterProducts(); // Ejecutar el filtro en tiempo real
+                generateAutocomplete();
+                filterProducts();
             });
+            
             document.querySelectorAll('input[name="category"], input[name="size"]').forEach(input => {
                 input.addEventListener('change', filterProducts);
             });
+            
             document.getElementById('sortSelect').addEventListener('change', filterProducts);
             document.getElementById('clearFilters').addEventListener('click', clearFilters);
             document.getElementById('resetFilters').addEventListener('click', clearFilters);
 
-            // Modal de imágenes
             document.getElementById('modalClose').addEventListener('click', closeImageModal);
-            document.getElementById('productInfoClose').addEventListener('click', closeImageModal);
-            document.getElementById('imageModal').addEventListener('click', function (e) {
+            
+            // En desktop, la X del panel grande cierra el modal completo
+            document.getElementById('productInfoClose').addEventListener('click', () => {
+                if (!isMobileView()) {
+                    closeImageModal();
+                }
+            }); 
+            
+            // Cerrar diálogo si se hace clic fuera de él (solo en móvil)
+            imageModal.addEventListener('click', function (e) {
                 if (e.target === this) {
                     closeImageModal();
+                } else if (isMobileView() && infoDialog.classList.contains('active') && e.target !== modalDetailsButton && !infoDialog.contains(e.target)) {
+                    toggleProductInfoDialog();
+                }
+            });
+
+            document.addEventListener('click', function (e) {
+                if (!e.target.closest('.filter-group')) {
+                    clearAutocomplete();
                 }
             });
         }
 
+        // ===== INICIALIZACIÓN =====
+        document.addEventListener('DOMContentLoaded', function () {
+            supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+            initDarkMode();
+            setupEventListeners();
+            loadAllProducts();
+        });
+        
         // Escuchar cambios en las preferencias del sistema
         window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
             if (!localStorage.getItem('lisport_dark')) {
