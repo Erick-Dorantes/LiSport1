@@ -613,7 +613,7 @@
                     </div>
 
                     <!-- Barra de Búsqueda -->
-                    <div class="filter-group mb-6">
+                    <div class="filter-group mb-6" style="position: relative;">
                         <div class="filter-title mb-4">
                             <h4 class="font-semibold text-gray-700 dark:text-gray-300">BUSCAR</h4>
                         </div>
@@ -621,6 +621,10 @@
                             <i class="fas fa-search search-icon text-gray-400"></i>
                             <input type="text" id="searchInput" placeholder="Buscar productos..." class="search-input"
                                 autocomplete="off">
+                        </div>
+                        <div id="autocomplete-results"
+                            class="absolute z-10 w-full bg-white dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-md shadow-lg mt-1"
+                            style="max-height: 200px; overflow-y: auto;">
                         </div>
                     </div>
 
@@ -659,35 +663,6 @@
                                 <input type="checkbox" name="category" value="enterizos" class="hidden">
                                 <span class="checkmark"></span>
                                 <span class="filter-text">Enterizos</span>
-                            </label>
-                        </div>
-                    </div>
-
-                    <!-- Filtro por Talla -->
-                    <div class="filter-group">
-                        <div class="filter-title mb-4">
-                            <h4 class="font-semibold text-gray-700 dark:text-gray-300">TALLA</h4>
-                        </div>
-                        <div class="size-filters">
-                            <label class="size-option">
-                                <input type="checkbox" name="size" value="XS" class="hidden">
-                                <span class="size-tag">XS</span>
-                            </label>
-                            <label class="size-option">
-                                <input type="checkbox" name="size" value="S" class="hidden">
-                                <span class="size-tag">S</span>
-                            </label>
-                            <label class="size-option">
-                                <input type="checkbox" name="size" value="M" class="hidden">
-                                <span class="size-tag">M</span>
-                            </label>
-                            <label class="size-option">
-                                <input type="checkbox" name="size" value="L" class="hidden">
-                                <span class="size-tag">L</span>
-                            </label>
-                            <label class="size-option">
-                                <input type="checkbox" name="size" value="XL" class="hidden">
-                                <span class="size-tag">XL</span>
                             </label>
                         </div>
                     </div>
@@ -946,32 +921,45 @@
             addImageModalListeners();
         }
 
-        // ===== GENERAR HTML PARA TALLAS DISPONIBLES =====
+        // ===== GENERAR HTML PARA TALLAS DISPONIBLES (MODIFICADO) =====
         function generateSizesHTML(product) {
-            // Si el producto tiene información de tallas específicas
-            if (product.tallas_disponibles && Array.isArray(product.tallas_disponibles)) {
-                const tallas = product.tallas_disponibles;
+            let tallas = product.tallas_disponibles;
+
+            // 1. Intentar parsear el JSON si es una cadena (común en bases de datos)
+            if (typeof tallas === 'string') {
+                try {
+                    tallas = JSON.parse(tallas);
+                } catch (e) {
+                    console.warn("Error al parsear tallas_disponibles para el producto:", product.id);
+                    tallas = null; // Fallar a la lógica de talla única o nada
+                }
+            }
+
+            // 2. Comprobar si tallas es ahora un array válido
+            if (tallas && Array.isArray(tallas)) {
+                const availableSizes = tallas.map(s => s.toUpperCase()); // Asegurar mayúsculas
                 let sizesHTML = '<span class="sizes-label">Tallas disponibles:</span><div class="product-sizes">';
 
-                // Definir todas las tallas posibles
-                const allSizes = ['XS', 'S', 'M', 'L', 'XL'];
+                // Define todas las tallas posibles que quieres mostrar
+                const allSizes = ['XS', 'S', 'M', 'L', 'XL', '2XL'];
 
                 allSizes.forEach(size => {
-                    const isAvailable = tallas.includes(size);
+                    // Verificar si la talla está en el array de tallas disponibles del producto
+                    const isAvailable = availableSizes.includes(size);
                     sizesHTML += `<span class="size-tag ${isAvailable ? 'available' : 'unavailable'}">${size}</span>`;
                 });
 
                 sizesHTML += '</div>';
                 return sizesHTML;
             }
-            // Si no hay información específica de tallas, mostrar la talla general
+
+            // 3. Lógica de respaldo: mostrar la talla general si existe y no hay tallas detalladas
             else if (product.talla) {
-                return `<div class="product-stock">Talla: ${product.talla}</div>`;
+                return `<div class="product-sizes"><span class="sizes-label">Talla:</span><span class="size-tag available">${product.talla}</span></div>`;
             }
 
             return '';
         }
-
         // ===== SISTEMA DE MODAL PARA MÚLTIPLES IMÁGENES =====
         function addImageModalListeners() {
             const productCards = document.querySelectorAll('.product-card');
@@ -1167,7 +1155,80 @@
             updateResultsCount();
             renderProducts();
         }
+        // ===== AUTOCOMPLETAR PREDICCIÓN =====
+        function generateAutocomplete() {
+            const inputElement = document.getElementById('searchInput');
+            const resultsContainer = document.getElementById('autocomplete-results');
+            const searchTerm = inputElement.value.toLowerCase().trim();
 
+            // Limpiar resultados anteriores
+            resultsContainer.innerHTML = '';
+            resultsContainer.style.display = 'none';
+
+            if (searchTerm.length < 2) { // Solo si el usuario ha escrito al menos 2 caracteres
+                return;
+            }
+
+            // 1. Obtener términos únicos de los productos (nombres, categorías)
+            const uniqueTerms = new Set();
+            allProducts.forEach(product => {
+                if (product.nombre) {
+                    uniqueTerms.add(product.nombre.toLowerCase());
+                }
+                if (product.categoria) {
+                    uniqueTerms.add(product.categoria.toLowerCase());
+                }
+            });
+
+            // 2. Filtrar términos que coinciden con la búsqueda
+            const matchingTerms = Array.from(uniqueTerms)
+                .filter(term => term.startsWith(searchTerm)) // Predicción estricta (empieza por)
+                .slice(0, 7); // Mostrar máximo 7 sugerencias
+
+            // 3. Renderizar las sugerencias
+            if (matchingTerms.length > 0) {
+                let html = '';
+                matchingTerms.forEach(term => {
+                    // Reemplaza la parte de la búsqueda para resaltarla
+                    const highlightedTerm = term.replace(
+                        new RegExp('^' + searchTerm, 'i'),
+                        `<span class="font-semibold text-pink-500">${searchTerm}</span>`
+                    );
+
+                    html += `
+                <div class="autocomplete-item px-3 py-2 cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-600 text-gray-700 dark:text-white" 
+                     data-value="${term}">
+                    ${highlightedTerm}
+                </div>
+            `;
+                });
+
+                resultsContainer.innerHTML = html;
+                resultsContainer.style.display = 'block';
+
+                // Agregar evento de clic a cada sugerencia
+                resultsContainer.querySelectorAll('.autocomplete-item').forEach(item => {
+                    item.addEventListener('click', function () {
+                        inputElement.value = this.getAttribute('data-value'); // Rellenar input
+                        resultsContainer.style.display = 'none'; // Ocultar
+                        filterProducts(); // Ejecutar el filtro con el nuevo valor
+                    });
+                });
+            }
+        }
+
+        // Función para limpiar la lista de autocompletado
+        function clearAutocomplete() {
+            document.getElementById('autocomplete-results').innerHTML = '';
+            document.getElementById('autocomplete-results').style.display = 'none';
+        }
+
+        // Para ocultar las sugerencias si el usuario hace clic fuera
+        document.addEventListener('click', function (e) {
+            if (!e.target.closest('.filter-group')) {
+                clearAutocomplete();
+            }
+        });
         function sortProducts(sortBy) {
             switch (sortBy) {
                 case 'price_asc':
@@ -1253,7 +1314,10 @@
             }
 
             // Filtros
-            document.getElementById('searchInput').addEventListener('input', filterProducts);
+            document.getElementById('searchInput').addEventListener('input', function () {
+                generateAutocomplete(); // Generar las sugerencias predictivas
+                filterProducts(); // Ejecutar el filtro en tiempo real
+            });
             document.querySelectorAll('input[name="category"], input[name="size"]').forEach(input => {
                 input.addEventListener('change', filterProducts);
             });
@@ -1278,5 +1342,4 @@
         });
     </script>
 </body>
-
 </html>
