@@ -1,13 +1,14 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Catálogo - LiSport</title>
-    
+
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    
+
     <!-- Iconos -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="icon" type="image/x-icon" href="images/favicon.ico">
@@ -17,23 +18,23 @@
     <link rel="manifest" href="images/site.webmanifest">
     <!-- Supabase -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    
+
     <style>
         :root {
             --rosa: #ff4c7a;
             --rosa-claro: #fff6f9;
             --bg-dark: #0b1020;
         }
-        
+
         body.dark {
             background: var(--bg-dark);
             color: #e6eef8;
         }
-        
+
         body.dark header {
             background: #0f1724;
         }
-        
+
         /* Productos - Estilo Simplificado */
         .product-card {
             transition: transform 0.3s ease, box-shadow 0.3s ease;
@@ -43,27 +44,28 @@
             position: relative;
             cursor: pointer;
         }
-        
+
         .dark .product-card {
             background: #1e293b;
         }
-        
+
         .product-card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
         }
-        
+
         .dark .product-card:hover {
-            box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
         }
-        
+
         .product-image-wrapper {
             position: relative;
             width: 100%;
-            padding-top: 125%; /* Relación de aspecto 4:5 */
+            padding-top: 125%;
+            /* Relación de aspecto 4:5 */
             overflow: hidden;
         }
-        
+
         .product-image {
             position: absolute;
             top: 0;
@@ -73,15 +75,15 @@
             object-fit: cover;
             transition: transform 0.3s ease;
         }
-        
+
         .product-card:hover .product-image {
             transform: scale(1.05);
         }
-        
+
         .product-info {
             padding: 12px;
         }
-        
+
         .product-title {
             font-size: 0.875rem;
             font-weight: 500;
@@ -93,31 +95,31 @@
             overflow: hidden;
             height: 2.8em;
         }
-        
+
         .product-price {
             font-weight: 700;
             color: var(--rosa);
             font-size: 1.125rem;
             margin-bottom: 4px;
         }
-        
+
         .product-stock {
             font-size: 0.75rem;
             color: #6b7280;
         }
-        
+
         .dark .product-stock {
             color: #9ca3af;
         }
-        
+
         .in-stock {
             color: #10b981;
         }
-        
+
         .out-of-stock {
             color: #ef4444;
         }
-        
+
         /* Nuevos estilos para tallas disponibles */
         .product-sizes {
             margin-top: 8px;
@@ -125,7 +127,7 @@
             flex-wrap: wrap;
             gap: 4px;
         }
-        
+
         .size-tag {
             display: inline-block;
             padding: 2px 6px;
@@ -136,44 +138,94 @@
             text-align: center;
             min-width: 28px;
         }
-        
+
         .size-tag.available {
             background-color: #f0f9ff;
             border-color: #0ea5e9;
             color: #0369a1;
         }
-        
+
         .dark .size-tag.available {
             background-color: #0c4a6e;
             border-color: #38bdf8;
             color: #e0f2fe;
         }
-        
+
         .size-tag.unavailable {
             background-color: #f3f4f6;
             border-color: #d1d5db;
             color: #9ca3af;
             text-decoration: line-through;
         }
-        
+
         .dark .size-tag.unavailable {
             background-color: #374151;
             border-color: #4b5563;
             color: #6b7280;
         }
-        
+
         .sizes-label {
             font-size: 0.75rem;
             color: #6b7280;
             margin-bottom: 4px;
             display: block;
         }
-        
+
         .dark .sizes-label {
             color: #9ca3af;
         }
-        
+
         /* Estilos para filtros */
+        /* Añadir estilo para el checkmark cuando está marcado */
+        .filter-option input:checked+.checkmark {
+            background-color: var(--rosa);
+            /* Fondo rosa */
+            border-color: var(--rosa);
+            /* Borde rosa */
+        }
+
+        /* El ícono de check dentro del checkmark */
+        .checkmark::after {
+            content: '';
+            position: absolute;
+            display: none;
+            width: 5px;
+            height: 10px;
+            border: solid white;
+            border-width: 0 2px 2px 0;
+            transform: rotate(45deg);
+        }
+
+        /* Mostrar el ícono de check cuando está marcado */
+        .filter-option input:checked+.checkmark::after {
+            display: block;
+        }
+
+        .checkmark {
+            /* ... Tus estilos anteriores para checkmark ... */
+            width: 18px;
+            height: 18px;
+            border: 2px solid #ddd;
+            border-radius: 3px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            position: relative;
+            /* Esencial para posicionar el icono de check */
+        }
+
+        /* Estilo para checkmark en modo oscuro */
+        .dark .checkmark {
+            border-color: #4b5563;
+            /* Borde más oscuro */
+        }
+
+        .dark .filter-option input:checked+.checkmark {
+            background-color: var(--rosa);
+            border-color: var(--rosa);
+        }
+
         .filters-sidebar {
             background: var(--card-bg, #f8f8f8);
             border-radius: 12px;
@@ -183,21 +235,21 @@
             top: 100px;
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
         }
-        
+
         .dark .filters-sidebar {
             background: #1e1e1e;
         }
-        
+
         .filter-group {
             margin-bottom: 30px;
             padding-bottom: 25px;
             border-bottom: 1px solid rgba(0, 0, 0, 0.1);
         }
-        
+
         .dark .filter-group {
             border-bottom-color: #374151;
         }
-        
+
         .filter-option {
             display: flex;
             align-items: center;
@@ -206,11 +258,11 @@
             padding: 8px 0;
             transition: all 0.3s ease;
         }
-        
+
         .filter-option:hover {
             color: var(--rosa);
         }
-        
+
         .checkmark {
             width: 18px;
             height: 18px;
@@ -221,13 +273,13 @@
             justify-content: center;
             transition: all 0.3s ease;
         }
-        
+
         .size-filters {
             display: flex;
             flex-wrap: wrap;
             gap: 8px;
         }
-        
+
         .size-option span {
             display: inline-block;
             padding: 8px 12px;
@@ -240,17 +292,17 @@
             text-align: center;
             cursor: pointer;
         }
-        
-        .size-option input:checked + span {
+
+        .size-option input:checked+span {
             background-color: var(--rosa);
             color: white;
             border-color: var(--rosa);
         }
-        
+
         .size-option:hover span {
             border-color: var(--rosa);
         }
-        
+
         .search-box {
             position: relative;
             display: flex;
@@ -261,12 +313,12 @@
             padding: 8px 12px;
             transition: all 0.3s ease;
         }
-        
+
         .search-box:focus-within {
             border-color: var(--rosa);
             box-shadow: 0 0 0 3px rgba(255, 76, 122, 0.1);
         }
-        
+
         .search-input {
             flex: 1;
             border: none;
@@ -276,7 +328,7 @@
             font-size: 0.95rem;
             padding: 4px 0;
         }
-        
+
         /* Layout principal */
         .catalog-layout {
             display: grid;
@@ -284,17 +336,17 @@
             gap: 2rem;
             align-items: start;
         }
-        
+
         @media (max-width: 1023px) {
             .catalog-layout {
                 grid-template-columns: 1fr;
             }
-            
+
             .filters-sidebar {
                 display: none;
             }
         }
-        
+
         /* Selector de ordenar más pequeño */
         .sort-select {
             border: 1px solid #d1d5db;
@@ -304,13 +356,13 @@
             background-color: white;
             color: #374151;
         }
-        
+
         .dark .sort-select {
             background-color: #374151;
             border-color: #4b5563;
             color: #e5e7eb;
         }
-        
+
         /* Botón de filtros flotante en móviles */
         .floating-filters-button {
             position: fixed;
@@ -329,7 +381,7 @@
             z-index: 100;
             cursor: pointer;
         }
-        
+
         @media (min-width: 1024px) {
             .floating-filters-button {
                 display: none;
@@ -342,7 +394,7 @@
             pointer-events: none;
             position: relative;
         }
-        
+
         .loading::after {
             content: '';
             position: absolute;
@@ -355,12 +407,17 @@
             border-radius: 50%;
             animation: spin 1s linear infinite;
         }
-        
+
         @keyframes spin {
-            0% { transform: translate(-50%, -50%) rotate(0deg); }
-            100% { transform: translate(-50%, -50%) rotate(360deg); }
+            0% {
+                transform: translate(-50%, -50%) rotate(0deg);
+            }
+
+            100% {
+                transform: translate(-50%, -50%) rotate(360deg);
+            }
         }
-        
+
         /* Modal para múltiples imágenes */
         .image-modal {
             display: none;
@@ -511,19 +568,22 @@
                     <img src="images/logo.png" alt="LiSport - Ropa Deportiva para Mujer" class="h-10">
                 </a>
             </div>
-            
+
             <!-- Menú principal -->
             <nav class="hidden md:flex" aria-label="Menú principal">
                 <ul class="flex space-x-6">
                     <li><a href="Inicio.html" class="hover:text-pink-200 transition py-2 relative">Inicio</a></li>
-                    <li><a href="catalogo.html" class="hover:text-pink-200 transition py-2 relative font-bold">Catálogo</a></li>
-                    <li><a href="sobre-nosotros.html" class="hover:text-pink-200 transition py-2 relative">Nosotros</a></li>
+                    <li><a href="catalogo.html"
+                            class="hover:text-pink-200 transition py-2 relative font-bold">Catálogo</a></li>
+                    <li><a href="sobre-nosotros.html" class="hover:text-pink-200 transition py-2 relative">Nosotros</a>
+                    </li>
                     <li><a href="contacto.html" class="hover:text-pink-200 transition py-2 relative">Contacto</a></li>
                 </ul>
             </nav>
-            
+
             <div class="flex items-center gap-4">
-                <button id="darkToggle" title="Cambiar modo" class="p-2 rounded-full bg-white/20 hover:bg-white/30 transition-colors">
+                <button id="darkToggle" title="Cambiar modo"
+                    class="p-2 rounded-full bg-white/20 hover:bg-white/30 transition-colors">
                     <span id="darkIcon">🌙</span>
                 </button>
             </div>
@@ -543,9 +603,11 @@
             <div class="catalog-layout">
                 <!-- Columna de Filtros (IZQUIERDA) -->
                 <aside class="filters-sidebar">
-                    <div class="filters-header flex justify-between items-center mb-6 pb-4 border-b border-gray-200 dark:border-gray-700">
+                    <div
+                        class="filters-header flex justify-between items-center mb-6 pb-4 border-b border-gray-200 dark:border-gray-700">
                         <h3 class="text-lg font-bold">FILTROS</h3>
-                        <button class="clear-filters text-sm text-pink-500 hover:text-pink-600 font-medium" id="clearFilters">
+                        <button class="clear-filters text-sm text-pink-500 hover:text-pink-600 font-medium"
+                            id="clearFilters">
                             Limpiar todo
                         </button>
                     </div>
@@ -557,7 +619,8 @@
                         </div>
                         <div class="search-box relative">
                             <i class="fas fa-search search-icon text-gray-400"></i>
-                            <input type="text" id="searchInput" placeholder="Buscar productos..." class="search-input" autocomplete="off">
+                            <input type="text" id="searchInput" placeholder="Buscar productos..." class="search-input"
+                                autocomplete="off">
                         </div>
                     </div>
 
@@ -632,12 +695,15 @@
 
                 <!-- Columna de Productos (DERECHA) -->
                 <main class="products-main">
-                    <div class="products-header bg-white dark:bg-gray-800 p-4 rounded-lg shadow-sm mb-6 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+                    <div
+                        class="products-header bg-white dark:bg-gray-800 p-4 rounded-lg shadow-sm mb-6 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
                         <div class="results-info">
-                            <span id="resultsCount" class="font-medium text-gray-700 dark:text-gray-300">Cargando productos...</span>
+                            <span id="resultsCount" class="font-medium text-gray-700 dark:text-gray-300">Cargando
+                                productos...</span>
                         </div>
                         <div class="sort-options flex items-center gap-2">
-                            <label for="sortSelect" class="text-sm text-gray-600 dark:text-gray-400">Ordenar por:</label>
+                            <label for="sortSelect" class="text-sm text-gray-600 dark:text-gray-400">Ordenar
+                                por:</label>
                             <select id="sortSelect" class="sort-select">
                                 <option value="recommended">Recomendados</option>
                                 <option value="price_asc">Precio: Menor a Mayor</option>
@@ -655,13 +721,14 @@
                             <p class="text-gray-600 dark:text-gray-400">Cargando productos...</p>
                         </div>
                     </div>
-                    
+
                     <!-- Mensaje cuando no hay resultados -->
                     <div id="noResults" class="hidden text-center py-12">
                         <i class="fas fa-search text-5xl text-gray-300 mb-4"></i>
                         <h3 class="text-xl font-bold mb-2">No se encontraron productos</h3>
                         <p class="text-gray-600 dark:text-gray-400">Intenta con otros términos de búsqueda o filtros</p>
-                        <button id="resetFilters" class="mt-4 bg-pink-500 text-white px-6 py-2 rounded-lg hover:bg-pink-600 transition">
+                        <button id="resetFilters"
+                            class="mt-4 bg-pink-500 text-white px-6 py-2 rounded-lg hover:bg-pink-600 transition">
                             Restablecer filtros
                         </button>
                     </div>
@@ -682,19 +749,19 @@
             <button class="modal-close" id="modalClose">
                 <i class="fas fa-times"></i>
             </button>
-            
+
             <div class="carousel-container-modal">
                 <div id="modalCarouselSlides" class="carousel-slides-container">
                     <!-- Las imágenes se cargarán dinámicamente aquí -->
                 </div>
-                
+
                 <button class="carousel-nav-modal carousel-prev-modal" id="modalPrev">
                     <i class="fas fa-chevron-left"></i>
                 </button>
                 <button class="carousel-nav-modal carousel-next-modal" id="modalNext">
                     <i class="fas fa-chevron-right"></i>
                 </button>
-                
+
                 <div class="carousel-indicators-modal" id="modalIndicators">
                     <!-- Los indicadores se cargarán dinámicamente aquí -->
                 </div>
@@ -708,12 +775,17 @@
             <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
                 <div class="footer-col">
                     <h3 class="text-xl font-bold mb-4">LiSport</h3>
-                    <p class="text-gray-300 mb-4">Ropa deportiva de alta calidad diseñada específicamente para mujeres activas que buscan comodidad, estilo y rendimiento.</p>
+                    <p class="text-gray-300 mb-4">Ropa deportiva de alta calidad diseñada específicamente para mujeres
+                        activas que buscan comodidad, estilo y rendimiento.</p>
                     <div class="social-links flex space-x-4">
-                        <a href="#" class="bg-gray-700 w-10 h-10 rounded-full flex items-center justify-center hover:bg-pink-500 transition" aria-label="Facebook">
+                        <a href="#"
+                            class="bg-gray-700 w-10 h-10 rounded-full flex items-center justify-center hover:bg-pink-500 transition"
+                            aria-label="Facebook">
                             <i class="fab fa-facebook-f"></i>
                         </a>
-                        <a href="https://www.instagram.com/li_sport_25?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" class="bg-gray-700 w-10 h-10 rounded-full flex items-center justify-center hover:bg-pink-500 transition" aria-label="Instagram">
+                        <a href="https://www.instagram.com/li_sport_25?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw=="
+                            class="bg-gray-700 w-10 h-10 rounded-full flex items-center justify-center hover:bg-pink-500 transition"
+                            aria-label="Instagram">
                             <i class="fab fa-instagram"></i>
                         </a>
                     </div>
@@ -724,20 +796,9 @@
                     <ul class="space-y-2">
                         <li><a href="Inicio.html" class="text-gray-300 hover:text-white transition">Inicio</a></li>
                         <li><a href="catalogo.html" class="text-gray-300 hover:text-white transition">Catálogo</a></li>
-                        <li><a href="sobre-nosotros.html" class="text-gray-300 hover:text-white transition">Sobre Nosotros</a></li>
+                        <li><a href="sobre-nosotros.html" class="text-gray-300 hover:text-white transition">Sobre
+                                Nosotros</a></li>
                         <li><a href="contacto.html" class="text-gray-300 hover:text-white transition">Contacto</a></li>
-                    </ul>
-                </div>
-
-                <div class="footer-col">
-                    <h3 class="text-xl font-bold mb-4">Categorías</h3>
-                    <ul class="space-y-2">
-                        <li><a href="catalogo.html?category=leggins" class="text-gray-300 hover:text-white transition">Leggings</a></li>
-                        <li><a href="catalogo.html?category=tops" class="text-gray-300 hover:text-white transition">Tops</a></li>
-                        <li><a href="catalogo.html?category=calcetas" class="text-gray-300 hover:text-white transition">Calcetas</a></li>
-                        <li><a href="catalogo.html?category=sweaters" class="text-gray-300 hover:text-white transition">Sudaderas</a></li>
-                        <li><a href="catalogo.html?category=conjuntos" class="text-gray-300 hover:text-white transition">Conjuntos</a></li>
-                        <li><a href="catalogo.html?category=enterizos" class="text-gray-300 hover:text-white transition">Enterizos</a></li>
                     </ul>
                 </div>
 
@@ -767,9 +828,9 @@
         let allProducts = [];
         let filteredProducts = [];
         let currentModalCarousel = null;
-        
+
         // ===== INICIALIZACIÓN =====
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function () {
             // Inicializar Supabase
             supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
             console.log('Supabase inicializado para catálogo');
@@ -785,10 +846,10 @@
             const container = document.getElementById('productsGrid');
             const loadingElement = document.getElementById('loading-products');
             const noResultsElement = document.getElementById('noResults');
-            
+
             try {
                 container.classList.add('loading');
-                
+
                 // Obtener productos de Supabase
                 const { data: products, error } = await supabaseClient
                     .from('productos')
@@ -796,14 +857,14 @@
                     .order('creado_en', { ascending: false });
 
                 if (error) throw error;
-                
+
                 allProducts = products || [];
                 filteredProducts = [...allProducts];
-                
+
                 updateResultsCount();
                 renderProducts();
-                
-            } catch(err) {
+
+            } catch (err) {
                 console.error('Error al cargar productos:', err);
                 container.innerHTML = `
                     <div class="col-span-full text-center py-12">
@@ -820,20 +881,20 @@
                 if (loadingElement) loadingElement.style.display = 'none';
             }
         }
-        
+
         // ===== RENDERIZAR PRODUCTOS =====
         function renderProducts() {
             const container = document.getElementById('productsGrid');
             const noResultsElement = document.getElementById('noResults');
-            
+
             if (filteredProducts.length === 0) {
                 container.innerHTML = '';
                 noResultsElement.classList.remove('hidden');
                 return;
             }
-            
+
             noResultsElement.classList.add('hidden');
-            
+
             container.innerHTML = filteredProducts.map(product => {
                 const nombre = product.nombre || "Producto sin nombre";
                 const descripcion = product.descripcion || "Sin descripción disponible";
@@ -841,7 +902,7 @@
                 const categoria = product.categoria || "General";
                 const cantidad = product.cantidad || 0;
                 const talla = product.talla || "Talla única";
-                
+
                 // Manejar múltiples imágenes
                 let imagenes = [];
                 if (product.imagenes && Array.isArray(product.imagenes)) {
@@ -851,12 +912,12 @@
                 } else {
                     imagenes = ['https://via.placeholder.com/400x500?text=Sin+imagen'];
                 }
-                
+
                 const imagenPrincipal = imagenes.length > 0 ? imagenes[0] : 'https://via.placeholder.com/400x500?text=Sin+imagen';
-                
+
                 // Generar etiquetas de tallas disponibles
                 const sizesHTML = generateSizesHTML(product);
-                
+
                 return `
                     <div class="product-card" data-product-id="${product.id}">
                         <div class="product-image-wrapper">
@@ -880,43 +941,43 @@
                     </div>
                 `;
             }).join('');
-            
+
             // Agregar event listeners para el modal de imágenes
             addImageModalListeners();
         }
-        
+
         // ===== GENERAR HTML PARA TALLAS DISPONIBLES =====
         function generateSizesHTML(product) {
             // Si el producto tiene información de tallas específicas
             if (product.tallas_disponibles && Array.isArray(product.tallas_disponibles)) {
                 const tallas = product.tallas_disponibles;
                 let sizesHTML = '<span class="sizes-label">Tallas disponibles:</span><div class="product-sizes">';
-                
+
                 // Definir todas las tallas posibles
                 const allSizes = ['XS', 'S', 'M', 'L', 'XL'];
-                
+
                 allSizes.forEach(size => {
                     const isAvailable = tallas.includes(size);
                     sizesHTML += `<span class="size-tag ${isAvailable ? 'available' : 'unavailable'}">${size}</span>`;
                 });
-                
+
                 sizesHTML += '</div>';
                 return sizesHTML;
-            } 
+            }
             // Si no hay información específica de tallas, mostrar la talla general
             else if (product.talla) {
                 return `<div class="product-stock">Talla: ${product.talla}</div>`;
             }
-            
+
             return '';
         }
-        
+
         // ===== SISTEMA DE MODAL PARA MÚLTIPLES IMÁGENES =====
         function addImageModalListeners() {
             const productCards = document.querySelectorAll('.product-card');
-            
+
             productCards.forEach(card => {
-                card.addEventListener('click', function() {
+                card.addEventListener('click', function () {
                     const productImage = this.querySelector('.product-image');
                     const imagesData = productImage.getAttribute('data-images');
                     if (imagesData) {
@@ -938,15 +999,15 @@
                 this.indicatorsContainer = document.getElementById('modalIndicators');
                 this.prevBtn = document.getElementById('modalPrev');
                 this.nextBtn = document.getElementById('modalNext');
-                
+
                 this.init();
             }
-            
+
             init() {
                 // Limpiar contenedores
                 this.slidesContainer.innerHTML = '';
                 this.indicatorsContainer.innerHTML = '';
-                
+
                 // Crear slides e indicadores
                 this.images.forEach((image, index) => {
                     // Crear slide
@@ -956,7 +1017,7 @@
                         <img src="${image}" alt="Imagen ${index + 1}" class="modal-image">
                     `;
                     this.slidesContainer.appendChild(slide);
-                    
+
                     // Crear indicador
                     const indicator = document.createElement('button');
                     indicator.className = `carousel-indicator-modal ${index === 0 ? 'active' : ''}`;
@@ -964,11 +1025,11 @@
                     indicator.setAttribute('aria-label', `Ver imagen ${index + 1}`);
                     this.indicatorsContainer.appendChild(indicator);
                 });
-                
+
                 // Event listeners
                 this.prevBtn.addEventListener('click', () => this.prevSlide());
                 this.nextBtn.addEventListener('click', () => this.nextSlide());
-                
+
                 // Event listeners para indicadores
                 this.indicatorsContainer.querySelectorAll('.carousel-indicator-modal').forEach(indicator => {
                     indicator.addEventListener('click', (e) => {
@@ -976,50 +1037,50 @@
                         this.goToSlide(index);
                     });
                 });
-                
+
                 // Event listeners para teclado
                 document.addEventListener('keydown', (e) => this.handleKeydown(e));
             }
-            
+
             showSlide(index) {
                 // Ocultar slide actual
                 const currentSlide = this.slidesContainer.querySelector('.carousel-slide-modal.active');
                 const currentIndicator = this.indicatorsContainer.querySelector('.carousel-indicator-modal.active');
-                
+
                 if (currentSlide) currentSlide.classList.remove('active');
                 if (currentIndicator) currentIndicator.classList.remove('active');
-                
+
                 // Actualizar índice actual
                 this.currentIndex = index;
-                
+
                 // Mostrar nuevo slide
                 const newSlide = this.slidesContainer.querySelectorAll('.carousel-slide-modal')[index];
                 const newIndicator = this.indicatorsContainer.querySelectorAll('.carousel-indicator-modal')[index];
-                
+
                 if (newSlide) newSlide.classList.add('active');
                 if (newIndicator) newIndicator.classList.add('active');
             }
-            
+
             nextSlide() {
                 const nextIndex = (this.currentIndex + 1) % this.images.length;
                 this.showSlide(nextIndex);
             }
-            
+
             prevSlide() {
                 const prevIndex = (this.currentIndex - 1 + this.images.length) % this.images.length;
                 this.showSlide(prevIndex);
             }
-            
+
             goToSlide(index) {
                 if (index >= 0 && index < this.images.length) {
                     this.showSlide(index);
                 }
             }
-            
+
             handleKeydown(e) {
                 if (!this.modal.classList.contains('active')) return;
-                
-                switch(e.key) {
+
+                switch (e.key) {
                     case 'ArrowLeft':
                         this.prevSlide();
                         break;
@@ -1031,7 +1092,7 @@
                         break;
                 }
             }
-            
+
             destroy() {
                 // Limpiar event listeners
                 this.prevBtn.replaceWith(this.prevBtn.cloneNode(true));
@@ -1042,12 +1103,12 @@
 
         function openImageModal(images) {
             const modal = document.getElementById('imageModal');
-            
+
             if (images.length === 0) return;
-            
+
             // Crear nuevo carrusel
             currentModalCarousel = new ImageModalCarousel(images);
-            
+
             // Mostrar modal
             modal.classList.add('active');
             document.body.style.overflow = 'hidden';
@@ -1055,10 +1116,10 @@
 
         function closeImageModal() {
             const modal = document.getElementById('imageModal');
-            
+
             modal.classList.remove('active');
             document.body.style.overflow = '';
-            
+
             // Destruir carrusel actual
             if (currentModalCarousel) {
                 currentModalCarousel.destroy();
@@ -1072,43 +1133,43 @@
             const count = filteredProducts.length;
             countElement.textContent = `${count} producto${count !== 1 ? 's' : ''} encontrado${count !== 1 ? 's' : ''}`;
         }
-        
+
         function filterProducts() {
             const searchTerm = document.getElementById('searchInput').value.toLowerCase();
             const selectedCategories = Array.from(document.querySelectorAll('input[name="category"]:checked')).map(cb => cb.value);
             const selectedSizes = Array.from(document.querySelectorAll('input[name="size"]:checked')).map(cb => cb.value);
             const sortValue = document.getElementById('sortSelect').value;
-            
+
             filteredProducts = allProducts.filter(product => {
                 // Filtro por búsqueda
                 const nombre = (product.nombre || "").toLowerCase();
                 const descripcion = (product.descripcion || "").toLowerCase();
-                const matchesSearch = !searchTerm || 
-                    nombre.includes(searchTerm) || 
+                const matchesSearch = !searchTerm ||
+                    nombre.includes(searchTerm) ||
                     descripcion.includes(searchTerm);
-                
+
                 // Filtro por categoría
                 const productCategory = product.categoria || "";
-                const matchesCategory = selectedCategories.length === 0 || 
+                const matchesCategory = selectedCategories.length === 0 ||
                     selectedCategories.includes(productCategory.toLowerCase());
-                
+
                 // Filtro por talla - usando el campo 'talla' de la base de datos
                 const productSize = product.talla || "";
-                const matchesSize = selectedSizes.length === 0 || 
+                const matchesSize = selectedSizes.length === 0 ||
                     selectedSizes.includes(productSize);
-                
+
                 return matchesSearch && matchesCategory && matchesSize;
             });
-            
+
             // Ordenar productos
             sortProducts(sortValue);
-            
+
             updateResultsCount();
             renderProducts();
         }
-        
+
         function sortProducts(sortBy) {
-            switch(sortBy) {
+            switch (sortBy) {
                 case 'price_asc':
                     filteredProducts.sort((a, b) => (parseFloat(a.precio) || 0) - (parseFloat(b.precio) || 0));
                     break;
@@ -1127,27 +1188,27 @@
                     break;
             }
         }
-        
+
         function clearFilters() {
             document.getElementById('searchInput').value = '';
             document.querySelectorAll('input[type="checkbox"]').forEach(cb => cb.checked = false);
             document.getElementById('sortSelect').value = 'recommended';
             filterProducts();
         }
-        
+
         // ===== MODO OSCURO =====
         function initDarkMode() {
             const body = document.body;
             const darkToggle = document.getElementById('darkToggle');
             const darkIcon = document.getElementById('darkIcon');
-            
+
             const storedPreference = localStorage.getItem('lisport_dark');
             const systemPreference = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
-            
+
             if (storedPreference === '1' || (!storedPreference && systemPreference)) {
                 setDark(true);
             }
-            
+
             darkToggle.addEventListener('click', () => {
                 setDark(!body.classList.contains('dark'));
             });
@@ -1156,7 +1217,7 @@
         function setDark(isDark) {
             const body = document.body;
             const darkIcon = document.getElementById('darkIcon');
-            
+
             if (isDark) {
                 body.classList.add('dark');
                 darkIcon.textContent = '☀️';
@@ -1174,7 +1235,7 @@
         function toggleMobileFilters() {
             const filtersSidebar = document.querySelector('.filters-sidebar');
             filtersSidebar.classList.toggle('mobile-open');
-            
+
             if (filtersSidebar.classList.contains('mobile-open')) {
                 filtersSidebar.style.display = 'block';
                 document.body.style.overflow = 'hidden';
@@ -1199,10 +1260,10 @@
             document.getElementById('sortSelect').addEventListener('change', filterProducts);
             document.getElementById('clearFilters').addEventListener('click', clearFilters);
             document.getElementById('resetFilters').addEventListener('click', clearFilters);
-            
+
             // Modal de imágenes
             document.getElementById('modalClose').addEventListener('click', closeImageModal);
-            document.getElementById('imageModal').addEventListener('click', function(e) {
+            document.getElementById('imageModal').addEventListener('click', function (e) {
                 if (e.target === this) {
                     closeImageModal();
                 }
@@ -1217,4 +1278,5 @@
         });
     </script>
 </body>
+
 </html>
