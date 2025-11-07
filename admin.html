@@ -5,10 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Admin - LiSport</title>
     
-    <!-- Tailwind CSS -->
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     
-    <!-- Iconos -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <link rel="icon" type="image/x-icon" href="images/favicon.ico">
@@ -55,7 +53,7 @@
         }
         
         .dark .text-high-contrast {
-            color: #f1f5f9;
+            color: #f1f5f9; /* Color de texto muy claro en modo oscuro */
         }
         
         .text-medium-contrast {
@@ -63,7 +61,7 @@
         }
         
         .dark .text-medium-contrast {
-            color: #cbd5e1;
+            color: #cbd5e1; /* Color de texto más claro en modo oscuro */
         }
         
         .modern-input {
@@ -228,6 +226,8 @@
             cursor: pointer;
             transition: all 0.3s ease;
             background: white;
+            /* Se corrigió el color de texto a high-contrast para mejor legibilidad */
+            color: #374151; 
         }
         
         .dark .featured-label {
@@ -469,10 +469,30 @@
             gap: 4px;
             margin-left: 8px;
         }
+        
+        /* Contenedor de filtros para la lista de productos */
+        .admin-filter-bar {
+            display: flex;
+            gap: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #e2e8f0;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+        .dark .admin-filter-bar {
+            border-bottom-color: #475569;
+        }
+        
+        .admin-filter-bar .modern-input,
+        .admin-filter-bar .modern-select {
+            flex: 1 1 180px; /* Flexibilidad en el ancho */
+            padding: 8px 12px;
+            border-radius: 8px;
+            font-size: 0.9rem;
+        }
     </style>
 </head>
 <body class="min-h-screen transition-colors duration-200">
-    <!-- Header -->
     <header class="header-gradient text-white sticky top-0 z-50">
         <div class="max-w-6xl mx-auto flex items-center justify-between header-compact">
             <div class="logo">
@@ -481,7 +501,6 @@
                 </a>
             </div>
             
-            <!-- Menú principal -->
             <nav class="hidden md:flex" aria-label="Menú principal">
                 <ul class="flex space-x-6">
                     <li><a href="Inicio.html" class="hover:text-pink-200 transition py-2 relative">Inicio</a></li>
@@ -501,7 +520,6 @@
             </div>
         </div>
 
-        <!-- Menú móvil -->
         <div class="mobile-menu fixed top-0 right-0 h-full w-64 bg-white text-gray-800 shadow-lg p-6 z-50" id="mobileMenu">
             <div class="flex justify-between items-center mb-8">
                 <h3 class="font-bold text-lg text-high-contrast">MENÚ</h3>
@@ -519,12 +537,10 @@
             </nav>
         </div>
         
-        <!-- Overlay para cerrar menú -->
         <div class="mobile-overlay fixed inset-0 bg-black bg-opacity-50 z-40 hidden" id="mobileOverlay"></div>
     </header>
 
     <div class="max-w-4xl mx-auto p-6">
-        <!-- Header Admin -->
         <div class="text-center mb-8">
             <h1 class="text-3xl font-bold text-high-contrast mb-2">
                 <i class="fas fa-cog text-pink-500 mr-2"></i>
@@ -533,7 +549,6 @@
             <p class="text-medium-contrast">Gestiona los productos de tu catálogo</p>
         </div>
 
-        <!-- Login Box -->
         <div id="loginBox" class="login-container">
             <div class="login-box">
                 <div class="text-center mb-6">
@@ -569,9 +584,7 @@
             </div>
         </div>
 
-        <!-- Admin Panel (oculto inicialmente) -->
         <div id="adminPanel" class="admin-panel" style="display: none;">
-            <!-- Información de sesión -->
             <div class="glass-card rounded-2xl p-4 mb-6">
                 <div class="flex items-center justify-between">
                     <div class="flex items-center">
@@ -590,7 +603,6 @@
                 </div>
             </div>
 
-            <!-- Formulario de Productos -->
             <div class="glass-card p-6 rounded-2xl shadow-lg mb-6">
                 <div class="flex items-center mb-4">
                     <div class="w-10 h-10 rounded-full bg-gradient-to-r from-pink-500 to-purple-500 flex items-center justify-center mr-3">
@@ -599,7 +611,6 @@
                     <h2 class="text-xl font-semibold text-high-contrast">Agregar / Editar Producto</h2>
                 </div>
                 
-                <!-- ID del Producto (solo lectura) -->
                 <div class="mb-4">
                     <label for="prod-id" class="form-label block text-sm font-medium mb-1">
                         ID del Producto (Automático)
@@ -683,7 +694,6 @@
                     </div>
                 </div>
                 
-                <!-- NUEVA SECCIÓN: Tallas Disponibles -->
                 <div class="mb-4">
                     <label class="form-label block text-sm font-medium mb-2">
                         Tallas Disponibles *
@@ -707,25 +717,22 @@
                     </div>
                 </div>
                 
-                <!-- NUEVA SECCIÓN: Producto Destacado -->
                 <div class="mb-6">
                     <input type="checkbox" id="destacado" class="featured-checkbox" name="destacado">
                     <label for="destacado" class="featured-label">
                         <span class="featured-checkmark"></span>
                         <div>
-                            <span class="font-semibold">Producto Destacado</span>
+                            <span class="font-semibold text-high-contrast">Producto Destacado</span>
                             <p class="text-xs text-medium-contrast mt-1">Aparecerá en la sección de productos destacados de la página de inicio</p>
                         </div>
                     </label>
                 </div>
                 
-                <!-- Sección de Múltiples Imágenes -->
                 <div class="mb-6">
                     <label class="form-label block text-sm font-medium mb-2">
                         Imágenes del Producto (Múltiples)
                     </label>
                     
-                    <!-- Área de subida -->
                     <div class="border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-xl p-6 text-center mb-4 cursor-pointer hover:border-pink-400 transition-colors" id="upload-area">
                         <i class="fas fa-cloud-upload-alt text-3xl text-gray-400 mb-3"></i>
                         <p class="text-medium-contrast mb-2">Arrastra y suelta imágenes aquí</p>
@@ -737,7 +744,6 @@
                         <input type="file" id="imagenes-file" multiple accept="image/*" class="hidden">
                     </div>
                     
-                    <!-- Progreso de subida -->
                     <div id="upload-progress" class="hidden mb-4">
                         <div class="flex justify-between text-sm text-medium-contrast mb-2">
                             <span>Subiendo imágenes...</span>
@@ -748,10 +754,8 @@
                         </div>
                     </div>
                     
-                    <!-- Vista previa de imágenes -->
                     <div id="images-preview" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3 mb-4"></div>
                     
-                    <!-- URLs de imágenes (oculto) -->
                     <input type="hidden" id="imagenes-urls" name="imagenes-urls">
                 </div>
                 
@@ -769,7 +773,6 @@
                 <p id="status" class="mt-4 text-sm text-center p-3 rounded-lg"></p>
             </div>
 
-            <!-- Lista de Productos -->
             <div class="glass-card p-6 rounded-2xl shadow-lg">
                 <div class="flex items-center justify-between mb-4">
                     <div class="flex items-center">
@@ -786,8 +789,31 @@
                     </div>
                 </div>
                 
+                <div class="admin-filter-bar">
+                    <input 
+                        type="text" 
+                        id="search-products-admin" 
+                        placeholder="Buscar por nombre o ID..." 
+                        class="modern-input w-full p-3 modern-select"
+                    />
+
+                    <select id="filter-category-admin" class="modern-input w-full p-3 modern-select">
+                        <option value="">Todas las Categorías</option>
+                        <option value="leggins">Leggings</option>
+                        <option value="tops">Tops</option>
+                        <option value="calcetas">Calcetas</option>
+                        <option value="sweaters">Sudaderas</option>
+                        <option value="conjuntos">Conjuntos</option>
+                        <option value="enterizos">Enterizos</option>
+                    </select>
+
+                    <select id="filter-featured-admin" class="modern-input w-full p-3 modern-select">
+                        <option value="">Todos</option>
+                        <option value="true">Solo Destacados</option>
+                        <option value="false">No Destacados</option>
+                    </select>
+                </div>
                 <div id="list" class="space-y-4">
-                    <!-- Los productos se cargarán aquí dinámicamente -->
                     <div class="text-center py-8 text-medium-contrast" id="loading-products">
                         <i class="fas fa-spinner fa-spin text-2xl mb-2"></i>
                         <p>Cargando productos...</p>
@@ -797,7 +823,6 @@
         </div>
     </div>
 
-    <!-- Footer -->
     <footer class="bg-gradient-to-r from-gray-800 to-gray-900 text-white pt-10 pb-6 mt-12">
         <div class="max-w-6xl mx-auto px-4">
             <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
@@ -852,13 +877,12 @@
         </div>
     </footer>
 
-    <!-- Scripts -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script>
         // ===== DECLARAR LAS VARIABLES PRIMERO =====
         let supabaseClient;
         let isAuthenticated = false;
-        let currentProducts = [];
+        let currentProducts = []; // Almacena todos los productos originales
         let isEditing = false;
         let currentEditId = null;
         let imageFiles = [];
@@ -866,17 +890,29 @@
         // Hash de la contraseña "admin123"
         const PASSWORD_HASH = '240be518fabd2724ddb6f04eeb1da5967448d7e831c08c8fa822809f74c720a9';
 
+        // Elementos del DOM
+        const statusEl = document.getElementById('status');
+        const prodIdInput = document.getElementById('prod-id');
+        const imagesPreview = document.getElementById('images-preview');
+        const fileInput = document.getElementById('imagenes-file');
+        const uploadArea = document.getElementById('upload-area');
+
+        // Contenedor de la lista de productos
+        const productListContainer = document.getElementById('list');
+        // Filtros
+        const searchInputAdmin = document.getElementById('search-products-admin');
+        const filterCategoryAdmin = document.getElementById('filter-category-admin');
+        const filterFeaturedAdmin = document.getElementById('filter-featured-admin');
+
+
         // ===== INICIALIZACIÓN AL CARGAR LA PÁGINA =====
         document.addEventListener('DOMContentLoaded', function() {
             // ===== CONFIGURACIÓN SUPABASE =====
             const SUPABASE_URL = 'https://qlkbqotipjtitrlskacv.supabase.co';
             const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFsa2Jxb3RpcGp0aXRybHNrYWN2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjI0MjE5NDAsImV4cCI6MjA3Nzk5Nzk0MH0.oYFxx5y1-KlQ4Fqjn_Cub4Dyd-2wC17m59EWyWLKCDA';
             
-            // Inicializar Supabase con un nombre diferente
             supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
             
-            console.log('Supabase inicializado correctamente', supabaseClient);
-
             // ===== CONFIGURACIÓN DE EVENT LISTENERS =====
             document.getElementById('create-btn').addEventListener('click', saveProduct);
             document.getElementById('clear-btn').addEventListener('click', clearForm);
@@ -885,7 +921,12 @@
                 if (e.key === 'Enter') verificarPassword();
             });
 
-            // ===== CONFIGURACIÓN DEL MODO OSCURO =====
+            // LISTENERS DE FILTROS EN EL ADMIN
+            if (searchInputAdmin) searchInputAdmin.addEventListener('input', applyFilters);
+            if (filterCategoryAdmin) filterCategoryAdmin.addEventListener('change', applyFilters);
+            if (filterFeaturedAdmin) filterFeaturedAdmin.addEventListener('change', applyFilters);
+
+            // [Inicialización de Dark Mode y Menú Móvil se mantienen]
             const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
             const storedPreference = localStorage.getItem('lisport_dark');
             
@@ -893,7 +934,6 @@
                 setDark(true);
             }
             
-            // ===== CONFIGURACIÓN DEL MENÚ MÓVIL =====
             const mobileMenuBtn = document.getElementById('mobileMenuBtn');
             const closeMenu = document.getElementById('closeMenu');
             const mobileMenu = document.getElementById('mobileMenu');
@@ -901,7 +941,6 @@
 
             function toggleMobileMenu() {
                 const isOpening = !mobileMenu.classList.contains('open');
-                
                 if (isOpening) {
                     mobileMenu.classList.add('open');
                     mobileOverlay.classList.remove('hidden');
@@ -917,13 +956,11 @@
                 mobileMenuBtn.addEventListener('click', toggleMobileMenu);
                 closeMenu.addEventListener('click', toggleMobileMenu);
                 mobileOverlay.addEventListener('click', toggleMobileMenu);
-                
                 mobileMenu.querySelectorAll('a').forEach(link => {
                     link.addEventListener('click', toggleMobileMenu);
                 });
             }
 
-            // ===== CONFIGURACIÓN DEL BOTÓN MODO OSCURO =====
             const darkToggle = document.getElementById('darkToggle');
             if (darkToggle) {
                 darkToggle.addEventListener('click', () => {
@@ -959,7 +996,6 @@
                 return;
             }
             
-            // Generar hash de la contraseña ingresada
             const inputHash = await generarHash(inputPassword);
             
             if (inputHash === PASSWORD_HASH) {
@@ -993,15 +1029,36 @@
             }
         }
 
-        // ===== FUNCIONES PRINCIPALES CON SUPABASE =====
-        // Elementos del DOM
-        const statusEl = document.getElementById('status');
-        const prodIdInput = document.getElementById('prod-id');
-        const imagesPreview = document.getElementById('images-preview');
-        const fileInput = document.getElementById('imagenes-file');
-        const uploadArea = document.getElementById('upload-area');
+        // ===== LÓGICA DE FILTRADO EN ADMIN (NUEVO) =====
 
-        // ===== SISTEMA DE IMÁGENES =====
+        function applyFilters() {
+            const searchTerm = searchInputAdmin.value.toLowerCase().trim();
+            const categoryFilter = filterCategoryAdmin.value;
+            const featuredFilter = filterFeaturedAdmin.value;
+            
+            // 1. Filtrar los productos cargados
+            let filtered = currentProducts.filter(product => {
+                const nameMatch = product.nombre.toLowerCase().includes(searchTerm);
+                const idMatch = product.id ? product.id.toLowerCase().includes(searchTerm) : false;
+                const searchMatch = nameMatch || idMatch;
+
+                const categoryMatch = !categoryFilter || product.categoria === categoryFilter;
+
+                const featuredMatch = !featuredFilter || 
+                                          (featuredFilter === 'true' && product.destacado === true) ||
+                                          (featuredFilter === 'false' && (product.destacado === false || product.destacado === null || product.destacado === undefined));
+
+                return searchMatch && categoryMatch && featuredMatch;
+            });
+
+            // 2. Renderizar la lista filtrada
+            renderProductList(filtered);
+        }
+
+        // ===== FUNCIONES PRINCIPALES CON SUPABASE (Corregidas) =====
+        
+        // ===== SISTEMA DE IMÁGENES Y CRUD [Se mantienen las funciones existentes] =====
+        
         function inicializarSistemaImagenes() {
             if (!uploadArea || !fileInput) return;
             
@@ -1042,7 +1099,6 @@
                 return;
             }
             
-            // Guardar archivos y mostrar preview
             imageFiles = Array.from(files);
             mostrarPreviews();
             showStatus(`✅ ${imageFiles.length} imagen(es) seleccionada(s)`, 'success');
@@ -1083,7 +1139,6 @@
             showStatus('🗑️ Imagen eliminada', 'success');
         }
 
-        // ===== SUBIR IMAGENES A SUPABASE =====
         async function subirImagenes() {
             if (imageFiles.length === 0) return [];
             
@@ -1092,19 +1147,16 @@
             
             for (const file of imageFiles) {
                 try {
-                    // Crear nombre único para el archivo
                     const fileExt = file.name.split('.').pop();
                     const fileName = `${Math.random().toString(36).substring(2)}_${Date.now()}.${fileExt}`;
                     const filePath = `productos/${fileName}`;
                     
-                    // Subir a Supabase Storage
                     const { data, error } = await supabaseClient.storage
                         .from('images')
                         .upload(filePath, file);
                     
                     if (error) throw error;
                     
-                    // Obtener URL pública
                     const { data: { publicUrl } } = supabaseClient.storage
                         .from('images')
                         .getPublicUrl(filePath);
@@ -1121,9 +1173,7 @@
             return uploadedUrls;
         }
 
-        // ===== OPERACIONES CRUD CON SUPABASE =====
         async function saveProduct() {
-            // Verificar que supabase esté inicializado
             if (!supabaseClient) {
                 showStatus('❌ Error: Base de datos no inicializada', 'error');
                 return;
@@ -1135,39 +1185,20 @@
             const cantidad = document.getElementById('cantidad')?.value.trim();
             const categoria = document.getElementById('categoria')?.value;
             
-            // Obtener tallas seleccionadas
             const tallasCheckboxes = document.querySelectorAll('input[name="tallas"]:checked');
             const tallasDisponibles = Array.from(tallasCheckboxes).map(cb => cb.value);
             
-            // Obtener estado de producto destacado
             const destacado = document.getElementById('destacado')?.checked || false;
             
-            // Validaciones
-            if (!nombre) {
-                showStatus('⚠️ El nombre del producto es obligatorio', 'error');
-                return;
-            }
-            if (!precio || isNaN(parseFloat(precio)) || parseFloat(precio) < 0) {
-                showStatus('⚠️ El precio debe ser un número válido mayor o igual a 0', 'error');
-                return;
-            }
-            if (!cantidad || isNaN(parseInt(cantidad)) || parseInt(cantidad) < 0) {
-                showStatus('⚠️ La cantidad debe ser un número válido mayor o igual a 0', 'error');
-                return;
-            }
-            if (!categoria) {
-                showStatus('⚠️ Selecciona una categoría', 'error');
-                return;
-            }
-            if (tallasDisponibles.length === 0) {
-                showStatus('⚠️ Selecciona al menos una talla disponible', 'error');
-                return;
-            }
+            if (!nombre) { showStatus('⚠️ El nombre del producto es obligatorio', 'error'); return; }
+            if (!precio || isNaN(parseFloat(precio)) || parseFloat(precio) < 0) { showStatus('⚠️ El precio debe ser un número válido mayor o igual a 0', 'error'); return; }
+            if (!cantidad || isNaN(parseInt(cantidad)) || parseInt(cantidad) < 0) { showStatus('⚠️ La cantidad debe ser un número válido mayor o igual a 0', 'error'); return; }
+            if (!categoria) { showStatus('⚠️ Selecciona una categoría', 'error'); return; }
+            if (tallasDisponibles.length === 0) { showStatus('⚠️ Selecciona al menos una talla disponible', 'error'); return; }
             
             showStatus(isEditing ? '⏳ Actualizando producto...' : '⏳ Creando producto...', 'loading');
             
             try {
-                // Subir imágenes primero
                 const imagenesUrls = await subirImagenes();
                 
                 const productData = {
@@ -1184,13 +1215,11 @@
                 let result;
                 
                 if (isEditing) {
-                    // Actualizar producto existente
                     result = await supabaseClient
                         .from('productos')
                         .update(productData)
                         .eq('id', currentEditId);
                 } else {
-                    // Crear nuevo producto
                     result = await supabaseClient
                         .from('productos')
                         .insert([productData]);
@@ -1200,7 +1229,6 @@
                 
                 showStatus('✅ ' + (isEditing ? 'Producto actualizado' : 'Producto creado') + ' correctamente', 'success');
                 
-                // Recargar lista y limpiar formulario
                 await loadProductList();
                 clearForm();
                 
@@ -1211,10 +1239,8 @@
         }
 
         async function loadProductList() {
-            const list = document.getElementById('list');
-            if (!list) return;
+            if (!productListContainer) return;
             
-            // Verificar que supabaseClient esté inicializado
             if (!supabaseClient) {
                 console.error('supabaseClient no está inicializado');
                 showProductListError(new Error('Conexión a base de datos no disponible'));
@@ -1222,8 +1248,9 @@
             }
             
             try {
-                list.innerHTML = '<div class="text-center py-4"><i class="fas fa-spinner fa-spin text-pink-500"></i> Cargando productos...</div>';
+                productListContainer.innerHTML = '<div class="text-center py-4"><i class="fas fa-spinner fa-spin text-pink-500"></i> Cargando productos...</div>';
                 
+                // Cargar TODOS los productos para que el filtro JS funcione correctamente
                 const { data: products, error } = await supabaseClient
                     .from('productos')
                     .select('*')
@@ -1231,8 +1258,8 @@
                 
                 if (error) throw error;
                 
-                currentProducts = products || [];
-                renderProductList(currentProducts);
+                currentProducts = products || []; // Almacenamos el master list
+                applyFilters(); // Aplicamos los filtros actuales al master list
                 
             } catch (error) {
                 console.error('Error cargando productos:', error);
@@ -1265,7 +1292,8 @@
                 if (error) throw error;
                 
                 showStatus('✅ Producto eliminado correctamente', 'success');
-                await loadProductList();
+                
+                await loadProductList(); // Recarga la lista completa
                 
                 if (isEditing && currentEditId === id) {
                     clearForm();
@@ -1292,12 +1320,10 @@
             if (document.getElementById('cantidad')) document.getElementById('cantidad').value = product.cantidad || '';
             if (document.getElementById('categoria')) document.getElementById('categoria').value = product.categoria || '';
             
-            // Limpiar selección de tallas
             document.querySelectorAll('input[name="tallas"]').forEach(cb => {
                 cb.checked = false;
             });
             
-            // Seleccionar tallas disponibles
             if (product.tallas_disponibles && Array.isArray(product.tallas_disponibles)) {
                 product.tallas_disponibles.forEach(talla => {
                     const checkbox = document.querySelector(`input[name="tallas"][value="${talla}"]`);
@@ -1305,16 +1331,13 @@
                 });
             }
             
-            // Establecer estado de producto destacado
             if (document.getElementById('destacado')) {
                 document.getElementById('destacado').checked = product.destacado || false;
             }
             
-            // Limpiar imágenes previas
             imageFiles = [];
             if (imagesPreview) imagesPreview.innerHTML = '';
             
-            // Mostrar imágenes existentes como preview (solo visual)
             if (product.imagenes && product.imagenes.length > 0) {
                 product.imagenes.forEach((url, index) => {
                     addImagePreview(url, `Imagen ${index + 1}`, index);
@@ -1330,7 +1353,7 @@
             }
         }
 
-        // ===== FUNCIONES AUXILIARES =====
+        // ===== FUNCIONES AUXILIARES DE RENDERIZADO =====
         function clearForm() {
             if (prodIdInput) prodIdInput.value = '';
             if (document.getElementById('nombre')) document.getElementById('nombre').value = '';
@@ -1339,12 +1362,10 @@
             if (document.getElementById('cantidad')) document.getElementById('cantidad').value = '';
             if (document.getElementById('categoria')) document.getElementById('categoria').value = '';
             
-            // Limpiar selección de tallas
             document.querySelectorAll('input[name="tallas"]').forEach(cb => {
                 cb.checked = false;
             });
             
-            // Limpiar checkbox de destacado
             if (document.getElementById('destacado')) {
                 document.getElementById('destacado').checked = false;
             }
@@ -1367,8 +1388,8 @@
                 list.innerHTML = `
                     <div class="text-center py-8 text-medium-contrast">
                         <i class="fas fa-box-open text-4xl mb-3"></i>
-                        <p class="text-lg">No hay productos registrados</p>
-                        <p class="text-sm">Usa el formulario superior para agregar el primer producto</p>
+                        <p class="text-lg">No se encontraron productos con estos filtros</p>
+                        <p class="text-sm">Intenta buscar por otro nombre o categoría.</p>
                     </div>
                 `;
                 return;
@@ -1379,7 +1400,6 @@
                 const imageCount = product.imagenes ? product.imagenes.length : 0;
                 const hasMultipleImages = imageCount > 1;
                 
-                // Mostrar tallas disponibles
                 const tallasHTML = product.tallas_disponibles && Array.isArray(product.tallas_disponibles) 
                     ? product.tallas_disponibles.map(talla => 
                         `<span class="bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 px-2 py-1 rounded-full text-xs font-medium">${talla}</span>`
@@ -1387,13 +1407,13 @@
                     : '';
                 
                 return `
-                    <div class="bg-white dark:bg-gray-700 p-4 rounded-lg border border-gray-200 dark:border-gray-600 product-card">
+                    <div class="glass-card p-4 rounded-lg border border-gray-200 dark:border-gray-600 product-card">
                         <div class="flex flex-col md:flex-row md:items-center gap-4">
                             <div class="flex-shrink-0 relative">
                                 <img src="${imagenPrincipal || 'https://via.placeholder.com/100x75?text=Sin+img'}" 
-                                     alt="${product.nombre}" 
-                                     class="w-20 h-20 object-cover rounded-lg"
-                                     onerror="this.src='https://via.placeholder.com/100x75?text=Error'">
+                                        alt="${product.nombre}" 
+                                        class="w-20 h-20 object-cover rounded-lg"
+                                        onerror="this.src='https://via.placeholder.com/100x75?text=Error'">
                                 ${hasMultipleImages ? `<span class="image-count-badge">+${imageCount-1}</span>` : ''}
                             </div>
                             <div class="flex-1 min-w-0">
@@ -1438,7 +1458,6 @@
                 `;
             }).join('');
             
-            // Agregar event listeners a los botones
             document.querySelectorAll('.edit-btn').forEach(btn => {
                 btn.addEventListener('click', (e) => {
                     const id = e.currentTarget.dataset.id;
@@ -1511,7 +1530,7 @@
             
             try {
                 inicializarSistemaImagenes();
-                loadProductList();
+                loadProductList(); // Carga inicial de productos
                 showStatus('Panel cargado correctamente con Supabase', 'success');
             } catch (error) {
                 console.error('Error inicializando panel:', error);
@@ -1519,5 +1538,6 @@
             }
         }
     </script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </body>
 </html>
