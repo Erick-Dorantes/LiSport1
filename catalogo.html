@@ -518,7 +518,7 @@
         @media (min-width: 1024px) {
             .filters-container {
                 display: grid;
-                grid-template-columns: 1fr 3fr;
+                grid-template-columns: 3fr 1fr;
                 gap: 2rem;
             }
         }
@@ -756,6 +756,22 @@
         .view-all:hover {
             text-decoration: underline;
         }
+        
+        /* Selector de ordenar más pequeño */
+        .sort-select {
+            border: 1px solid #d1d5db;
+            border-radius: 4px;
+            padding: 4px 8px;
+            font-size: 0.875rem;
+            background-color: white;
+            color: #374151;
+        }
+        
+        .dark .sort-select {
+            background-color: #374151;
+            border-color: #4b5563;
+            color: #e5e7eb;
+        }
     </style>
 </head>
 
@@ -828,7 +844,44 @@
             <!-- Filtros y productos -->
             <div class="filters-section">
                 <div class="filters-container">
-                    <!-- SOLO MOSTRAR FILTROS EN DESKTOP -->
+                    <!-- Columna de Productos (IZQUIERDA) -->
+                    <main class="products-main lg:col-span-3 mt-6 lg:mt-0">
+                        <div class="products-header bg-white dark:bg-gray-800 p-4 rounded-lg shadow-sm mb-6 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+                            <div class="results-info">
+                                <span id="resultsCount" class="font-medium text-gray-700 dark:text-gray-300">Cargando productos...</span>
+                            </div>
+                            <div class="sort-options flex items-center gap-2">
+                                <label for="sortSelect" class="text-sm text-gray-600 dark:text-gray-400">Ordenar por:</label>
+                                <select id="sortSelect" class="sort-select">
+                                    <option value="recommended">Recomendados</option>
+                                    <option value="price_asc">Precio: Menor a Mayor</option>
+                                    <option value="price_desc">Precio: Mayor a Menor</option>
+                                    <option value="name">Nombre A-Z</option>
+                                    <option value="newest">Más Nuevos</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="products-grid grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4" id="productsGrid">
+                            <!-- Estado de carga -->
+                            <div class="col-span-full text-center py-12" id="loading-products">
+                                <i class="fas fa-spinner fa-spin text-pink-500 text-3xl mb-4"></i>
+                                <p class="text-gray-600 dark:text-gray-400">Cargando productos...</p>
+                            </div>
+                        </div>
+                        
+                        <!-- Mensaje cuando no hay resultados -->
+                        <div id="noResults" class="hidden text-center py-12">
+                            <i class="fas fa-search text-5xl text-gray-300 mb-4"></i>
+                            <h3 class="text-xl font-bold mb-2">No se encontraron productos</h3>
+                            <p class="text-gray-600 dark:text-gray-400">Intenta con otros términos de búsqueda o filtros</p>
+                            <button id="resetFilters" class="mt-4 bg-pink-500 text-white px-6 py-2 rounded-lg hover:bg-pink-600 transition">
+                                Restablecer filtros
+                            </button>
+                        </div>
+                    </main>
+
+                    <!-- SOLO MOSTRAR FILTROS EN DESKTOP (DERECHA) -->
                     <div class="hidden lg:block">
                         <!-- Columna de Filtros -->
                         <aside class="filters-sidebar lg:col-span-1">
@@ -926,43 +979,6 @@
                             </div>
                         </aside>
                     </div>
-
-                    <!-- Columna de Productos -->
-                    <main class="products-main lg:col-span-3 mt-6 lg:mt-0">
-                        <div class="products-header bg-white dark:bg-gray-800 p-4 rounded-lg shadow-sm mb-6 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
-                            <div class="results-info">
-                                <span id="resultsCount" class="font-medium text-gray-700 dark:text-gray-300">Cargando productos...</span>
-                            </div>
-                            <div class="sort-options flex items-center gap-2">
-                                <label for="sortSelect" class="text-sm text-gray-600 dark:text-gray-400">Ordenar por:</label>
-                                <select id="sortSelect" class="border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded px-3 py-1 text-sm focus:outline-none focus:ring-2 focus:ring-pink-500">
-                                    <option value="recommended">Recomendados</option>
-                                    <option value="price_asc">Precio: Menor a Mayor</option>
-                                    <option value="price_desc">Precio: Mayor a Menor</option>
-                                    <option value="name">Nombre A-Z</option>
-                                    <option value="newest">Más Nuevos</option>
-                                </select>
-                            </div>
-                        </div>
-
-                        <div class="products-grid grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4" id="productsGrid">
-                            <!-- Estado de carga -->
-                            <div class="col-span-full text-center py-12" id="loading-products">
-                                <i class="fas fa-spinner fa-spin text-pink-500 text-3xl mb-4"></i>
-                                <p class="text-gray-600 dark:text-gray-400">Cargando productos...</p>
-                            </div>
-                        </div>
-                        
-                        <!-- Mensaje cuando no hay resultados -->
-                        <div id="noResults" class="hidden text-center py-12">
-                            <i class="fas fa-search text-5xl text-gray-300 mb-4"></i>
-                            <h3 class="text-xl font-bold mb-2">No se encontraron productos</h3>
-                            <p class="text-gray-600 dark:text-gray-400">Intenta con otros términos de búsqueda o filtros</p>
-                            <button id="resetFilters" class="mt-4 bg-pink-500 text-white px-6 py-2 rounded-lg hover:bg-pink-600 transition">
-                                Restablecer filtros
-                            </button>
-                        </div>
-                    </main>
                 </div>
             </div>
         </section>
