@@ -418,7 +418,7 @@
             }
         }
 
-        /* Modal para múltiples imágenes */
+        /* ===== MODAL MEJORADO CON DESCRIPCIÓN ===== */
         .image-modal {
             display: none;
             position: fixed;
@@ -458,7 +458,7 @@
         }
 
         .modal-close {
-            position: absolute;
+            position: fixed;
             top: 20px;
             right: 20px;
             background: none;
@@ -468,10 +468,17 @@
             cursor: pointer;
             padding: 5px;
             z-index: 1001;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            transition: background-color 0.3s ease;
         }
 
         .modal-close:hover {
-            color: #ff4c7a;
+            background-color: rgba(255, 255, 255, 0.1);
         }
 
         /* Carrusel dentro del modal */
@@ -487,7 +494,8 @@
         .carousel-container-modal {
             position: relative;
             width: 100%;
-            height: 100%;
+            max-width: 90vw;
+            max-height: 90vh;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -496,14 +504,18 @@
         .carousel-slide-modal {
             display: none;
             text-align: center;
+            width: 100%;
+            height: 100%;
         }
 
         .carousel-slide-modal.active {
-            display: block;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         .carousel-nav-modal {
-            position: absolute;
+            position: fixed;
             top: 50%;
             transform: translateY(-50%);
             background: rgba(255, 255, 255, 0.2);
@@ -533,7 +545,7 @@
         }
 
         .carousel-indicators-modal {
-            position: absolute;
+            position: fixed;
             bottom: 20px;
             left: 50%;
             transform: translateX(-50%);
@@ -555,6 +567,163 @@
         .carousel-indicator-modal.active {
             background: white;
             transform: scale(1.2);
+        }
+
+        /* ===== PANEL DE INFORMACIÓN DEL PRODUCTO ===== */
+        .product-info-panel {
+            position: fixed;
+            right: 0;
+            top: 0;
+            width: 400px;
+            height: 100%;
+            background: white;
+            z-index: 1002;
+            padding: 30px;
+            overflow-y: auto;
+            transform: translateX(100%);
+            transition: transform 0.3s ease;
+            box-shadow: -5px 0 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .dark .product-info-panel {
+            background: #1e293b;
+            color: #e6eef8;
+        }
+
+        .product-info-panel.active {
+            transform: translateX(0);
+        }
+
+        .product-info-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 20px;
+            border-bottom: 1px solid #e5e7eb;
+            padding-bottom: 15px;
+        }
+
+        .dark .product-info-header {
+            border-bottom-color: #374151;
+        }
+
+        .product-info-title {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #1f2937;
+            margin: 0;
+        }
+
+        .dark .product-info-title {
+            color: #f9fafb;
+        }
+
+        .product-info-close {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #6b7280;
+            padding: 5px;
+        }
+
+        .product-info-close:hover {
+            color: #ef4444;
+        }
+
+        .product-info-price {
+            font-size: 1.75rem;
+            font-weight: bold;
+            color: var(--rosa);
+            margin-bottom: 15px;
+        }
+
+        .product-info-category {
+            display: inline-block;
+            background: #f3f4f6;
+            color: #374151;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.875rem;
+            margin-bottom: 15px;
+        }
+
+        .dark .product-info-category {
+            background: #374151;
+            color: #e5e7eb;
+        }
+
+        .product-info-description {
+            line-height: 1.6;
+            color: #4b5563;
+            margin-bottom: 20px;
+        }
+
+        .dark .product-info-description {
+            color: #d1d5db;
+        }
+
+        .product-info-stock {
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+
+        .product-info-stock.in-stock {
+            color: #10b981;
+        }
+
+        .product-info-stock.out-of-stock {
+            color: #ef4444;
+        }
+
+        .product-info-sizes {
+            margin-top: 20px;
+        }
+
+        .sizes-title {
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: #374151;
+        }
+
+        .dark .sizes-title {
+            color: #e5e7eb;
+        }
+
+        .sizes-container-modal {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        @media (max-width: 768px) {
+            .product-info-panel {
+                width: 100%;
+                padding: 20px;
+            }
+            
+            .carousel-nav-modal {
+                width: 40px;
+                height: 40px;
+            }
+            
+            .carousel-prev-modal {
+                left: 10px;
+            }
+            
+            .carousel-next-modal {
+                right: 10px;
+            }
+            
+            .carousel-container-modal {
+                max-width: 95vw;
+            }
+            
+            .modal-close {
+                top: 10px;
+                right: 10px;
+                font-size: 1.5rem;
+            }
         }
     </style>
 </head>
@@ -718,7 +887,7 @@
         <span>Filtros</span>
     </button>
 
-    <!-- Modal para múltiples imágenes -->
+    <!-- ===== MODAL MEJORADO CON DESCRIPCIÓN ===== -->
     <div id="imageModal" class="image-modal">
         <div class="modal-carousel">
             <button class="modal-close" id="modalClose">
@@ -739,6 +908,36 @@
 
                 <div class="carousel-indicators-modal" id="modalIndicators">
                     <!-- Los indicadores se cargarán dinámicamente aquí -->
+                </div>
+            </div>
+        </div>
+        
+        <!-- ===== PANEL DE INFORMACIÓN DEL PRODUCTO ===== -->
+        <div class="product-info-panel" id="productInfoPanel">
+            <div class="product-info-header">
+                <h2 class="product-info-title" id="productInfoTitle">Nombre del Producto</h2>
+                <button class="product-info-close" id="productInfoClose">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            
+            <div class="product-info-price" id="productInfoPrice">$0.00</div>
+            
+            <div class="product-info-category" id="productInfoCategory">Categoría</div>
+            
+            <div class="product-info-stock in-stock" id="productInfoStock">
+                <i class="fas fa-check-circle mr-2"></i>
+                <span id="stockText">0 disponibles</span>
+            </div>
+            
+            <div class="product-info-description" id="productInfoDescription">
+                Descripción del producto aparecerá aquí...
+            </div>
+            
+            <div class="product-info-sizes">
+                <h3 class="sizes-title">Tallas Disponibles</h3>
+                <div class="sizes-container-modal" id="productInfoSizes">
+                    <!-- Las tallas se cargarán dinámicamente aquí -->
                 </div>
             </div>
         </div>
@@ -803,6 +1002,7 @@
         let allProducts = [];
         let filteredProducts = [];
         let currentModalCarousel = null;
+        let currentProduct = null;
 
         // ===== INICIALIZACIÓN =====
         document.addEventListener('DOMContentLoaded', function () {
@@ -894,7 +1094,7 @@
                 const sizesHTML = generateSizesHTML(product);
 
                 return `
-                    <div class="product-card" data-product-id="${product.id}">
+                    <div class="product-card" data-product-id="${product.id}" data-product='${JSON.stringify(product).replace(/'/g, "&apos;")}'>
                         <div class="product-image-wrapper">
                             <img 
                                 src="${imagenPrincipal}" 
@@ -960,18 +1160,22 @@
 
             return '';
         }
-        // ===== SISTEMA DE MODAL PARA MÚLTIPLES IMÁGENES =====
+
+        // ===== SISTEMA DE MODAL MEJORADO CON DESCRIPCIÓN =====
         function addImageModalListeners() {
             const productCards = document.querySelectorAll('.product-card');
 
             productCards.forEach(card => {
                 card.addEventListener('click', function () {
+                    const productData = this.getAttribute('data-product');
                     const productImage = this.querySelector('.product-image');
                     const imagesData = productImage.getAttribute('data-images');
-                    if (imagesData) {
+                    
+                    if (productData && imagesData) {
+                        const product = JSON.parse(productData);
                         const images = JSON.parse(imagesData);
                         if (images.length > 0) {
-                            openImageModal(images);
+                            openImageModal(images, product);
                         }
                     }
                 });
@@ -1089,23 +1293,87 @@
             }
         }
 
-        function openImageModal(images) {
+        function openImageModal(images, product) {
             const modal = document.getElementById('imageModal');
+            const infoPanel = document.getElementById('productInfoPanel');
 
             if (images.length === 0) return;
+
+            // Guardar producto actual
+            currentProduct = product;
 
             // Crear nuevo carrusel
             currentModalCarousel = new ImageModalCarousel(images);
 
-            // Mostrar modal
+            // Actualizar información del producto en el panel
+            updateProductInfo(product);
+
+            // Mostrar modal y panel de información
             modal.classList.add('active');
+            infoPanel.classList.add('active');
             document.body.style.overflow = 'hidden';
+        }
+
+        function updateProductInfo(product) {
+            document.getElementById('productInfoTitle').textContent = product.nombre || "Producto sin nombre";
+            document.getElementById('productInfoPrice').textContent = `$${product.precio || "0"}`;
+            document.getElementById('productInfoCategory').textContent = product.categoria || "General";
+            
+            // Actualizar stock
+            const stockElement = document.getElementById('productInfoStock');
+            const stockText = document.getElementById('stockText');
+            const cantidad = product.cantidad || 0;
+            
+            if (cantidad > 0) {
+                stockElement.className = 'product-info-stock in-stock';
+                stockText.textContent = `${cantidad} disponibles`;
+            } else {
+                stockElement.className = 'product-info-stock out-of-stock';
+                stockText.textContent = 'Agotado';
+            }
+            
+            // Actualizar descripción
+            const descripcion = product.descripcion || "Sin descripción disponible";
+            document.getElementById('productInfoDescription').textContent = descripcion;
+            
+            // Actualizar tallas
+            const sizesContainer = document.getElementById('productInfoSizes');
+            sizesContainer.innerHTML = '';
+            
+            let tallas = product.tallas_disponibles;
+            if (typeof tallas === 'string') {
+                try {
+                    tallas = JSON.parse(tallas);
+                } catch (e) {
+                    tallas = null;
+                }
+            }
+            
+            if (tallas && Array.isArray(tallas)) {
+                const availableSizes = tallas.map(s => s.toUpperCase());
+                const allSizes = ['XS', 'S', 'M', 'L', 'XL', '2XL'];
+                
+                allSizes.forEach(size => {
+                    const isAvailable = availableSizes.includes(size);
+                    const sizeElement = document.createElement('span');
+                    sizeElement.className = `size-tag ${isAvailable ? 'available' : 'unavailable'}`;
+                    sizeElement.textContent = size;
+                    sizesContainer.appendChild(sizeElement);
+                });
+            } else if (product.talla) {
+                const sizeElement = document.createElement('span');
+                sizeElement.className = 'size-tag available';
+                sizeElement.textContent = product.talla;
+                sizesContainer.appendChild(sizeElement);
+            }
         }
 
         function closeImageModal() {
             const modal = document.getElementById('imageModal');
+            const infoPanel = document.getElementById('productInfoPanel');
 
             modal.classList.remove('active');
+            infoPanel.classList.remove('active');
             document.body.style.overflow = '';
 
             // Destruir carrusel actual
@@ -1113,6 +1381,8 @@
                 currentModalCarousel.destroy();
                 currentModalCarousel = null;
             }
+            
+            currentProduct = null;
         }
 
         // ===== FILTROS Y BÚSQUEDA =====
@@ -1155,6 +1425,7 @@
             updateResultsCount();
             renderProducts();
         }
+        
         // ===== AUTOCOMPLETAR PREDICCIÓN =====
         function generateAutocomplete() {
             const inputElement = document.getElementById('searchInput');
@@ -1229,6 +1500,7 @@
                 clearAutocomplete();
             }
         });
+        
         function sortProducts(sortBy) {
             switch (sortBy) {
                 case 'price_asc':
@@ -1327,6 +1599,7 @@
 
             // Modal de imágenes
             document.getElementById('modalClose').addEventListener('click', closeImageModal);
+            document.getElementById('productInfoClose').addEventListener('click', closeImageModal);
             document.getElementById('imageModal').addEventListener('click', function (e) {
                 if (e.target === this) {
                     closeImageModal();
