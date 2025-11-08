@@ -1406,10 +1406,12 @@
             document.getElementById('dialogSizes').innerHTML = generateSizesHTML(product, true);
         }
 
-        function closeImageModal() {
+        function closeImageModal(fromBackButton = false) {
             const modal = document.getElementById('imageModal');
             const infoPanel = document.getElementById('productInfoPanel');
             const infoDialog = document.getElementById('productInfoDialog');
+
+            if (!modal.classList.contains('active')) return; // Evita cierres dobles
 
             modal.classList.remove('active');
             infoPanel.classList.remove('active');
@@ -1423,7 +1425,13 @@
 
             currentProduct = null;
             isModalOpen = false; // Marcar el modal como cerrado
-            history.back(); // Permitir que el botón de retroceso funcione normalmente
+
+            // Si el modal se cierra mediante un botón interno (cierre, ESC, o clic fuera de imagen)
+            // ejecutamos history.back() para eliminar la entrada única del historial.
+            if (!fromBackButton) {
+                // history.back() eliminará la entrada pushState creada al abrir el modal.
+                history.back();
+            }
         }
 
         function toggleProductInfoDialog() {
@@ -1438,7 +1446,7 @@
             const infoPanel = document.getElementById('productInfoPanel');
             const infoDialog = document.getElementById('productInfoDialog');
 
-            if (images.length === 0) return;
+            if (images.length === 0 || isModalOpen) return;
 
             currentProduct = product;
             currentModalCarousel = new ImageModalCarousel(images);
@@ -1455,7 +1463,8 @@
             }
 
             isModalOpen = true; // Marcar el modal como abierto
-            history.pushState({ modalOpen: true }, ''); // Añadir una entrada al historial para el modal
+            // Añadir una entrada única al historial para el modal. Usamos un hash para que no recargue la página.
+            history.pushState({ modalOpen: true }, '', '#product-modal-open');
         }
 
         function addImageModalListeners() {
@@ -1519,7 +1528,6 @@
                         this.goToSlide(index);
                     });
                 });
-                // REMOVED: Moved keydown listener to global scope for Escape key handling
             }
 
             showSlide(index) {
@@ -1556,7 +1564,7 @@
             }
         }
 
-        // ===== LÓGICA DE CARGA, FILTROS Y AUTOCOMPLETADO =====
+        // ===== LÓGICA DE CARGA, FILTROS Y AUTOCOMPLETADO (SIN CAMBIOS) =====
 
         function loadAllProducts() {
             const container = document.getElementById('productsGrid');
@@ -1901,11 +1909,10 @@
                 }
             });
 
-            // Cerrar diálogo si se hace clic fuera de él (solo en móvil)
-            // MODIFICADO: Ahora el clic fuera de la imagen (pero dentro del modal) cierra el modal
+            // Cerrar modal al hacer clic en el fondo (área negra)
             imageModal.addEventListener('click', function (e) {
                 // Si el clic es directamente en el fondo del modal (imageModal)
-                // Y no en la imagen dentro del carrusel ni en el panel de información ni en el diálogo móvil
+                // O si es en el contenedor del carrusel pero no en uno de sus hijos (es decir, en el fondo oscuro)
                 if (e.target === this || e.target.classList.contains('carousel-container-modal')) {
                     closeImageModal();
                 } else if (isMobileView() && infoDialog.classList.contains('active') && e.target !== modalDetailsButton && !infoDialog.contains(e.target)) {
@@ -1921,18 +1928,22 @@
                 }
             });
 
-            // Nuevo listener para la tecla ESCAPE
+            // Listener para la tecla ESCAPE
             document.addEventListener('keydown', function (e) {
                 if (e.key === 'Escape' && isModalOpen) {
+                    e.preventDefault(); // Evita que ESC también active el retroceso del navegador
                     closeImageModal();
                 }
             });
 
-            // Nuevo listener para el botón de retroceso del navegador
+            // Listener para el botón de retroceso del navegador
             window.addEventListener('popstate', function (event) {
-                if (isModalOpen && !event.state?.modalOpen) {
-                    // Si el modal está abierto y el historial ha vuelto a un estado donde no debería estar abierto (e.g., el usuario presionó el botón de retroceso)
-                    closeImageModal();
+                const modal = document.getElementById('imageModal');
+                
+                // Si el modal está activo y el estado del historial no tiene la bandera modalOpen, lo cerramos.
+                // Esto ocurre cuando el usuario presiona el botón de retroceso del navegador.
+                if (modal.classList.contains('active') && (event.state === null || event.state.modalOpen === undefined)) {
+                    closeImageModal(true); // El 'true' indica que el cierre viene del botón de retroceso
                 }
             });
         }
@@ -1943,6 +1954,11 @@
             initDarkMode();
             setupEventListeners();
             loadAllProducts();
+            
+            // Si la página se carga con el hash del modal, lo quitamos inmediatamente
+            if (window.location.hash === '#product-modal-open') {
+                history.replaceState(null, '', window.location.pathname + window.location.search);
+            }
         });
 
         // Escuchar cambios en las preferencias del sistema
