@@ -107,7 +107,7 @@
         }
 
         .dark .product-stock {
-            color: #9ca3af;
+            color: #10b981;
         }
 
         .in-stock {
@@ -215,8 +215,10 @@
             border-color: var(--rosa);
         }
 
+        /* *** AJUSTE INICIAL: Barra Lateral de Filtros (Fondo Blanco) *** */
         .filters-sidebar {
-            background: var(--card-bg, #f8f8f8);
+            background: white;
+            /* **Fondo BLANCO por defecto (modo claro)** */
             border-radius: 12px;
             padding: 25px;
             height: fit-content;
@@ -228,6 +230,116 @@
         .dark .filters-sidebar {
             background: #1e1e1e;
         }
+        /* *** FIN AJUSTE INICIAL *** */
+
+        /* *** AJUSTES DE VISIBILIDAD DE TEXTO DENTRO DEL FILTRO (MODO CLARO) *** */
+        /* 1. Títulos de Filtro (FILTROS, BUSCAR, CATEGORÍA, TALLA) */
+        .filters-sidebar h3,
+        .filters-sidebar h4 {
+            color: #1f2937;
+            /* Gris muy oscuro, casi negro, en modo claro */
+        }
+
+        .dark .filters-sidebar h3,
+        .dark .filters-sidebar h4 {
+            color: #e5e7eb;
+            /* Blanco/gris claro en modo oscuro */
+        }
+
+        /* 2. Texto de Opción de Filtro (Leggings, Tops) */
+        .filter-option .filter-text {
+            color: #4b5563;
+            /* Gris oscuro para las opciones en modo claro */
+        }
+
+        .dark .filter-option .filter-text {
+            color: #e5e7eb;
+            /* Blanco/gris claro en modo oscuro */
+        }
+
+        /* 3. Estilo del Campo de Búsqueda (Input y Lupa) */
+        .search-box {
+            position: relative;
+            display: flex;
+            align-items: center;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            padding: 8px 12px;
+            transition: all 0.3s ease;
+            /* >>> MODIFICACIÓN CLAVE: Fondo en modo claro */
+            background: white;
+        }
+
+        .dark .search-box {
+            /* >>> MODIFICACIÓN CLAVE: Fondo en modo oscuro */
+            background: #1f2937;
+            border-color: #4b5563;
+        }
+
+        .search-box:focus-within {
+            border-color: var(--rosa);
+            box-shadow: 0 0 0 3px rgba(255, 76, 122, 0.1);
+        }
+
+        .search-box .search-icon {
+            color: #4b5563;
+            /* Gris oscuro para la lupa en modo claro */
+        }
+
+        .dark .search-box .search-icon {
+            color: #9ca3af;
+            /* Color más claro para la lupa en modo oscuro */
+        }
+
+        .search-input {
+            flex: 1;
+            border: none;
+            outline: none;
+            background: transparent;
+            color: #1f2937 !important;
+            /* Forzar el color del texto escrito a oscuro en modo claro */
+            font-size: 0.95rem;
+            padding: 4px 0;
+        }
+
+        /* === SOLUCIÓN AGRESIVA PARA EL PLACEHOLDER EN MODO CLARO === */
+        .search-input::placeholder,
+        .search-input::-webkit-input-placeholder,
+        /* WebKit (Chrome, Safari) */
+        .search-input:-moz-placeholder,
+        /* Mozilla Firefox 4 to 18 */
+        .search-input::-moz-placeholder,
+        /* Mozilla Firefox 19+ */
+        .search-input:-ms-input-placeholder,
+        /* Internet Explorer 10+ */
+        .search-input::-ms-input-placeholder {
+            color: #6b7280 !important;
+            /* FORZAMOS un gris oscuro para que sea visible */
+            opacity: 1 !important;
+            /* Aseguramos que la opacidad no lo haga invisible */
+        }
+        /* ========================================================== */
+
+        .dark .search-input {
+            color: #e6eef8 !important;
+            /* El texto en modo oscuro debe ser claro */
+        }
+
+        /* === SOLUCIÓN AGRESIVA PARA EL PLACEHOLDER EN MODO OSCURO === */
+        .dark .search-input::placeholder,
+        .dark .search-input::-webkit-input-placeholder,
+        .dark .search-input:-moz-placeholder,
+        .dark .search-input::-moz-placeholder,
+        .dark .search-input:-ms-input-placeholder,
+        .dark .search-input::-ms-input-placeholder {
+            color: #9ca3af !important;
+            /* Gris claro para el placeholder en modo oscuro */
+            opacity: 1 !important;
+        }
+        /* ========================================================== */
+        
+        /* *** FIN AJUSTES DE VISIBILIDAD DE TEXTO *** */
+
 
         .filter-group {
             margin-bottom: 30px;
@@ -285,33 +397,45 @@
             border-color: var(--rosa);
         }
 
-        .search-box {
-            position: relative;
-            display: flex;
-            align-items: center;
-            background: var(--background-color, white);
-            border: 2px solid #ddd;
-            border-radius: 8px;
-            padding: 8px 12px;
-            transition: all 0.3s ease;
+        /* Selector de ordenar más pequeño */
+        .sort-select {
+            border: 1px solid #d1d5db;
+            border-radius: 4px;
+            padding: 4px 8px;
+            font-size: 0.875rem;
+            background-color: white;
+            /* **Fondo Blanco para el select en modo claro** */
+            color: #374151;
         }
 
-        .search-box:focus-within {
-            border-color: var(--rosa);
-            box-shadow: 0 0 0 3px rgba(255, 76, 122, 0.1);
+        .dark .sort-select {
+            background-color: #374151;
+            border-color: #4b5563;
+            color: #e5e7eb;
         }
 
-        .search-input {
-            flex: 1;
-            border: none;
-            outline: none;
-            background: transparent;
-            color: var(--text-color, #000);
-            font-size: 0.95rem;
-            padding: 4px 0;
+        /* *** AJUSTE FINAL: Recuadro de Resultados/Ordenación (Fondo Blanco) *** */
+        .products-header {
+            /* Eliminamos las clases bg- de Tailwind en el HTML para controlar el color aquí */
+            background-color: white;
+            /* **Fondo BLANCO forzado en modo claro** */
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+            /* Aseguramos el padding/margin de Tailwind si se eliminan las utilidades */
+            padding: 1rem;
+            /* p-4 */
+            margin-bottom: 1.5rem;
+            /* mb-6 */
         }
 
-        /* Layout principal */
+        .dark .products-header {
+            background-color: #1f2937;
+            /* Color oscuro similar a dark:bg-gray-800 */
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+        /* *** FIN AJUSTE FINAL *** */
+
+
+        /* Layout principal y media queries (sin cambios) */
         .catalog-layout {
             display: grid;
             grid-template-columns: 280px 1fr;
@@ -327,7 +451,7 @@
             .filters-sidebar {
                 display: none;
             }
-            
+
             .filters-sidebar.mobile-open {
                 display: block;
                 position: fixed;
@@ -339,27 +463,12 @@
                 overflow-y: auto;
                 background: white;
             }
-            
+
             .dark .filters-sidebar.mobile-open {
                 background: #1e293b;
             }
         }
-
-        /* Selector de ordenar más pequeño */
-        .sort-select {
-            border: 1px solid #d1d5db;
-            border-radius: 4px;
-            padding: 4px 8px;
-            font-size: 0.875rem;
-            background-color: white;
-            color: #374151;
-        }
-
-        .dark .sort-select {
-            background-color: #374151;
-            border-color: #4b5563;
-            color: #e5e7eb;
-        }
+        /* ... (resto de media queries y estilos no afectados) ... */
 
         /* Botón de filtros flotante en móviles */
         .floating-filters-button {
@@ -416,7 +525,7 @@
             }
         }
 
-        /* ===== MODAL GENERAL (Contenedor de Carrusel y Paneles) ===== */
+        /* ===== MODAL GENERAL (Contenedor de Carrusel y Paneles) (sin cambios) ===== */
         .image-modal {
             display: none;
             position: fixed;
@@ -436,6 +545,8 @@
             align-items: center;
             justify-content: center;
         }
+
+        /* ... (Resto de estilos de Modal y Carousel) ... */
 
         .modal-content {
             position: relative;
@@ -488,7 +599,7 @@
             align-items: center;
             justify-content: center;
         }
-        
+
         /* CORRECCIÓN 1 (Desktop): Ajuste del contenedor de imagen */
         .carousel-container-modal {
             position: relative;
@@ -498,9 +609,9 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            
+
             /* COMPENSACIÓN: Deja espacio para el panel lateral de 400px */
-            margin-right: var(--panel-width); 
+            margin-right: var(--panel-width);
             transition: margin-right 0.3s ease;
         }
 
@@ -542,17 +653,17 @@
         .carousel-prev-modal {
             left: 20px;
         }
-        
+
         /* CORRECCIÓN 2 (Desktop): Posición de la flecha derecha */
         .carousel-next-modal {
-            right: calc(var(--panel-width) + 20px); 
+            right: calc(var(--panel-width) + 20px);
         }
 
         .carousel-indicators-modal {
             position: fixed;
             bottom: 20px;
             /* CORRECCIÓN 3 (Desktop): Centrado de indicadores */
-            left: calc(50% - (var(--panel-width) / 2)); 
+            left: calc(50% - (var(--panel-width) / 2));
             transform: translateX(-50%);
             display: flex;
             gap: 10px;
@@ -574,7 +685,7 @@
             transform: scale(1.2);
         }
 
-        /* ===== PANEL DE INFORMACIÓN DEL PRODUCTO (Desktop) ===== */
+        /* ===== PANEL DE INFORMACIÓN DEL PRODUCTO (Desktop) (sin cambios) ===== */
         .product-info-panel {
             position: fixed;
             right: 0;
@@ -586,7 +697,7 @@
             padding: 30px;
             overflow-y: auto;
             /* Usamos transform: translateX(100%) para ocultar en desktop si no está 'active' */
-            transform: translateX(100%); 
+            transform: translateX(100%);
             transition: transform 0.3s ease;
             box-shadow: -5px 0 15px rgba(0, 0, 0, 0.1);
         }
@@ -701,27 +812,33 @@
             flex-wrap: wrap;
             gap: 8px;
         }
-        
+
         /* NUEVO ESTILO: Botón de Detalles - Más elegante y pequeño (45px) */
         .modal-details-button {
             position: fixed;
             bottom: 20px;
-            left: 20px; 
-            background: rgba(255, 76, 122, 0.9); /* Rosa semi-transparente */
+            left: 20px;
+            background: rgba(255, 76, 122, 0.9);
+            /* Rosa semi-transparente */
             color: white;
-            border: 2px solid white; /* Borde para sofisticación */
-            width: 45px; /* Reducido */
-            height: 45px; /* Reducido */
+            border: 2px solid white;
+            /* Borde para sofisticación */
+            width: 45px;
+            /* Reducido */
+            height: 45px;
+            /* Reducido */
             border-radius: 50%;
-            display: none; /* Oculto por defecto, se muestra solo en móvil */
+            display: none;
+            /* Oculto por defecto, se muestra solo en móvil */
             align-items: center;
             justify-content: center;
             font-size: 1.1rem;
             cursor: pointer;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-            z-index: 1003; 
+            z-index: 1003;
             transition: transform 0.2s ease, background 0.3s ease;
         }
+
         .modal-details-button:active {
             transform: scale(0.95);
         }
@@ -729,7 +846,8 @@
         /* NUEVO ESTILO: Contenedor del Diálogo flotante (Solo Móvil) */
         #productInfoDialog {
             position: fixed;
-            bottom: 80px; /* Sobre el botón de detalles */
+            bottom: 80px;
+            /* Sobre el botón de detalles */
             left: 20px;
             max-width: 90%;
             width: 300px;
@@ -765,29 +883,32 @@
 
         /* Responsive mejorado (MOBILE) */
         @media (max-width: 768px) {
-            
+
             /* CORRECCIÓN 5: Desactiva el panel grande y la compensación en móvil */
             .product-info-panel {
-                display: none; /* Ocultar completamente el panel grande en móvil */
+                display: none;
+                /* Ocultar completamente el panel grande en móvil */
                 transform: translateX(100%) !important;
             }
+
             .carousel-container-modal {
-                margin-right: 0; 
+                margin-right: 0;
                 max-width: 95vw;
             }
-            
+
             /* Posicionamiento en móvil */
             .carousel-next-modal {
-                right: 10px; 
+                right: 10px;
             }
+
             .carousel-indicators-modal {
                 left: 50%;
                 transform: translateX(-50%);
             }
-            
+
             /* Mostrar el botón de detalles en móvil */
             .modal-details-button {
-                display: flex; 
+                display: flex;
             }
         }
 
@@ -796,12 +917,12 @@
                 grid-template-columns: 1fr;
                 gap: 1rem;
             }
-            
+
             .products-header {
                 flex-direction: column;
                 gap: 1rem;
             }
-            
+
             .sort-options {
                 width: 100%;
                 justify-content: space-between;
@@ -814,7 +935,7 @@
             top: 100%;
             left: 0;
             right: 0;
-            background: white;
+            background: white; /* **Fondo BLANCO forzado en modo CLARO** */
             border: 1px solid #e5e7eb;
             border-radius: 8px;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
@@ -825,6 +946,7 @@
 
         .dark #autocomplete-results {
             background: #374151;
+            /* Color oscuro en modo oscuro */
             border-color: #4b5563;
         }
 
@@ -832,24 +954,31 @@
             padding: 8px 12px;
             cursor: pointer;
             border-bottom: 1px solid #f3f4f6;
+            color: #374151;
+            /* Texto oscuro en modo claro */
         }
 
         .dark .autocomplete-item {
+            background: transparent;
             border-bottom-color: #4b5563;
             color: #e5e7eb;
+            /* Texto claro en modo oscuro */
         }
 
         .autocomplete-item:hover {
             background-color: #f9fafb;
+            /* Fondo claro al pasar el ratón en modo claro */
         }
 
         .dark .autocomplete-item:hover {
             background-color: #4b5563;
+            /* Fondo oscuro al pasar el ratón en modo oscuro */
         }
 
         .autocomplete-item:last-child {
             border-bottom: none;
         }
+        /* FIN AUTOCÓMPLETE */
     </style>
 </head>
 
@@ -907,9 +1036,9 @@
 
                     <div class="filter-group mb-6" style="position: relative;">
                         <div class="filter-title mb-4">
-                            <h4 class="font-semibold text-gray-700 dark:text-gray-300">BUSCAR</h4>
+                            <h4 class="font-semibold">BUSCAR</h4>
                         </div>
-                        <div class="search-box relative">
+                        <div class="search-box relative"> 
                             <i class="fas fa-search search-icon text-gray-400"></i>
                             <input type="text" id="searchInput" placeholder="Buscar productos..." class="search-input"
                                 autocomplete="off">
@@ -920,7 +1049,7 @@
 
                     <div class="filter-group mb-6">
                         <div class="filter-title flex justify-between items-center mb-4">
-                            <h4 class="font-semibold text-gray-700 dark:text-gray-300">CATEGORÍA</h4>
+                               <h4 class="font-semibold">CATEGORÍA</h4>
                         </div>
                         <div class="filter-options space-y-2">
                             <label class="filter-option">
@@ -958,7 +1087,7 @@
 
                     <div class="filter-group">
                         <div class="filter-title mb-4">
-                            <h4 class="font-semibold text-gray-700 dark:text-gray-300">TALLA</h4>
+                            <h4 class="font-semibold">TALLA</h4>
                         </div>
                         <div class="size-filters">
                             <label class="size-option">
@@ -987,9 +1116,9 @@
 
                 <main class="products-main">
                     <div
-                        class="products-header bg-white dark:bg-gray-800 p-4 rounded-lg shadow-sm mb-6 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+                        class="products-header text-gray-800 dark:text-white p-4 rounded-lg shadow-sm mb-6 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
                         <div class="results-info">
-                            <span id="resultsCount" class="font-medium text-gray-700 dark:text-gray-300">Cargando
+                            <span id="resultsCount" class="font-medium text-gray-800 dark:text-gray-300">Cargando
                                 productos...</span>
                         </div>
                         <div class="sort-options flex items-center gap-2">
@@ -1039,7 +1168,7 @@
 
             <div class="carousel-container-modal">
                 <div id="modalCarouselSlides" class="carousel-slides-container">
-                    </div>
+                </div>
 
                 <button class="carousel-nav-modal carousel-prev-modal" id="modalPrev">
                     <i class="fas fa-chevron-left"></i>
@@ -1049,10 +1178,10 @@
                 </button>
 
                 <div class="carousel-indicators-modal" id="modalIndicators">
-                    </div>
+                </div>
             </div>
         </div>
-        
+
         <div class="product-info-panel" id="productInfoPanel">
             <div class="product-info-header">
                 <h2 class="product-info-title" id="productInfoTitle">Nombre del Producto</h2>
@@ -1060,27 +1189,27 @@
                     <i class="fas fa-times"></i>
                 </button>
             </div>
-            
+
             <div class="product-info-price" id="productInfoPrice">$0.00</div>
-            
+
             <div class="product-info-category" id="productInfoCategory">Categoría</div>
-            
+
             <div class="product-info-stock in-stock" id="productInfoStock">
                 <i class="fas fa-check-circle mr-2"></i>
                 <span id="stockText">0 disponibles</span>
             </div>
-            
+
             <div class="product-info-description" id="productInfoDescription">
                 Descripción del producto aparecerá aquí...
             </div>
-            
+
             <div class="product-info-sizes">
                 <h3 class="sizes-title">Tallas Disponibles</h3>
                 <div class="sizes-container-modal" id="productInfoSizes">
-                    </div>
+                </div>
             </div>
         </div>
-        
+
         <button class="modal-details-button" id="modalDetailsButton" aria-label="Ver detalles del producto">
             <i class="fas fa-info"></i>
         </button>
@@ -1155,14 +1284,14 @@
         let filteredProducts = [];
         let currentModalCarousel = null;
         let currentProduct = null;
-        
+
         // Función auxiliar para obtener el estado de móvil
         function isMobileView() {
             return window.matchMedia('(max-width: 768px)').matches;
         }
 
         // ===== LÓGICA DEL MODAL (Funciones declaradas para evitar el error "is not defined") =====
-        
+
         function generateSizesHTML(product, isDialog = false) {
             let tallas = product.tallas_disponibles;
 
@@ -1178,14 +1307,14 @@
                 const availableSizes = tallas.map(s => s.toUpperCase());
                 const allSizes = ['XS', 'S', 'M', 'L', 'XL', '2XL'];
                 let sizesHTML = '';
-                
+
                 allSizes.forEach(size => {
                     const isAvailable = availableSizes.includes(size);
                     const tagClass = `size-tag ${isAvailable ? 'available' : 'unavailable'}`;
                     const style = isDialog ? 'padding: 1px 4px; font-size: 0.65rem;' : '';
                     sizesHTML += `<span class="${tagClass}" style="${style}">${size}</span>`;
                 });
-                
+
                 return sizesHTML;
             } else if (product.talla) {
                 const style = isDialog ? 'padding: 1px 4px; font-size: 0.65rem;' : '';
@@ -1196,17 +1325,17 @@
         }
 
         function updateProductInfo(product) {
-            
+
             // 1. Actualizar Panel de Desktop
             document.getElementById('productInfoTitle').textContent = product.nombre || "Producto sin nombre";
             document.getElementById('productInfoPrice').textContent = `$${product.precio || "0"}`;
             document.getElementById('productInfoCategory').textContent = product.categoria || "General";
-            
+
             // Actualizar stock
             const stockElement = document.getElementById('productInfoStock');
             const stockText = document.getElementById('stockText');
             const cantidad = product.cantidad || 0;
-            
+
             if (cantidad > 0) {
                 stockElement.className = 'product-info-stock in-stock';
                 stockText.textContent = `${cantidad} disponibles`;
@@ -1214,11 +1343,11 @@
                 stockElement.className = 'product-info-stock out-of-stock';
                 stockText.textContent = 'Agotado';
             }
-            
+
             // Actualizar descripción
             const descripcion = product.descripcion || "Sin descripción disponible";
             document.getElementById('productInfoDescription').textContent = descripcion;
-            
+
             // Actualizar tallas
             document.getElementById('productInfoSizes').innerHTML = generateSizesHTML(product);
 
@@ -1227,7 +1356,7 @@
             document.getElementById('dialogTitle').textContent = product.nombre || "Detalles";
             document.getElementById('dialogPrice').textContent = `$${product.precio || "0"}`;
             document.getElementById('dialogDescription').textContent = descripcion;
-            document.getElementById('dialogSizes').innerHTML = generateSizesHTML(product, true); 
+            document.getElementById('dialogSizes').innerHTML = generateSizesHTML(product, true);
         }
 
         function closeImageModal() {
@@ -1244,14 +1373,14 @@
                 currentModalCarousel.destroy();
                 currentModalCarousel = null;
             }
-            
+
             currentProduct = null;
         }
 
         function toggleProductInfoDialog() {
             const infoDialog = document.getElementById('productInfoDialog');
             if (!isMobileView()) return;
-            
+
             infoDialog.classList.toggle('active');
         }
 
@@ -1259,7 +1388,7 @@
             const modal = document.getElementById('imageModal');
             const infoPanel = document.getElementById('productInfoPanel');
             const infoDialog = document.getElementById('productInfoDialog');
-            
+
             if (images.length === 0) return;
 
             currentProduct = product;
@@ -1268,7 +1397,7 @@
 
             modal.classList.add('active');
             document.body.style.overflow = 'hidden';
-            
+
             if (!isMobileView()) {
                 infoPanel.classList.add('active');
             } else {
@@ -1276,7 +1405,7 @@
                 infoDialog.classList.remove('active');
             }
         }
-        
+
         function addImageModalListeners() {
             const productCards = document.querySelectorAll('.product-card');
 
@@ -1285,7 +1414,7 @@
                     const productData = this.getAttribute('data-product');
                     const productImage = this.querySelector('.product-image');
                     const imagesData = productImage.getAttribute('data-images');
-                    
+
                     if (productData && imagesData) {
                         const product = JSON.parse(productData);
                         const images = JSON.parse(imagesData);
@@ -1296,7 +1425,7 @@
                 });
             });
         }
-        
+
         // La clase puede permanecer igual
         class ImageModalCarousel {
             constructor(images) {
@@ -1389,16 +1518,16 @@
                 this.nextBtn.replaceWith(this.nextBtn.cloneNode(true));
             }
         }
-        
-        // ===== CARGA Y FILTROS (Funciones declaradas para evitar el error "is not defined") =====
-        
+
+        // ===== LÓGICA DE CARGA, FILTROS Y AUTOCOMPLETADO =====
+
         function loadAllProducts() {
             const container = document.getElementById('productsGrid');
             const loadingElement = document.getElementById('loading-products');
             const noResultsElement = document.getElementById('noResults');
 
             // Convertir a async si se necesita
-            (async function() {
+            (async function () {
                 try {
                     container.classList.add('loading');
                     const { data: products, error } = await supabaseClient
@@ -1435,7 +1564,7 @@
                 }
             })();
         }
-        
+
         function renderProducts() {
             const container = document.getElementById('productsGrid');
             const noResultsElement = document.getElementById('noResults');
@@ -1521,9 +1650,9 @@
                         productSizes = product.talla ? [product.talla] : [];
                     }
                 }
-                
+
                 const matchesSize = selectedSizes.length === 0 ||
-                    (productSizes && productSizes.some(size => 
+                    (productSizes && productSizes.some(size =>
                         selectedSizes.includes(size.toUpperCase())
                     ));
 
@@ -1549,21 +1678,28 @@
 
             const uniqueTerms = new Set();
             allProducts.forEach(product => {
-                if (product.nombre) {
-                    uniqueTerms.add(product.nombre.toLowerCase());
+                const nombre = (product.nombre || "").toLowerCase();
+                const categoria = (product.categoria || "").toLowerCase();
+                
+                // Priorizar coincidencias exactas y al inicio de la palabra
+                if (nombre.includes(searchTerm)) {
+                    uniqueTerms.add(nombre);
                 }
-                if (product.categoria) {
-                    uniqueTerms.add(product.categoria.toLowerCase());
+                if (categoria.includes(searchTerm)) {
+                    uniqueTerms.add(categoria);
                 }
             });
 
+            // Filtramos solo los que coinciden con el término de búsqueda
             const matchingTerms = Array.from(uniqueTerms)
                 .filter(term => term.includes(searchTerm))
+                .sort((a, b) => a.indexOf(searchTerm) - b.indexOf(searchTerm)) // Ordenar por relevancia
                 .slice(0, 7);
 
             if (matchingTerms.length > 0) {
                 let html = '';
                 matchingTerms.forEach(term => {
+                    // Resaltar el término de búsqueda
                     const highlightedTerm = term.replace(
                         new RegExp(searchTerm, 'gi'),
                         match => `<span class="font-semibold text-pink-500">${match}</span>`
@@ -1571,7 +1707,7 @@
 
                     html += `
                         <div class="autocomplete-item" data-value="${term}">
-                            ${highlightedTerm}
+                            ${highlightedTerm.charAt(0).toUpperCase() + highlightedTerm.slice(1)}
                         </div>
                     `;
                 });
@@ -1581,6 +1717,7 @@
 
                 resultsContainer.querySelectorAll('.autocomplete-item').forEach(item => {
                     item.addEventListener('click', function () {
+                        // Al hacer clic, se pone el valor en el input y se filtra
                         inputElement.value = this.getAttribute('data-value');
                         resultsContainer.classList.add('hidden');
                         filterProducts();
@@ -1594,7 +1731,7 @@
             resultsContainer.innerHTML = '';
             resultsContainer.classList.add('hidden');
         }
-        
+
         function sortProducts(sortBy) {
             switch (sortBy) {
                 case 'price_asc':
@@ -1659,7 +1796,7 @@
         function toggleMobileFilters() {
             const filtersSidebar = document.getElementById('filtersSidebar');
             filtersSidebar.classList.toggle('mobile-open');
-            
+
             if (filtersSidebar.classList.contains('mobile-open')) {
                 document.body.style.overflow = 'hidden';
             } else {
@@ -1684,29 +1821,30 @@
             if (modalDetailsButton) {
                 modalDetailsButton.addEventListener('click', toggleProductInfoDialog);
             }
-            
+
+            // *** FUNCIONALIDAD DE AUTOCOMPLETADO Y FILTRADO INMEDIATO ***
             document.getElementById('searchInput').addEventListener('input', function () {
                 generateAutocomplete();
-                filterProducts();
+                filterProducts(); // Filtra productos en vivo
             });
-            
+
             document.querySelectorAll('input[name="category"], input[name="size"]').forEach(input => {
                 input.addEventListener('change', filterProducts);
             });
-            
+
             document.getElementById('sortSelect').addEventListener('change', filterProducts);
             document.getElementById('clearFilters').addEventListener('click', clearFilters);
             document.getElementById('resetFilters').addEventListener('click', clearFilters);
 
             document.getElementById('modalClose').addEventListener('click', closeImageModal);
-            
+
             // En desktop, la X del panel grande cierra el modal completo
             document.getElementById('productInfoClose').addEventListener('click', () => {
                 if (!isMobileView()) {
                     closeImageModal();
                 }
-            }); 
-            
+            });
+
             // Cerrar diálogo si se hace clic fuera de él (solo en móvil)
             imageModal.addEventListener('click', function (e) {
                 if (e.target === this) {
@@ -1716,6 +1854,7 @@
                 }
             });
 
+            // Cerrar autocompletado si se hace clic fuera
             document.addEventListener('click', function (e) {
                 if (!e.target.closest('.filter-group')) {
                     clearAutocomplete();
@@ -1730,7 +1869,7 @@
             setupEventListeners();
             loadAllProducts();
         });
-        
+
         // Escuchar cambios en las preferencias del sistema
         window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
             if (!localStorage.getItem('lisport_dark')) {
@@ -1739,4 +1878,5 @@
         });
     </script>
 </body>
+
 </html>
