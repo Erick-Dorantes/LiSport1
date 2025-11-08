@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Catálogo - LiSport</title>
+    <title>Comprar - LiSport</title>
 
     <script src="https://cdn.tailwindcss.com"></script>
 
@@ -230,6 +230,7 @@
         .dark .filters-sidebar {
             background: #1e1e1e;
         }
+
         /* *** FIN AJUSTE INICIAL *** */
 
         /* *** AJUSTES DE VISIBILIDAD DE TEXTO DENTRO DEL FILTRO (MODO CLARO) *** */
@@ -318,6 +319,7 @@
             opacity: 1 !important;
             /* Aseguramos que la opacidad no lo haga invisible */
         }
+
         /* ========================================================== */
 
         .dark .search-input {
@@ -336,8 +338,9 @@
             /* Gris claro para el placeholder en modo oscuro */
             opacity: 1 !important;
         }
+
         /* ========================================================== */
-        
+
         /* *** FIN AJUSTES DE VISIBILIDAD DE TEXTO *** */
 
 
@@ -432,6 +435,7 @@
             /* Color oscuro similar a dark:bg-gray-800 */
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
         }
+
         /* *** FIN AJUSTE FINAL *** */
 
 
@@ -468,6 +472,7 @@
                 background: #1e293b;
             }
         }
+
         /* ... (resto de media queries y estilos no afectados) ... */
 
         /* Botón de filtros flotante en móviles */
@@ -1010,6 +1015,7 @@
         .autocomplete-item:last-child {
             border-bottom: none;
         }
+
         /* FIN AUTOCÓMPLETE */
     </style>
 </head>
@@ -1027,10 +1033,12 @@
                 <ul class="flex space-x-6">
                     <li><a href="Inicio.html" class="hover:text-pink-200 transition py-2 relative">Inicio</a></li>
                     <li><a href="catalogo.html"
-                            class="hover:text-pink-200 transition py-2 relative font-bold">Catálogo</a></li>
-                    <li><a href="sobre-nosotros.html" class="hover:text-pink-200 transition py-2 relative">Nosotros</a>
+                            class="hover:text-pink-200 transition py-2 relative font-bold">Comprar</a></li>
+                    <li><a href="sobre-nosotros.html" class="hover:text-pink-200 transition py-2 relative">Nuestra
+                            Historia</a>
                     </li>
-                    <li><a href="contacto.html" class="hover:text-pink-200 transition py-2 relative">Contacto</a></li>
+                    <li><a href="contacto.html" class="hover:text-pink-200 transition py-2 relative">Contactanos</a>
+                    </li>
                 </ul>
             </nav>
 
@@ -1050,9 +1058,10 @@
             <ul class="flex flex-col text-center divide-y divide-pink-400">
                 <li><a href="Inicio.html" class="block py-3 hover:bg-pink-400 transition">Inicio</a></li>
                 <li><a href="catalogo.html"
-                        class="block py-3 hover:bg-pink-400 transition font-bold bg-pink-400">Catálogo</a></li>
-                <li><a href="sobre-nosotros.html" class="block py-3 hover:bg-pink-400 transition">Nosotros</a></li>
-                <li><a href="contacto.html" class="block py-3 hover:bg-pink-400 transition">Contacto</a></li>
+                        class="block py-3 hover:bg-pink-400 transition font-bold bg-pink-400">Comprar</a></li>
+                <li><a href="sobre-nosotros.html" class="block py-3 hover:bg-pink-400 transition">Nuestra Historia</a>
+                </li>
+                <li><a href="contacto.html" class="block py-3 hover:bg-pink-400 transition">Contactanos</a></li>
             </ul>
         </div>
     </header>
@@ -1073,7 +1082,8 @@
                                 id="clearFilters">
                                 Limpiar todo
                             </button>
-                            <button class="close-filters text-sm text-gray-500 hover:text-gray-700 font-medium md:hidden"
+                            <button
+                                class="close-filters text-sm text-gray-500 hover:text-gray-700 font-medium md:hidden"
                                 id="closeFilters">
                                 <i class="fas fa-times"></i>
                             </button>
@@ -1270,22 +1280,21 @@
             </div>
         </div>
     </div>
-
-    <footer class="bg-gray-800 text-white pt-10 pb-6 mt-12">
+    <footer class="bg-gray-800 text-white pt-10 pb-6">
         <div class="max-w-6xl mx-auto px-4">
             <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
                 <div class="footer-col">
                     <h3 class="text-xl font-bold mb-4">LiSport</h3>
-                    <p class="text-gray-300 mb-4">Ropa deportiva de alta calidad diseñada específicamente para mujeres
-                        activas que buscan comodidad, estilo y rendimiento.</p>
+                    <p class="text-gray-300 mb-4">Porque entrenar también es una forma de brillar.
+                        Descubre ropa deportiva pensada para mujeres seguras, activas y llenas de poder.</p>
                     <div class="social-links flex space-x-4">
                         <a href="#"
-                            class="bg-gray-700 w-10 h-10 rounded-full flex items-center justify-center hover:bg-pink-500 transition"
+                            class="bg-gray-700 w-10 h-10 rounded-full flex items-center justify-center hover:bg-pink-500 transition focus:outline-none focus:ring-2 focus:ring-pink-500"
                             aria-label="Facebook">
                             <i class="fab fa-facebook-f"></i>
                         </a>
                         <a href="https://www.instagram.com/li_sport_25?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw=="
-                            class="bg-gray-700 w-10 h-10 rounded-full flex items-center justify-center hover:bg-pink-500 transition"
+                            class="bg-gray-700 w-10 h-10 rounded-full flex items-center justify-center hover:bg-pink-500 transition focus:outline-none focus:ring-2 focus:ring-pink-500"
                             aria-label="Instagram">
                             <i class="fab fa-instagram"></i>
                         </a>
@@ -1295,27 +1304,61 @@
                 <div class="footer-col">
                     <h3 class="text-xl font-bold mb-4">Enlaces Rápidos</h3>
                     <ul class="space-y-2">
-                        <li><a href="Inicio.html" class="text-gray-300 hover:text-white transition">Inicio</a></li>
-                        <li><a href="catalogo.html" class="text-gray-300 hover:text-white transition">Catálogo</a></li>
-                        <li><a href="sobre-nosotros.html" class="text-gray-300 hover:text-white transition">Sobre
-                                Nosotros</a></li>
-                        <li><a href="contacto.html" class="text-gray-300 hover:text-white transition">Contacto</a></li>
-                    </ul>
-                </div>
-
-                <div class="footer-col">
-                    <h3 class="text-xl font-bold mb-4">Contacto</h3>
-                    <ul class="space-y-2">
-                        <li class="flex items-start">
-                            <i class="fas fa-map-marker-alt mt-1 mr-2 text-pink-400"></i>
-                            <span class="text-gray-300">Chilpancingo de los Bravo, Guerrero, México</span>
+                        <li><a href="Inicio.html"
+                                class="text-gray-300 hover:text-white transition focus:outline-none focus:text-white">Inicio</a>
+                        </li>
+                        <li><a href="catalogo.html"
+                                class="text-gray-300 hover:text-white transition focus:outline-none focus:text-white">Comprar</a>
+                        </li>
+                        <li><a href="sobre-nosotros.html"
+                                class="text-gray-300 hover:text-white transition focus:outline-none focus:text-white">Nuestra
+                                Historia</a></li>
+                        <li><a href="contacto.html"
+                                class="text-gray-300 hover:text-white transition focus:outline-none focus:text-white">Contactanos</a>
                         </li>
                     </ul>
                 </div>
+                <div class="footer-col">
+                    <h3 class="text-xl font-bold mb-4">Tu Compra Segura</h3>
+                    <ul class="space-y-3">
+                        <li class="flex items-start text-gray-300">
+                            <i class="fas fa-undo-alt mt-1 mr-2 text-pink-400"></i>
+                            <p>30 días para Cambios y Devoluciones.</p>
+                        </li>
+                        <li class="flex items-start text-gray-300">
+                            <i class="fas fa-truck mt-1 mr-2 text-pink-400"></i>
+                            <p>Envíos a todo México.</p>
+                        </li>
+                        <li class="flex items-start text-gray-300">
+                            <i class="fas fa-lock mt-1 mr-2 text-pink-400"></i>
+                            <p>Pago 100% seguro.</p>
+                        </li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h3 class="text-xl font-bold mb-4">Encuéntranos</h3>
+
+                    <div class="map-container mb-4 rounded-md overflow-hidden shadow-lg">
+                        <iframe
+                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2729.2544410240494!2d-99.50254862667765!3d17.549706698112438!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x85cbedc493332ecf%3A0x88d3c2fff71d32c7!2sbe%20you%20for%20you!5e1!3m2!1ses-419!2smx!4v1762577542925!5m2!1ses-419!2smx"
+                            width="100%" height="150" style="border:0;" allowfullscreen="" loading="lazy"
+                            referrerpolicy="no-referrer-when-downgrade"
+                            title="Ubicación de la tienda LiSport en Chilpancingo"></iframe>
+                    </div>
+
+                    <ul class="space-y-1">
+                        <li class="flex items-center text-gray-300 text-sm">
+                            <i class="fas fa-map-marker-alt mr-2 text-pink-400"></i>
+                            Chilpancingo de los Bravo, Guerrero
+                        </li>
+                    </ul>
+                </div>
+
             </div>
-            <div class="copyright border-t border-gray-700 pt-6 text-center text-gray-400">
-                <p>&copy; 2025 LiSport. Todos los derechos reservados.</p>
-            </div>
+        </div>
+        <div class="copyright border-t border-gray-700 pt-6 text-center text-gray-400">
+            <p>&copy; 2025 LiSport. Todos los derechos reservados.</p>
+        </div>
         </div>
     </footer>
 
@@ -1939,7 +1982,7 @@
             // Listener para el botón de retroceso del navegador
             window.addEventListener('popstate', function (event) {
                 const modal = document.getElementById('imageModal');
-                
+
                 // Si el modal está activo y el estado del historial no tiene la bandera modalOpen, lo cerramos.
                 // Esto ocurre cuando el usuario presiona el botón de retroceso del navegador.
                 if (modal.classList.contains('active') && (event.state === null || event.state.modalOpen === undefined)) {
@@ -1954,7 +1997,7 @@
             initDarkMode();
             setupEventListeners();
             loadAllProducts();
-            
+
             // Si la página se carga con el hash del modal, lo quitamos inmediatamente
             if (window.location.hash === '#product-modal-open') {
                 history.replaceState(null, '', window.location.pathname + window.location.search);
