@@ -1,56 +1,60 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sobre Nosotros - LiSport</title>
-    
+    <title>Nuestra Historia- LiSport</title>
+
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    
+
     <!-- Iconos -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
+
     <!-- Favicons -->
     <link rel="icon" type="image/x-icon" href="images/favicon.ico">
     <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="images/favicon-16x16.png">
     <link rel="apple-touch-icon" sizes="180x180" href="images/apple-touch-icon.png">
     <link rel="manifest" href="images/site.webmanifest">
-    
+
     <style>
         :root {
             --rosa: #ff4c7a;
             --rosa-claro: #fff6f9;
             --bg-dark: #0b1020;
         }
-        
+
         /* Logo reducido */
         .logo-image {
-            height: 60px; /* REDUCIDO de ~50px a 25px */
+            height: 60px;
+            /* REDUCIDO de ~50px a 25px */
             width: auto;
-            max-width: 130px; /* Controla el ancho máximo */
+            max-width: 130px;
+            /* Controla el ancho máximo */
             transition: all 0.3s ease;
         }
-        
+
         .logo-image:hover {
             transform: scale(1.05);
         }
-        
+
         /* Header más compacto */
         .header-compact {
-            padding: 10px 20px; /* Reducido padding vertical */
+            padding: 10px 20px;
+            /* Reducido padding vertical */
         }
-        
+
         body.dark {
             background: var(--bg-dark);
             color: #e6eef8;
         }
-        
+
         body.dark header {
             background: #0f1724;
         }
-        
+
         /* Menú móvil CORREGIDO */
         .mobile-menu {
             transform: translateX(100%);
@@ -58,33 +62,34 @@
             visibility: hidden;
             opacity: 0;
         }
-        
+
         .mobile-menu.open {
             transform: translateX(0);
             visibility: visible;
             opacity: 1;
         }
-        
+
         .mobile-overlay {
             transition: opacity 0.3s ease;
         }
-        
+
         /* Animaciones */
         @keyframes fadeInUp {
             from {
                 opacity: 0;
                 transform: translateY(30px);
             }
+
             to {
                 opacity: 1;
                 transform: translateY(0);
             }
         }
-        
+
         .fade-in {
             animation: fadeInUp 0.8s ease-out;
         }
-        
+
         /* Hero Section */
         .about-hero {
             background: linear-gradient(135deg, var(--rosa) 0%, #ff8ca0 100%);
@@ -94,7 +99,7 @@
             position: relative;
             overflow: hidden;
         }
-        
+
         .about-hero::before {
             content: '';
             position: absolute;
@@ -105,26 +110,26 @@
             background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000" opacity="0.1"><polygon fill="white" points="0,1000 1000,0 1000,1000"/></svg>');
             background-size: cover;
         }
-        
+
         /* Tarjetas */
         .feature-card {
             transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
-        
+
         .feature-card:hover {
             transform: translateY(-5px);
             box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
         }
-        
+
         .value-card {
             transition: all 0.3s ease;
         }
-        
+
         .value-card:hover {
             transform: translateY(-5px);
             border-color: var(--rosa);
         }
-        
+
         .sr-only {
             position: absolute;
             width: 1px;
@@ -136,31 +141,38 @@
             white-space: nowrap;
             border: 0;
         }
-        
+
         /* Responsive para logo */
         @media (max-width: 768px) {
             .logo-image {
-                height: 22px; /* Más pequeño en tablets */
+                height: 22px;
+                /* Más pequeño en tablets */
                 max-width: 90px;
             }
+
             .header-compact {
-                padding: 8px 15px; /* Más compacto en tablets */
+                padding: 8px 15px;
+                /* Más compacto en tablets */
             }
         }
-        
+
         @media (max-width: 576px) {
             .logo-image {
-                height: 20px; /* Más pequeño en móviles */
+                height: 20px;
+                /* Más pequeño en móviles */
                 max-width: 80px;
             }
+
             .header-compact {
-                padding: 6px 12px; /* Más compacto en móviles */
+                padding: 6px 12px;
+                /* Más compacto en móviles */
             }
         }
-        
+
         @media (max-width: 400px) {
             .logo-image {
-                height: 18px; /* Mínimo tamaño */
+                height: 18px;
+                /* Mínimo tamaño */
                 max-width: 70px;
             }
         }
@@ -176,29 +188,33 @@
                     <img src="images/logo.png" alt="LiSport - Ropa Deportiva para Mujer" class="logo-image">
                 </a>
             </div>
-            
+
             <!-- Menú principal -->
             <nav class="hidden md:flex" aria-label="Menú principal">
                 <ul class="flex space-x-6">
                     <li><a href="Inicio.html" class="hover:text-pink-200 transition py-2 relative">Inicio</a></li>
-                    <li><a href="catalogo.html" class="hover:text-pink-200 transition py-2 relative">Catálogo</a></li>
-                    <li><a href="sobre-nosotros.html" class="hover:text-pink-200 transition py-2 relative font-bold">Nosotros</a></li>
-                    <li><a href="contacto.html" class="hover:text-pink-200 transition py-2 relative">Contacto</a></li>
+                    <li><a href="catalogo.html" class="hover:text-pink-200 transition py-2 relative">Comprar</a></li>
+                    <li><a href="sobre-nosotros.html"
+                            class="hover:text-pink-200 transition py-2 relative font-bold">Nuestra Historia</a></li>
+                    <li><a href="contacto.html" class="hover:text-pink-200 transition py-2 relative">Contactanos</a></li>
                 </ul>
             </nav>
-            
+
             <div class="flex items-center gap-4">
-                <button id="darkToggle" title="Cambiar modo" class="p-2 rounded-full bg-white/20 hover:bg-white/30 transition-colors">
+                <button id="darkToggle" title="Cambiar modo"
+                    class="p-2 rounded-full bg-white/20 hover:bg-white/30 transition-colors">
                     <span id="darkIcon">🌙</span>
                 </button>
-                <button class="md:hidden p-2 rounded-full bg-white/20 hover:bg-white/30 transition-colors" id="mobileMenuBtn">
+                <button class="md:hidden p-2 rounded-full bg-white/20 hover:bg-white/30 transition-colors"
+                    id="mobileMenuBtn">
                     <i class="fas fa-bars"></i>
                 </button>
             </div>
         </div>
 
         <!-- Menú móvil CORREGIDO -->
-        <div class="mobile-menu fixed top-0 right-0 h-full w-64 bg-white text-gray-800 shadow-lg p-6 z-50" id="mobileMenu">
+        <div class="mobile-menu fixed top-0 right-0 h-full w-64 bg-white text-gray-800 shadow-lg p-6 z-50"
+            id="mobileMenu">
             <div class="flex justify-between items-center mb-8">
                 <h3 class="font-bold text-lg">MENÚ</h3>
                 <button class="p-2 rounded-full hover:bg-gray-100 transition" id="closeMenu">
@@ -207,14 +223,22 @@
             </div>
             <nav aria-label="Navegación móvil">
                 <ul class="space-y-4">
-                    <li><a href="Inicio.html" class="block py-2 font-medium hover:text-pink-500 transition border-b border-gray-200">INICIO</a></li>
-                    <li><a href="catalogo.html" class="block py-2 font-medium hover:text-pink-500 transition border-b border-gray-200">CATÁLOGO</a></li>
-                    <li><a href="sobre-nosotros.html" class="block py-2 font-bold hover:text-pink-500 transition border-b border-gray-200">NOSOTROS</a></li>
-                    <li><a href="contacto.html" class="block py-2 font-medium hover:text-pink-500 transition border-b border-gray-200">CONTACTO</a></li>
+                    <li><a href="Inicio.html"
+                            class="block py-2 font-medium hover:text-pink-500 transition border-b border-gray-200">INICIO</a>
+                    </li>
+                    <li><a href="catalogo.html"
+                            class="block py-2 font-medium hover:text-pink-500 transition border-b border-gray-200">COMPRAR</a>
+                    </li>
+                    <li><a href="sobre-nosotros.html"
+                            class="block py-2 font-bold hover:text-pink-500 transition border-b border-gray-200">NUESTRA HISTORIA</a>
+                    </li>
+                    <li><a href="contacto.html"
+                            class="block py-2 font-medium hover:text-pink-500 transition border-b border-gray-200">CONTACTANOS</a>
+                    </li>
                 </ul>
             </nav>
         </div>
-        
+
         <!-- Overlay para cerrar menú -->
         <div class="mobile-overlay fixed inset-0 bg-black bg-opacity-50 z-40 hidden" id="mobileOverlay"></div>
     </header>
@@ -225,7 +249,10 @@
         <section class="about-hero text-white">
             <div class="max-w-6xl mx-auto px-4 text-center relative z-10 fade-in">
                 <h1 class="text-4xl md:text-5xl font-bold mb-4">Nuestra Pasión por el Deporte</h1>
-                <p class="text-xl max-w-2xl mx-auto">En LiSport, creemos que cada mujer merece sentirse poderosa, cómoda y segura durante su práctica deportiva</p>
+                <p class="text-xl max-w-2xl mx-auto">En LiSport creemos que el deporte es mucho más que movimiento: es
+                    una forma de conectar contigo misma, de liberar tu energía y de sentirte poderosa. Por eso, nos
+                    apasiona acompañarte con prendas que te hagan sentir cómoda, segura y lista para dar lo mejor de ti
+                    en cada entrenamiento.</p>
             </div>
         </section>
 
@@ -234,21 +261,28 @@
             <div class="max-w-6xl mx-auto px-4">
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                     <div class="feature-card bg-white dark:bg-gray-700 p-8 rounded-lg text-center">
-                        <div class="w-20 h-20 bg-pink-100 dark:bg-pink-900 rounded-full flex items-center justify-center mx-auto mb-6">
+                        <div
+                            class="w-20 h-20 bg-pink-100 dark:bg-pink-900 rounded-full flex items-center justify-center mx-auto mb-6">
                             <i class="fas fa-bullseye text-pink-500 text-2xl"></i>
                         </div>
                         <h2 class="text-2xl font-bold mb-4">Nuestra Misión</h2>
                         <p class="text-gray-600 dark:text-gray-300 text-lg leading-relaxed">
-                            Empoderar a las mujeres a través de ropa deportiva de alta calidad que combine estilo, comodidad y rendimiento. Creemos que la ropa deportiva debe adaptarse al cuerpo de la mujer, no al revés.
+                            Empoderar a las mujeres a través de ropa deportiva cuidadosamente seleccionada por su
+                            calidad, estilo y comodidad. En LiSport creemos que la ropa debe adaptarse al cuerpo y al
+                            ritmo de cada mujer, acompañándola en cada paso de su camino hacia el bienestar y la
+                            confianza.
                         </p>
                     </div>
                     <div class="feature-card bg-white dark:bg-gray-700 p-8 rounded-lg text-center">
-                        <div class="w-20 h-20 bg-pink-100 dark:bg-pink-900 rounded-full flex items-center justify-center mx-auto mb-6">
+                        <div
+                            class="w-20 h-20 bg-pink-100 dark:bg-pink-900 rounded-full flex items-center justify-center mx-auto mb-6">
                             <i class="fas fa-eye text-pink-500 text-2xl"></i>
                         </div>
                         <h2 class="text-2xl font-bold mb-4">Nuestra Visión</h2>
                         <p class="text-gray-600 dark:text-gray-300 text-lg leading-relaxed">
-                            Ser la empresa líder en venta de ropa deportiva para mujer en Guerrero, reconocida por nuestra innovación, calidad y compromiso con el empoderamiento femenino en el deporte.
+                            Ser la tienda líder en venta de ropa deportiva para mujer en Guerrero, reconocida por
+                            inspirar a más mujeres a moverse, sentirse seguras y brillar a través del deporte, el estilo
+                            y una comunidad unida por la fuerza femenina.
                         </p>
                     </div>
                 </div>
@@ -259,50 +293,58 @@
         <section class="py-12">
             <div class="max-w-6xl mx-auto px-4">
                 <h2 class="text-3xl font-bold text-center mb-2">Nuestros Valores</h2>
-                <p class="text-center text-gray-600 dark:text-gray-400 mb-10 max-w-2xl mx-auto">Los principios que guían cada decisión que tomamos en LiSport</p>
-                
+                <p class="text-center text-gray-600 dark:text-gray-400 mb-10 max-w-2xl mx-auto">Los principios que guían
+                    cada paso que damos en LiSport 🌸</p>
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                    <div class="value-card bg-white dark:bg-gray-700 p-6 rounded-lg border-2 border-transparent hover:border-pink-500 text-center">
+                    <div
+                        class="value-card bg-white dark:bg-gray-700 p-6 rounded-lg border-2 border-transparent hover:border-pink-500 text-center">
                         <div class="w-16 h-16 bg-pink-500 rounded-full flex items-center justify-center mx-auto mb-4">
                             <i class="fas fa-medal text-white text-xl"></i>
                         </div>
-                        <h3 class="text-xl font-bold mb-3">Calidad Premium</h3>
+                        <h3 class="text-xl font-bold mb-3">🌟 Calidad que inspira confianza</h3>
                         <p class="text-gray-600 dark:text-gray-300">
-                            Utilizamos los mejores materiales y procesos de fabricación para garantizar durabilidad y comodidad en cada prenda.
+                            Seleccionamos cuidadosamente cada prenda para ofrecerte ropa deportiva de marcas que
+                            destacan por su calidad, durabilidad y comodidad. Queremos que cada pieza te acompañe en tu
+                            movimiento, día tras día.
                         </p>
                     </div>
-                    <div class="value-card bg-white dark:bg-gray-700 p-6 rounded-lg border-2 border-transparent hover:border-pink-500 text-center">
+                    <div
+                        class="value-card bg-white dark:bg-gray-700 p-6 rounded-lg border-2 border-transparent hover:border-pink-500 text-center">
                         <div class="w-16 h-16 bg-pink-500 rounded-full flex items-center justify-center mx-auto mb-4">
                             <i class="fas fa-heart text-white text-xl"></i>
                         </div>
-                        <h3 class="text-xl font-bold mb-3">Pasión por el Deporte</h3>
+                        <h3 class="text-xl font-bold mb-3">💪 Pasión por el deporte</h3>
                         <p class="text-gray-600 dark:text-gray-300">
-                            Vivimos y respiramos deporte. Cada diseño está creado por y para mujeres activas que aman moverse.
+                            El deporte nos inspira, nos une y nos impulsa. En LiSport compartimos esa energía con
+                            mujeres activas que encuentran en el movimiento su mejor versión.
                         </p>
                     </div>
-                    <div class="value-card bg-white dark:bg-gray-700 p-6 rounded-lg border-2 border-transparent hover:border-pink-500 text-center">
+                    <div
+                        class="value-card bg-white dark:bg-gray-700 p-6 rounded-lg border-2 border-transparent hover:border-pink-500 text-center">
                         <div class="w-16 h-16 bg-pink-500 rounded-full flex items-center justify-center mx-auto mb-4">
                             <i class="fas fa-leaf text-white text-xl"></i>
                         </div>
-                        <h3 class="text-xl font-bold mb-3">Sostenibilidad</h3>
+                        <h3 class="text-xl font-bold mb-3">🌿 Compromiso con la sostenibilidad</h3>
                         <p class="text-gray-600 dark:text-gray-300">
-                            Nos comprometemos con prácticas sostenibles y materiales ecológicos para cuidar nuestro planeta.
+                            Creemos que verse bien también significa hacer el bien. Por eso apoyamos marcas y productos
+                            que apuestan por procesos más responsables con el planeta.
                         </p>
                     </div>
-                    <div class="value-card bg-white dark:bg-gray-700 p-6 rounded-lg border-2 border-transparent hover:border-pink-500 text-center">
+                    <div
+                        class="value-card bg-white dark:bg-gray-700 p-6 rounded-lg border-2 border-transparent hover:border-pink-500 text-center">
                         <div class="w-16 h-16 bg-pink-500 rounded-full flex items-center justify-center mx-auto mb-4">
                             <i class="fas fa-users text-white text-xl"></i>
                         </div>
-                        <h3 class="text-xl font-bold mb-3">Comunidad</h3>
+                        <h3 class="text-xl font-bold mb-3">🤍 Comunidad femenina</h3>
                         <p class="text-gray-600 dark:text-gray-300">
-                            Creemos en el poder de la comunidad femenina deportiva y apoyamos el crecimiento mutuo.
+                            LiSport es más que una tienda, es una comunidad de mujeres reales que se apoyan, se motivan
+                            y celebran juntas cada logro, grande o pequeño.
                         </p>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- Nuestra Historia -->
         <section class="py-12 bg-gray-50 dark:bg-gray-800">
             <div class="max-w-6xl mx-auto px-4">
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
@@ -310,19 +352,32 @@
                         <h2 class="text-3xl font-bold mb-6">Nuestra Historia</h2>
                         <div class="space-y-4 text-gray-600 dark:text-gray-300 text-lg leading-relaxed">
                             <p>
-                                LiSport nació de la pasión compartida por el deporte y la moda. Como mujeres activas, entendíamos las necesidades específicas que teníamos durante nuestros entrenamientos: comodidad, estilo y funcionalidad.
+                                LiSport nació del amor por el movimiento, la fuerza y la confianza de las mujeres. Como
+                                mujeres activas, entendimos lo importante que es contar con ropa deportiva que te haga
+                                sentir cómoda, segura y con estilo en cada paso.
                             </p>
                             <p>
-                                Comenzamos como un pequeño emprendimiento local en Chilpancingo, Guerrero, con la visión de crear ropa deportiva que realmente entendiera y celebrara el cuerpo femenino en movimiento.
+                                Comenzamos como un pequeño proyecto en Chilpancingo, Guerrero, con la idea de reunir en
+                                un solo lugar las
+                                mejores marcas y prendas deportivas que se adaptaran a la vida real de cada mujer.
+                                Queríamos ofrecer opciones que inspiraran a moverse, a cuidarse y a disfrutar del
+                                proceso.
                             </p>
                             <p>
-                                Hoy, seguimos manteniendo ese espíritu emprendedor mientras crecemos, siempre fieles a nuestra misión de empoderar a través del deporte y la moda funcional.
+                                Hoy, LiSport es más que una tienda, es una comunidad de mujeres que se apoyan, se
+                                inspiran y comparten la pasión
+                                por el bienestar y la moda deportiva. Seguimos creciendo con la misma ilusión,
+                                acercándote ropa que te motive a
+                                sentirte bien y a brillar desde adentro hacia afuera.
                             </p>
                         </div>
                     </div>
+
                     <div class="bg-white dark:bg-gray-700 p-8 rounded-lg">
-                        <div class="aspect-w-16 aspect-h-12 bg-gray-200 dark:bg-gray-600 rounded-lg flex items-center justify-center">
-                            <i class="fas fa-history text-6xl text-gray-400"></i>
+                        <div class="aspect-w-16 aspect-h-12 rounded-lg overflow-hidden">
+                            <img src="images/Portada.png"
+                                alt="Fotografía de las fundadoras de LiSport con ropa deportiva"
+                                class="object-cover w-full h-full">
                         </div>
                     </div>
                 </div>
@@ -333,71 +388,43 @@
         <section class="py-12">
             <div class="max-w-6xl mx-auto px-4">
                 <h2 class="text-3xl font-bold text-center mb-2">Nuestros Compromisos</h2>
-                <p class="text-center text-gray-600 dark:text-gray-400 mb-10 max-w-2xl mx-auto">Lo que nos diferencia y nos impulsa cada día</p>
-                
+                <p class="text-center text-gray-600 dark:text-gray-400 mb-10 max-w-2xl mx-auto">Lo que nos inspira y nos
+                    impulsa cada día ✨</p>
+
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                     <div class="feature-card bg-white dark:bg-gray-700 p-8 rounded-lg">
                         <div class="flex items-start space-x-4">
-                            <div class="flex-shrink-0 w-16 h-16 bg-pink-100 dark:bg-pink-900 rounded-full flex items-center justify-center">
+                            <div
+                                class="flex-shrink-0 w-16 h-16 bg-pink-100 dark:bg-pink-900 rounded-full flex items-center justify-center">
                                 <i class="fas fa-female text-pink-500 text-xl"></i>
                             </div>
                             <div>
-                                <h3 class="text-xl font-bold mb-3">Diseño Inclusivo</h3>
+                                <h3 class="text-xl font-bold mb-3">🌸 Inclusión Real</h3>
                                 <p class="text-gray-600 dark:text-gray-300 leading-relaxed">
-                                    Creemos en la diversidad corporal. Nuestras prendas están diseñadas para adaptarse a diferentes tipos de cuerpo femenino, celebrando la singularidad de cada mujer.
+                                    En LiSport creemos que cada mujer tiene su propio ritmo, su propia historia y su
+                                    propia forma de brillar. Por eso elegimos ropa deportiva que se adapta a diferentes
+                                    cuerpos y estilos de vida, celebrando la diversidad y la confianza en una misma.
                                 </p>
                             </div>
                         </div>
                     </div>
                     <div class="feature-card bg-white dark:bg-gray-700 p-8 rounded-lg">
                         <div class="flex items-start space-x-4">
-                            <div class="flex-shrink-0 w-16 h-16 bg-pink-100 dark:bg-pink-900 rounded-full flex items-center justify-center">
+                            <div
+                                class="flex-shrink-0 w-16 h-16 bg-pink-100 dark:bg-pink-900 rounded-full flex items-center justify-center">
                                 <i class="fas fa-recycle text-pink-500 text-xl"></i>
                             </div>
                             <div>
-                                <h3 class="text-xl font-bold mb-3">Venta Responsable</h3>
+                                <h3 class="text-xl font-bold mb-3">🌱 Venta Consciente</h3>
                                 <p class="text-gray-600 dark:text-gray-300 leading-relaxed">
-                                    En LiSport, promovemos una venta responsable de ropa deportiva. Seleccionamos cuidadosamente a nuestros proveedores para ofrecer productos que combinan calidad, comodidad y un compromiso con prácticas de fabricación éticas y sostenibles.
+                                    Nos apasiona ofrecer productos que no solo se ven bien, sino que también se sienten
+                                    bien. Seleccionamos cuidadosamente cada prenda y proveedor, apostando por la
+                                    calidad, la comodidad y un compromiso real con prácticas responsables y sostenibles.
+                                    Porque en LiSport no solo vendemos ropa, compartimos una forma de vivir activa,
+                                    positiva y con propósito. 🌿
                                 </p>
                             </div>
                         </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Por qué elegirnos -->
-        <section class="py-12 bg-gray-50 dark:bg-gray-800">
-            <div class="max-w-6xl mx-auto px-4">
-                <h2 class="text-3xl font-bold text-center mb-10">¿Por Qué Elegir LiSport?</h2>
-                
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                    <div class="text-center">
-                        <div class="w-20 h-20 bg-pink-500 rounded-full flex items-center justify-center mx-auto mb-4">
-                            <i class="fas fa-tshirt text-white text-2xl"></i>
-                        </div>
-                        <h3 class="text-xl font-bold mb-3">Calidad Comprobada</h3>
-                        <p class="text-gray-600 dark:text-gray-300">
-                            Telas de alta calidad que mantienen su forma y color después de múltiples lavados y usos intensos.
-                        </p>
-                    </div>
-                    <div class="text-center">
-                        <div class="w-20 h-20 bg-pink-500 rounded-full flex items-center justify-center mx-auto mb-4">
-                            <i class="fas fa-heart text-white text-2xl"></i>
-                        </div>
-                        <h3 class="text-xl font-bold mb-3">Hecho para Mujeres</h3>
-                        <p class="text-gray-600 dark:text-gray-300">
-                            Diseñado específicamente para el cuerpo femenino, considerando movilidad, comodidad y estilo.
-                        </p>
-                    </div>
-                    <div class="text-center">
-                        <div class="w-20 h-20 bg-pink-500 rounded-full flex items-center justify-center mx-auto mb-4">
-                            <i class="fas fa-hand-holding-heart text-white text-2xl"></i>
-                        </div>
-                        <h3 class="text-xl font-bold mb-3">Compromiso Local</h3>
-                        <p class="text-gray-600 dark:text-gray-300">
-                            Empresa 100% guerrerense, apoyando la economía local y entendiendo las necesidades de nuestra comunidad.
-                        </p>
                     </div>
                 </div>
             </div>
@@ -410,12 +437,17 @@
             <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
                 <div class="footer-col">
                     <h3 class="text-xl font-bold mb-4">LiSport</h3>
-                    <p class="text-gray-300 mb-4">Ropa deportiva de alta calidad diseñada específicamente para mujeres activas que buscan comodidad, estilo y rendimiento.</p>
+                    <p class="text-gray-300 mb-4">Porque entrenar también es una forma de brillar.
+                        Descubre ropa deportiva pensada para mujeres seguras, activas y llenas de poder.</p>
                     <div class="social-links flex space-x-4">
-                        <a href="#" class="bg-gray-700 w-10 h-10 rounded-full flex items-center justify-center hover:bg-pink-500 transition" aria-label="Facebook">
+                        <a href="#"
+                            class="bg-gray-700 w-10 h-10 rounded-full flex items-center justify-center hover:bg-pink-500 transition focus:outline-none focus:ring-2 focus:ring-pink-500"
+                            aria-label="Facebook">
                             <i class="fab fa-facebook-f"></i>
                         </a>
-                        <a href="https://www.instagram.com/li_sport_25?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" class="bg-gray-700 w-10 h-10 rounded-full flex items-center justify-center hover:bg-pink-500 transition" aria-label="Instagram">
+                        <a href="https://www.instagram.com/li_sport_25?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw=="
+                            class="bg-gray-700 w-10 h-10 rounded-full flex items-center justify-center hover:bg-pink-500 transition focus:outline-none focus:ring-2 focus:ring-pink-500"
+                            aria-label="Instagram">
                             <i class="fab fa-instagram"></i>
                         </a>
                     </div>
@@ -424,38 +456,61 @@
                 <div class="footer-col">
                     <h3 class="text-xl font-bold mb-4">Enlaces Rápidos</h3>
                     <ul class="space-y-2">
-                        <li><a href="Inicio.html" class="text-gray-300 hover:text-white transition">Inicio</a></li>
-                        <li><a href="catalogo.html" class="text-gray-300 hover:text-white transition">Catálogo</a></li>
-                        <li><a href="sobre-nosotros.html" class="text-gray-300 hover:text-white transition">Sobre Nosotros</a></li>
-                        <li><a href="contacto.html" class="text-gray-300 hover:text-white transition">Contacto</a></li>
-                    </ul>
-                </div>
-
-                <div class="footer-col">
-                    <h3 class="text-xl font-bold mb-4">Categorías</h3>
-                    <ul class="space-y-2">
-                        <li><a href="catalogo.html?category=leggins" class="text-gray-300 hover:text-white transition">Leggings</a></li>
-                        <li><a href="catalogo.html?category=tops" class="text-gray-300 hover:text-white transition">Tops</a></li>
-                        <li><a href="catalogo.html?category=calcetas" class="text-gray-300 hover:text-white transition">Calcetas</a></li>
-                        <li><a href="catalogo.html?category=sweaters" class="text-gray-300 hover:text-white transition">Sudaderas</a></li>
-                        <li><a href="catalogo.html?category=conjuntos" class="text-gray-300 hover:text-white transition">Conjuntos</a></li>
-                        <li><a href="catalogo.html?category=enterizos" class="text-gray-300 hover:text-white transition">Enterizos</a></li>
-                    </ul>
-                </div>
-
-                <div class="footer-col">
-                    <h3 class="text-xl font-bold mb-4">Contacto</h3>
-                    <ul class="space-y-2">
-                        <li class="flex items-start">
-                            <i class="fas fa-map-marker-alt mt-1 mr-2 text-pink-400"></i>
-                            <span class="text-gray-300">Chilpancingo de los Bravo, Guerrero, México</span>
+                        <li><a href="Inicio.html"
+                                class="text-gray-300 hover:text-white transition focus:outline-none focus:text-white">Inicio</a>
+                        </li>
+                        <li><a href="catalogo.html"
+                                class="text-gray-300 hover:text-white transition focus:outline-none focus:text-white">Comprar</a>
+                        </li>
+                        <li><a href="sobre-nosotros.html"
+                                class="text-gray-300 hover:text-white transition focus:outline-none focus:text-white">Nuestra
+                                Historia</a></li>
+                        <li><a href="contacto.html"
+                                class="text-gray-300 hover:text-white transition focus:outline-none focus:text-white">Contactanos</a>
                         </li>
                     </ul>
                 </div>
+                <div class="footer-col">
+                    <h3 class="text-xl font-bold mb-4">Tu Compra Segura</h3>
+                    <ul class="space-y-3">
+                        <li class="flex items-start text-gray-300">
+                            <i class="fas fa-undo-alt mt-1 mr-2 text-pink-400"></i>
+                            <p>30 días para Cambios y Devoluciones.</p>
+                        </li>
+                        <li class="flex items-start text-gray-300">
+                            <i class="fas fa-truck mt-1 mr-2 text-pink-400"></i>
+                            <p>Envíos a todo México.</p>
+                        </li>
+                        <li class="flex items-start text-gray-300">
+                            <i class="fas fa-lock mt-1 mr-2 text-pink-400"></i>
+                            <p>Pago 100% seguro.</p>
+                        </li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h3 class="text-xl font-bold mb-4">Encuéntranos</h3>
+
+                    <div class="map-container mb-4 rounded-md overflow-hidden shadow-lg">
+                        <iframe
+                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2729.2544410240494!2d-99.50254862667765!3d17.549706698112438!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x85cbedc493332ecf%3A0x88d3c2fff71d32c7!2sbe%20you%20for%20you!5e1!3m2!1ses-419!2smx!4v1762577542925!5m2!1ses-419!2smx"
+                            width="100%" height="150" style="border:0;" allowfullscreen="" loading="lazy"
+                            referrerpolicy="no-referrer-when-downgrade"
+                            title="Ubicación de la tienda LiSport en Chilpancingo"></iframe>
+                    </div>
+
+                    <ul class="space-y-1">
+                        <li class="flex items-center text-gray-300 text-sm">
+                            <i class="fas fa-map-marker-alt mr-2 text-pink-400"></i>
+                            Chilpancingo de los Bravo, Guerrero
+                        </li>
+                    </ul>
+                </div>
+
             </div>
-            <div class="copyright border-t border-gray-700 pt-6 text-center text-gray-400">
-                <p>&copy; 2025 LiSport. Todos los derechos reservados.</p>
-            </div>
+        </div>
+        <div class="copyright border-t border-gray-700 pt-6 text-center text-gray-400">
+            <p>&copy; 2025 LiSport. Todos los derechos reservados.</p>
+        </div>
         </div>
     </footer>
 
@@ -465,7 +520,7 @@
         const body = document.body;
         const darkToggle = document.getElementById('darkToggle');
         const darkIcon = document.getElementById('darkIcon');
-        
+
         function setDark(isDark) {
             if (isDark) {
                 body.classList.add('dark');
@@ -477,7 +532,7 @@
                 localStorage.removeItem('lisport_dark');
             }
         }
-        
+
         // Menú móvil CORREGIDO
         const mobileMenuBtn = document.getElementById('mobileMenuBtn');
         const closeMenu = document.getElementById('closeMenu');
@@ -486,7 +541,7 @@
 
         function toggleMobileMenu() {
             const isOpening = !mobileMenu.classList.contains('open');
-            
+
             if (isOpening) {
                 mobileMenu.classList.add('open');
                 mobileOverlay.classList.remove('hidden');
@@ -513,13 +568,13 @@
                 toggleMobileMenu();
             }
         });
-        
+
         // Inicializar modo oscuro desde localStorage o preferencias del sistema
-        if (localStorage.getItem('lisport_dark') === '1' || 
+        if (localStorage.getItem('lisport_dark') === '1' ||
             (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
             setDark(true);
         }
-        
+
         darkToggle.addEventListener('click', () => {
             setDark(!body.classList.contains('dark'));
         });
@@ -527,11 +582,11 @@
         // Animación de aparición para elementos
         function animateOnScroll() {
             const elements = document.querySelectorAll('.feature-card, .value-card');
-            
+
             elements.forEach(element => {
                 const elementTop = element.getBoundingClientRect().top;
                 const elementVisible = 150;
-                
+
                 if (elementTop < window.innerHeight - elementVisible) {
                     element.style.opacity = "1";
                     element.style.transform = "translateY(0)";
@@ -540,7 +595,7 @@
         }
 
         // Inicializar animaciones
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function () {
             // Configurar elementos para animación
             const elements = document.querySelectorAll('.feature-card, .value-card');
             elements.forEach(element => {
@@ -548,11 +603,12 @@
                 element.style.transform = "translateY(20px)";
                 element.style.transition = "opacity 0.6s ease, transform 0.6s ease";
             });
-            
+
             // Iniciar animación al cargar y al hacer scroll
             animateOnScroll();
             window.addEventListener('scroll', animateOnScroll);
         });
     </script>
 </body>
+
 </html>
