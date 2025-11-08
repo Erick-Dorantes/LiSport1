@@ -1,58 +1,63 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Contacto - LiSport</title>
-    
-    <meta name="description" content="Contáctanos para consultas, pedidos o cualquier pregunta. Estamos aquí para ayudarte.">
-    
+
+    <meta name="description"
+        content="Contáctanos para consultas, pedidos o cualquier pregunta. Estamos aquí para ayudarte.">
+
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    
+
     <!-- Iconos -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
+
     <!-- Favicons -->
     <link rel="icon" type="image/x-icon" href="images/favicon.ico">
     <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="images/favicon-16x16.png">
     <link rel="apple-touch-icon" sizes="180x180" href="images/apple-touch-icon.png">
     <link rel="manifest" href="images/site.webmanifest">
-    
+
     <style>
         :root {
             --rosa: #ff4c7a;
             --rosa-claro: #fff6f9;
             --bg-dark: #0b1020;
         }
-        
+
         /* Logo reducido */
         .logo-image {
-            height: 60px; /* REDUCIDO de ~50px a 25px */
+            height: 60px;
+            /* REDUCIDO de ~50px a 25px */
             width: auto;
-            max-width: 130px; /* Controla el ancho máximo */
+            max-width: 130px;
+            /* Controla el ancho máximo */
             transition: all 0.3s ease;
         }
-        
+
         .logo-image:hover {
             transform: scale(1.05);
         }
-        
+
         /* Header más compacto */
         .header-compact {
-            padding: 10px 20px; /* Reducido padding vertical */
+            padding: 10px 20px;
+            /* Reducido padding vertical */
         }
-        
+
         body.dark {
             background: var(--bg-dark);
             color: #e6eef8;
         }
-        
+
         body.dark header {
             background: #0f1724;
         }
-        
+
         /* Menú móvil CORREGIDO */
         .mobile-menu {
             transform: translateX(100%);
@@ -60,17 +65,17 @@
             visibility: hidden;
             opacity: 0;
         }
-        
+
         .mobile-menu.open {
             transform: translateX(0);
             visibility: visible;
             opacity: 1;
         }
-        
+
         .mobile-overlay {
             transition: opacity 0.3s ease;
         }
-        
+
         .contact-hero {
             background: linear-gradient(135deg, rgba(255, 76, 122, 0.9) 0%, rgba(255, 140, 160, 0.9) 100%);
             background-size: cover;
@@ -81,7 +86,7 @@
             position: relative;
             overflow: hidden;
         }
-        
+
         .contact-hero::before {
             content: '';
             position: absolute;
@@ -92,16 +97,16 @@
             background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000" opacity="0.1"><polygon fill="white" points="0,1000 1000,0 1000,1000"/></svg>');
             background-size: cover;
         }
-        
+
         .contact-info-card {
             transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
-        
+
         .contact-info-card:hover {
             transform: translateY(-5px);
             box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
         }
-        
+
         .sr-only {
             position: absolute;
             width: 1px;
@@ -113,31 +118,38 @@
             white-space: nowrap;
             border: 0;
         }
-        
+
         /* Responsive para logo */
         @media (max-width: 768px) {
             .logo-image {
-                height: 22px; /* Más pequeño en tablets */
+                height: 22px;
+                /* Más pequeño en tablets */
                 max-width: 90px;
             }
+
             .header-compact {
-                padding: 8px 15px; /* Más compacto en tablets */
+                padding: 8px 15px;
+                /* Más compacto en tablets */
             }
         }
-        
+
         @media (max-width: 576px) {
             .logo-image {
-                height: 20px; /* Más pequeño en móviles */
+                height: 20px;
+                /* Más pequeño en móviles */
                 max-width: 80px;
             }
+
             .header-compact {
-                padding: 6px 12px; /* Más compacto en móviles */
+                padding: 6px 12px;
+                /* Más compacto en móviles */
             }
         }
-        
+
         @media (max-width: 400px) {
             .logo-image {
-                height: 18px; /* Mínimo tamaño */
+                height: 18px;
+                /* Mínimo tamaño */
                 max-width: 70px;
             }
         }
@@ -153,29 +165,34 @@
                     <img src="images/logo.png" alt="LiSport - Ropa Deportiva para Mujer" class="logo-image">
                 </a>
             </div>
-            
+
             <!-- Menú principal -->
             <nav class="hidden md:flex" aria-label="Menú principal">
                 <ul class="flex space-x-6">
                     <li><a href="Inicio.html" class="hover:text-pink-200 transition py-2 relative">Inicio</a></li>
-                    <li><a href="catalogo.html" class="hover:text-pink-200 transition py-2 relative">Catálogo</a></li>
-                    <li><a href="sobre-nosotros.html" class="hover:text-pink-200 transition py-2 relative">Nosotros</a></li>
-                    <li><a href="contacto.html" class="hover:text-pink-200 transition py-2 relative font-bold">Contacto</a></li>
+                    <li><a href="catalogo.html" class="hover:text-pink-200 transition py-2 relative">Comprar</a></li>
+                    <li><a href="sobre-nosotros.html" class="hover:text-pink-200 transition py-2 relative">Nuestra
+                            Historia</a></li>
+                    <li><a href="contacto.html"
+                            class="hover:text-pink-200 transition py-2 relative font-bold">Contáctanos</a></li>
                 </ul>
             </nav>
-            
+
             <div class="flex items-center gap-4">
-                <button id="darkToggle" title="Cambiar modo" class="p-2 rounded-full bg-white/20 hover:bg-white/30 transition-colors">
+                <button id="darkToggle" title="Cambiar modo"
+                    class="p-2 rounded-full bg-white/20 hover:bg-white/30 transition-colors">
                     <span id="darkIcon">🌙</span>
                 </button>
-                <button class="md:hidden p-2 rounded-full bg-white/20 hover:bg-white/30 transition-colors" id="mobileMenuBtn">
+                <button class="md:hidden p-2 rounded-full bg-white/20 hover:bg-white/30 transition-colors"
+                    id="mobileMenuBtn">
                     <i class="fas fa-bars"></i>
                 </button>
             </div>
         </div>
 
         <!-- Menú móvil CORREGIDO -->
-        <div class="mobile-menu fixed top-0 right-0 h-full w-64 bg-white text-gray-800 shadow-lg p-6 z-50" id="mobileMenu">
+        <div class="mobile-menu fixed top-0 right-0 h-full w-64 bg-white text-gray-800 shadow-lg p-6 z-50"
+            id="mobileMenu">
             <div class="flex justify-between items-center mb-8">
                 <h3 class="font-bold text-lg">MENÚ</h3>
                 <button class="p-2 rounded-full hover:bg-gray-100 transition" id="closeMenu">
@@ -184,14 +201,22 @@
             </div>
             <nav aria-label="Navegación móvil">
                 <ul class="space-y-4">
-                    <li><a href="Inicio.html" class="block py-2 font-medium hover:text-pink-500 transition border-b border-gray-200">INICIO</a></li>
-                    <li><a href="catalogo.html" class="block py-2 font-medium hover:text-pink-500 transition border-b border-gray-200">CATÁLOGO</a></li>
-                    <li><a href="sobre-nosotros.html" class="block py-2 font-medium hover:text-pink-500 transition border-b border-gray-200">NOSOTROS</a></li>
-                    <li><a href="contacto.html" class="block py-2 font-bold hover:text-pink-500 transition border-b border-gray-200">CONTACTO</a></li>
+                    <li><a href="Inicio.html"
+                            class="block py-2 font-medium hover:text-pink-500 transition border-b border-gray-200">INICIO</a>
+                    </li>
+                    <li><a href="catalogo.html"
+                            class="block py-2 font-medium hover:text-pink-500 transition border-b border-gray-200">COMPRAR</a>
+                    </li>
+                    <li><a href="sobre-nosotros.html"
+                            class="block py-2 font-medium hover:text-pink-500 transition border-b border-gray-200">NUESTRA
+                            HISTORIA</a></li>
+                    <li><a href="contacto.html"
+                            class="block py-2 font-bold hover:text-pink-500 transition border-b border-gray-200">CONTÁCTANOS</a>
+                    </li>
                 </ul>
             </nav>
         </div>
-        
+
         <!-- Overlay para cerrar menú -->
         <div class="mobile-overlay fixed inset-0 bg-black bg-opacity-50 z-40 hidden" id="mobileOverlay"></div>
     </header>
@@ -202,7 +227,8 @@
         <section class="contact-hero text-white">
             <div class="max-w-6xl mx-auto px-4 text-center relative z-10">
                 <h1 class="text-4xl md:text-5xl font-bold mb-4">CONTÁCTANOS</h1>
-                <p class="text-xl max-w-2xl mx-auto">Estamos aquí para responder todas tus preguntas y ayudarte con lo que necesites</p>
+                <p class="text-xl max-w-2xl mx-auto">En LiSport te escuchamos. Queremos que tu experiencia sea tan
+                    cómoda y auténtica como tú. 💖</p>
             </div>
         </section>
 
@@ -214,13 +240,16 @@
                     <div>
                         <h2 class="text-3xl font-bold mb-6">Información de Contacto</h2>
                         <p class="text-gray-600 dark:text-gray-500 mb-8 text-lg">
-                            No dudes en contactarnos para consultas sobre productos, pedidos personalizados o cualquier pregunta que tengas. Estamos aquí para ayudarte.
+                            No dudes en escribirnos si tienes preguntas sobre productos, pedidos o cualquier duda. En
+                            LiSport estamos para ayudarte y hacer que tu experiencia sea siempre cómoda y confiable.
                         </p>
-                        
+
                         <div class="space-y-6">
-                            <div class="contact-info-card bg-gray-50 dark:bg-gray-800 p-6 rounded-lg border-l-4 border-pink-500">
+                            <div
+                                class="contact-info-card bg-gray-50 dark:bg-gray-800 p-6 rounded-lg border-l-4 border-pink-500">
                                 <div class="flex items-start space-x-4">
-                                    <div class="flex-shrink-0 w-12 h-12 bg-pink-100 dark:bg-pink-900 rounded-full flex items-center justify-center">
+                                    <div
+                                        class="flex-shrink-0 w-12 h-12 bg-pink-100 dark:bg-pink-900 rounded-full flex items-center justify-center">
                                         <i class="fas fa-map-marker-alt text-pink-500 text-xl"></i>
                                     </div>
                                     <div>
@@ -231,14 +260,17 @@
                                     </div>
                                 </div>
                             </div>
-                            
-                            <div class="contact-info-card bg-gray-50 dark:bg-gray-800 p-6 rounded-lg border-l-4 border-pink-500">
+
+                            <div
+                                class="contact-info-card bg-gray-50 dark:bg-gray-800 p-6 rounded-lg border-l-4 border-pink-500">
                                 <div class="flex items-start space-x-4">
-                                    <div class="flex-shrink-0 w-12 h-12 bg-pink-100 dark:bg-pink-900 rounded-full flex items-center justify-center">
+                                    <div
+                                        class="flex-shrink-0 w-12 h-12 bg-pink-100 dark:bg-pink-900 rounded-full flex items-center justify-center">
                                         <i class="fas fa-envelope text-pink-500 text-xl"></i>
                                     </div>
                                     <div>
-                                        <h3 class="text-xl font-bold mb-2 text-gray-800 dark:text-white">Correo Electrónico</h3>
+                                        <h3 class="text-xl font-bold mb-2 text-gray-800 dark:text-white">Correo
+                                            Electrónico</h3>
                                         <p class="text-gray-600 dark:text-gray-300">
                                             info@lisport.com
                                         </p>
@@ -248,10 +280,12 @@
                                     </div>
                                 </div>
                             </div>
-                            
-                            <div class="contact-info-card bg-gray-50 dark:bg-gray-800 p-6 rounded-lg border-l-4 border-pink-500">
+
+                            <div
+                                class="contact-info-card bg-gray-50 dark:bg-gray-800 p-6 rounded-lg border-l-4 border-pink-500">
                                 <div class="flex items-start space-x-4">
-                                    <div class="flex-shrink-0 w-12 h-12 bg-pink-100 dark:bg-pink-900 rounded-full flex items-center justify-center">
+                                    <div
+                                        class="flex-shrink-0 w-12 h-12 bg-pink-100 dark:bg-pink-900 rounded-full flex items-center justify-center">
                                         <i class="fas fa-phone text-pink-500 text-xl"></i>
                                     </div>
                                     <div>
@@ -265,14 +299,17 @@
                                     </div>
                                 </div>
                             </div>
-                            
-                            <div class="contact-info-card bg-gray-50 dark:bg-gray-800 p-6 rounded-lg border-l-4 border-pink-500">
+
+                            <div
+                                class="contact-info-card bg-gray-50 dark:bg-gray-800 p-6 rounded-lg border-l-4 border-pink-500">
                                 <div class="flex items-start space-x-4">
-                                    <div class="flex-shrink-0 w-12 h-12 bg-pink-100 dark:bg-pink-900 rounded-full flex items-center justify-center">
+                                    <div
+                                        class="flex-shrink-0 w-12 h-12 bg-pink-100 dark:bg-pink-900 rounded-full flex items-center justify-center">
                                         <i class="fas fa-clock text-pink-500 text-xl"></i>
                                     </div>
                                     <div>
-                                        <h3 class="text-xl font-bold mb-2 text-gray-800 dark:text-white">Horario de Atención</h3>
+                                        <h3 class="text-xl font-bold mb-2 text-gray-800 dark:text-white">Horario de
+                                            Atención</h3>
                                         <p class="text-gray-600 dark:text-gray-300">
                                             <strong>Lunes a Viernes:</strong> 9:00 AM - 6:00 PM<br>
                                             <strong>Sábados:</strong> 10:00 AM - 2:00 PM<br>
@@ -283,100 +320,95 @@
                             </div>
                         </div>
                     </div>
-                    
+
                     <!-- Información adicional -->
                     <div>
                         <h2 class="text-3xl font-bold mb-6">¿Cómo podemos ayudarte?</h2>
-                        
+
                         <div class="space-y-6 mb-8">
-                            <div class="bg-pink-50 dark:bg-pink-900/20 p-6 rounded-lg border border-pink-200 dark:border-pink-800">
+                            <div
+                                class="bg-pink-50 dark:bg-pink-900/20 p-6 rounded-lg border border-pink-200 dark:border-pink-800">
                                 <div class="flex items-start space-x-4">
-                                    <div class="flex-shrink-0 w-10 h-10 bg-pink-500 rounded-full flex items-center justify-center">
+                                    <div
+                                        class="flex-shrink-0 w-10 h-10 bg-pink-500 rounded-full flex items-center justify-center">
                                         <i class="fas fa-shopping-bag text-white"></i>
                                     </div>
                                     <div>
-                                        <h3 class="text-lg font-bold mb-2 text-gray-800 dark:text-white">Consultas sobre Productos</h3>
+                                        <h3 class="text-lg font-bold mb-2 text-gray-800 dark:text-white">Consultas sobre
+                                            Productos</h3>
                                         <p class="text-gray-600 dark:text-gray-500">
-                                            ¿Tienes dudas sobre tallas, materiales o disponibilidad? Estamos aquí para asesorarte.
+                                            ¿Tienes dudas sobre tallas, materiales o disponibilidad?
+                                            Estamos aquí para guiarte y ayudarte a encontrar la prenda perfecta para ti.
                                         </p>
                                     </div>
                                 </div>
                             </div>
-                            
-                            <div class="bg-pink-50 dark:bg-pink-900/20 p-6 rounded-lg border border-pink-200 dark:border-pink-800">
+
+                            <div
+                                class="bg-pink-50 dark:bg-pink-900/20 p-6 rounded-lg border border-pink-200 dark:border-pink-800">
                                 <div class="flex items-start space-x-4">
-                                    <div class="flex-shrink-0 w-10 h-10 bg-pink-500 rounded-full flex items-center justify-center">
+                                    <div
+                                        class="flex-shrink-0 w-10 h-10 bg-pink-500 rounded-full flex items-center justify-center">
                                         <i class="fas fa-truck text-white"></i>
                                     </div>
                                     <div>
-                                        <h3 class="text-lg font-bold mb-2 text-gray-800 dark:text-white">Seguimiento de Pedidos</h3>
+                                        <h3 class="text-lg font-bold mb-2 text-gray-800 dark:text-white">Seguimiento de
+                                            Pedidos</h3>
                                         <p class="text-gray-600 dark:text-gray-500">
-                                            ¿Necesitas información sobre tu pedido o envío? Te ayudamos con el seguimiento.
+                                            ¿Quieres saber cómo va tu pedido o cuándo llegará? 📦
+                                            Contáctanos y con gusto te ayudaremos con toda la información de tu envío.
                                         </p>
                                     </div>
                                 </div>
                             </div>
-                            
-                            <div class="bg-pink-50 dark:bg-pink-900/20 p-6 rounded-lg border border-pink-200 dark:border-pink-800">
+
+                            <div
+                                class="bg-pink-50 dark:bg-pink-900/20 p-6 rounded-lg border border-pink-200 dark:border-pink-800">
                                 <div class="flex items-start space-x-4">
-                                    <div class="flex-shrink-0 w-10 h-10 bg-pink-500 rounded-full flex items-center justify-center">
+                                    <div
+                                        class="flex-shrink-0 w-10 h-10 bg-pink-500 rounded-full flex items-center justify-center">
                                         <i class="fas fa-exchange-alt text-white"></i>
                                     </div>
                                     <div>
-                                        <h3 class="text-lg font-bold mb-2 text-gray-800 dark:text-white">Cambios y Devoluciones</h3>
+                                        <h3 class="text-lg font-bold mb-2 text-gray-800 dark:text-white">Cambios y
+                                            Devoluciones</h3>
                                         <p class="text-gray-600 dark:text-gray-500">
-                                            ¿Necesitas realizar un cambio o devolución? Te explicamos nuestro proceso.
+                                            ¿Necesitas hacer un cambio o devolución? ♻️
+                                            Queremos que te sientas feliz con tu compra, por eso te explicamos nuestro
+                                            proceso paso a paso.
                                         </p>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        
+
                         <!-- Redes Sociales -->
                         <div class="bg-gray-50 dark:bg-gray-800 p-6 rounded-lg">
-                            <h3 class="text-xl font-bold mb-4 text-gray-800 dark:text-white">Síguenos en Redes Sociales</h3>
+                            <h3 class="text-xl font-bold mb-4 text-gray-800 dark:text-white">Síguenos en Redes Sociales
+                            </h3>
                             <p class="text-gray-600 dark:text-gray-300 mb-4">
-                                Mantente al día con nuestras novedades, promociones y consejos de estilo.
+                                Únete a nuestra comunidad 💖
+                                Descubre nuestras novedades, promociones y consejos de estilo pensados para mujeres como
+                                tú.
                             </p>
                             <div class="flex space-x-4">
-                                <a href="#" class="bg-gray-200 dark:bg-gray-700 w-12 h-12 rounded-full flex items-center justify-center hover:bg-pink-500 hover:text-white transition transform hover:scale-110" aria-label="Síguenos en Facebook">
+                                <a href="#"
+                                    class="bg-gray-200 dark:bg-gray-700 w-12 h-12 rounded-full flex items-center justify-center hover:bg-pink-500 hover:text-white transition transform hover:scale-110"
+                                    aria-label="Síguenos en Facebook">
                                     <i class="fab fa-facebook-f"></i>
                                 </a>
-                                <a href="https://www.instagram.com/li_sport_25?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" class="bg-gray-200 dark:bg-gray-700 w-12 h-12 rounded-full flex items-center justify-center hover:bg-pink-500 hover:text-white transition transform hover:scale-110" aria-label="Síguenos en Instagram">
+                                <a href="https://www.instagram.com/li_sport_25?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw=="
+                                    class="bg-gray-200 dark:bg-gray-700 w-12 h-12 rounded-full flex items-center justify-center hover:bg-pink-500 hover:text-white transition transform hover:scale-110"
+                                    aria-label="Síguenos en Instagram">
                                     <i class="fab fa-instagram"></i>
                                 </a>
-                                <a href="#" class="bg-gray-200 dark:bg-gray-700 w-12 h-12 rounded-full flex items-center justify-center hover:bg-pink-500 hover:text-white transition transform hover:scale-110" aria-label="Síguenos en WhatsApp">
+                                <a href="#"
+                                    class="bg-gray-200 dark:bg-gray-700 w-12 h-12 rounded-full flex items-center justify-center hover:bg-pink-500 hover:text-white transition transform hover:scale-110"
+                                    aria-label="Síguenos en WhatsApp">
                                     <i class="fab fa-whatsapp"></i>
                                 </a>
                             </div>
                         </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Sección de FAQ -->
-        <section class="py-12 bg-gray-50 dark:bg-gray-800">
-            <div class="max-w-4xl mx-auto px-4">
-                <h2 class="text-3xl font-bold text-center mb-10">Preguntas Frecuentes</h2>
-                <div class="space-y-4">
-                    <div class="bg-white dark:bg-gray-700 p-6 rounded-lg shadow-sm">
-                        <h3 class="text-lg font-bold mb-2 text-gray-800 dark:text-white">¿Cuál es el tiempo de entrega?</h3>
-                        <p class="text-gray-600 dark:text-gray-300">
-                            El tiempo de entrega varía según tu ubicación. Generalmente, los envíos dentro de Chilpancingo tardan 1-2 días hábiles, y al resto del país 3-5 días hábiles.
-                        </p>
-                    </div>
-                    <div class="bg-white dark:bg-gray-700 p-6 rounded-lg shadow-sm">
-                        <h3 class="text-lg font-bold mb-2 text-gray-800 dark:text-white">¿Ofrecen cambios o devoluciones?</h3>
-                        <p class="text-gray-600 dark:text-gray-300">
-                            Sí, aceptamos cambios dentro de los 15 días posteriores a la recepción de tu pedido. El producto debe estar en perfectas condiciones y con etiquetas.
-                        </p>
-                    </div>
-                    <div class="bg-white dark:bg-gray-700 p-6 rounded-lg shadow-sm">
-                        <h3 class="text-lg font-bold mb-2 text-gray-800 dark:text-white">¿Cómo elijo mi talla correcta?</h3>
-                        <p class="text-gray-600 dark:text-gray-300">
-                            En la página de cada producto encontrarás una guía de tallas detallada. Si necesitas ayuda adicional, contáctanos por WhatsApp para asesorarte personalmente.
-                        </p>
                     </div>
                 </div>
             </div>
@@ -389,12 +421,17 @@
             <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
                 <div class="footer-col">
                     <h3 class="text-xl font-bold mb-4">LiSport</h3>
-                    <p class="text-gray-300 mb-4">Ropa deportiva de alta calidad diseñada específicamente para mujeres activas que buscan comodidad, estilo y rendimiento.</p>
+                    <p class="text-gray-300 mb-4">Porque entrenar también es una forma de brillar.
+                        Descubre ropa deportiva pensada para mujeres seguras, activas y llenas de poder.</p>
                     <div class="social-links flex space-x-4">
-                        <a href="#" class="bg-gray-700 w-10 h-10 rounded-full flex items-center justify-center hover:bg-pink-500 transition" aria-label="Facebook">
+                        <a href="#"
+                            class="bg-gray-700 w-10 h-10 rounded-full flex items-center justify-center hover:bg-pink-500 transition focus:outline-none focus:ring-2 focus:ring-pink-500"
+                            aria-label="Facebook">
                             <i class="fab fa-facebook-f"></i>
                         </a>
-                        <a href="https://www.instagram.com/li_sport_25?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" class="bg-gray-700 w-10 h-10 rounded-full flex items-center justify-center hover:bg-pink-500 transition" aria-label="Instagram">
+                        <a href="https://www.instagram.com/li_sport_25?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw=="
+                            class="bg-gray-700 w-10 h-10 rounded-full flex items-center justify-center hover:bg-pink-500 transition focus:outline-none focus:ring-2 focus:ring-pink-500"
+                            aria-label="Instagram">
                             <i class="fab fa-instagram"></i>
                         </a>
                     </div>
@@ -403,56 +440,70 @@
                 <div class="footer-col">
                     <h3 class="text-xl font-bold mb-4">Enlaces Rápidos</h3>
                     <ul class="space-y-2">
-                        <li><a href="Inicio.html" class="text-gray-300 hover:text-white transition">Inicio</a></li>
-                        <li><a href="catalogo.html" class="text-gray-300 hover:text-white transition">Catálogo</a></li>
-                        <li><a href="sobre-nosotros.html" class="text-gray-300 hover:text-white transition">Sobre Nosotros</a></li>
-                        <li><a href="contacto.html" class="text-gray-300 hover:text-white transition">Contacto</a></li>
+                        <li><a href="Inicio.html"
+                                class="text-gray-300 hover:text-white transition focus:outline-none focus:text-white">Inicio</a>
+                        </li>
+                        <li><a href="catalogo.html"
+                                class="text-gray-300 hover:text-white transition focus:outline-none focus:text-white">Comprar</a>
+                        </li>
+                        <li><a href="sobre-nosotros.html"
+                                class="text-gray-300 hover:text-white transition focus:outline-none focus:text-white">Nuestra
+                                Historia</a></li>
+                        <li><a href="contacto.html"
+                                class="text-gray-300 hover:text-white transition focus:outline-none focus:text-white">Contactanos</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h3 class="text-xl font-bold mb-4">Tu Compra Segura</h3>
+                    <ul class="space-y-3">
+                        <li class="flex items-start text-gray-300">
+                            <i class="fas fa-undo-alt mt-1 mr-2 text-pink-400"></i>
+                            <p>30 días para Cambios y Devoluciones.</p>
+                        </li>
+                        <li class="flex items-start text-gray-300">
+                            <i class="fas fa-truck mt-1 mr-2 text-pink-400"></i>
+                            <p>Envíos a todo México.</p>
+                        </li>
+                        <li class="flex items-start text-gray-300">
+                            <i class="fas fa-lock mt-1 mr-2 text-pink-400"></i>
+                            <p>Pago 100% seguro.</p>
+                        </li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h3 class="text-xl font-bold mb-4">Encuéntranos</h3>
+
+                    <div class="map-container mb-4 rounded-md overflow-hidden shadow-lg">
+                        <iframe
+                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2729.2544410240494!2d-99.50254862667765!3d17.549706698112438!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x85cbedc493332ecf%3A0x88d3c2fff71d32c7!2sbe%20you%20for%20you!5e1!3m2!1ses-419!2smx!4v1762577542925!5m2!1ses-419!2smx"
+                            width="100%" height="150" style="border:0;" allowfullscreen="" loading="lazy"
+                            referrerpolicy="no-referrer-when-downgrade"
+                            title="Ubicación de la tienda LiSport en Chilpancingo"></iframe>
+                    </div>
+
+                    <ul class="space-y-1">
+                        <li class="flex items-center text-gray-300 text-sm">
+                            <i class="fas fa-map-marker-alt mr-2 text-pink-400"></i>
+                            Chilpancingo de los Bravo, Guerrero
+                        </li>
                     </ul>
                 </div>
 
-                <div class="footer-col">
-                    <h3 class="text-xl font-bold mb-4">Categorías</h3>
-                    <ul class="space-y-2">
-                        <li><a href="catalogo.html?category=leggins" class="text-gray-300 hover:text-white transition">Leggings</a></li>
-                        <li><a href="catalogo.html?category=tops" class="text-gray-300 hover:text-white transition">Tops</a></li>
-                        <li><a href="catalogo.html?category=calcetas" class="text-gray-300 hover:text-white transition">Calcetas</a></li>
-                        <li><a href="catalogo.html?category=sweaters" class="text-gray-300 hover:text-white transition">Sudaderas</a></li>
-                        <li><a href="catalogo.html?category=conjuntos" class="text-gray-300 hover:text-white transition">Conjuntos</a></li>
-                        <li><a href="catalogo.html?category=enterizos" class="text-gray-300 hover:text-white transition">Enterizos</a></li>
-                    </ul>
-                </div>
-
-                <div class="footer-col">
-                    <h3 class="text-xl font-bold mb-4">Contacto</h3>
-                    <ul class="space-y-2">
-                        <li class="flex items-start">
-                            <i class="fas fa-map-marker-alt mt-1 mr-2 text-pink-400"></i>
-                            <span class="text-gray-300">Chilpancingo de los Bravo, Guerrero, México</span>
-                        </li>
-                        <li class="flex items-start">
-                            <i class="fas fa-phone mt-1 mr-2 text-pink-400"></i>
-                            <span class="text-gray-300">+52 747 123 4567</span>
-                        </li>
-                        <li class="flex items-start">
-                            <i class="fas fa-envelope mt-1 mr-2 text-pink-400"></i>
-                            <span class="text-gray-300">info@lisport.com</span>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-            <div class="copyright border-t border-gray-700 pt-6 text-center text-gray-400">
-                <p>&copy; 2025 LiSport. Todos los derechos reservados.</p>
             </div>
         </div>
+        <div class="copyright border-t border-gray-700 pt-6 text-center text-gray-400">
+            <p>&copy; 2025 LiSport. Todos los derechos reservados.</p>
+        </div>
+        </div>
     </footer>
-
     <!-- Scripts -->
     <script>
         // Modo oscuro
         const body = document.body;
         const darkToggle = document.getElementById('darkToggle');
         const darkIcon = document.getElementById('darkIcon');
-        
+
         function setDark(isDark) {
             if (isDark) {
                 body.classList.add('dark');
@@ -464,7 +515,7 @@
                 localStorage.removeItem('lisport_dark');
             }
         }
-        
+
         // Menú móvil CORREGIDO
         const mobileMenuBtn = document.getElementById('mobileMenuBtn');
         const closeMenu = document.getElementById('closeMenu');
@@ -473,7 +524,7 @@
 
         function toggleMobileMenu() {
             const isOpening = !mobileMenu.classList.contains('open');
-            
+
             if (isOpening) {
                 mobileMenu.classList.add('open');
                 mobileOverlay.classList.remove('hidden');
@@ -500,16 +551,17 @@
                 toggleMobileMenu();
             }
         });
-        
+
         // Inicializar modo oscuro desde localStorage o preferencias del sistema
-        if (localStorage.getItem('lisport_dark') === '1' || 
+        if (localStorage.getItem('lisport_dark') === '1' ||
             (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
             setDark(true);
         }
-        
+
         darkToggle.addEventListener('click', () => {
             setDark(!body.classList.contains('dark'));
         });
     </script>
 </body>
+
 </html>
