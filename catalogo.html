@@ -266,12 +266,12 @@
             border-radius: 8px;
             padding: 8px 12px;
             transition: all 0.3s ease;
-            /* >>> MODIFICACIÓN CLAVE: Fondo en modo claro */
+            /* >>> MODIFICACIÓN PARA MODO OSCURO */
             background: white;
         }
 
         .dark .search-box {
-            /* >>> MODIFICACIÓN CLAVE: Fondo en modo oscuro */
+            /* >>> MODIFICACIÓN PARA MODO OSCURO */
             background: #1f2937;
             border-color: #4b5563;
         }
@@ -525,7 +525,40 @@
             }
         }
 
-        /* ===== MODAL GENERAL (Contenedor de Carrusel y Paneles) (sin cambios) ===== */
+        /* --- NUEVOS ESTILOS PARA MENÚ HAMBURGUESA --- */
+        /* Estilo por defecto: oculto con transición */
+        .mobile-menu-dropdown {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-in-out;
+            background: var(--rosa);
+        }
+
+        /* Estado activo: visible */
+        .mobile-menu-dropdown.active {
+            max-height: 300px;
+            /* Suficientemente grande para mostrar todos los enlaces */
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        /* Color del divisor del menú móvil en modo oscuro */
+        .dark .mobile-menu-dropdown ul {
+            border-color: #f472b6 !important;
+            /* pink-400 */
+        }
+
+        /* Asegurar que el texto del menú móvil sea blanco, independientemente del modo oscuro del body */
+        .mobile-menu-dropdown a {
+            color: white !important;
+        }
+
+        /* Ajustar el enlace activo/actual en el menú móvil */
+        .mobile-menu-dropdown .font-bold {
+            background-color: var(--rosa);
+            /* Asegurar el fondo del enlace activo */
+        }
+
+        /* ===== ESTILOS DE MODAL Y OTROS (SIN CAMBIOS) ===== */
         .image-modal {
             display: none;
             position: fixed;
@@ -545,8 +578,6 @@
             align-items: center;
             justify-content: center;
         }
-
-        /* ... (Resto de estilos de Modal y Carousel) ... */
 
         .modal-content {
             position: relative;
@@ -935,7 +966,8 @@
             top: 100%;
             left: 0;
             right: 0;
-            background: white; /* **Fondo BLANCO forzado en modo CLARO** */
+            background: white;
+            /* **Fondo BLANCO forzado en modo CLARO** */
             border: 1px solid #e5e7eb;
             border-radius: 8px;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
@@ -1007,7 +1039,21 @@
                     class="p-2 rounded-full bg-white/20 hover:bg-white/30 transition-colors">
                     <span id="darkIcon">🌙</span>
                 </button>
+
+                <button id="mobileMenuButton" class="p-2 md:hidden">
+                    <i class="fas fa-bars text-xl"></i>
+                </button>
             </div>
+        </div>
+
+        <div id="mobileMenu" class="mobile-menu-dropdown">
+            <ul class="flex flex-col text-center divide-y divide-pink-400">
+                <li><a href="Inicio.html" class="block py-3 hover:bg-pink-400 transition">Inicio</a></li>
+                <li><a href="catalogo.html"
+                        class="block py-3 hover:bg-pink-400 transition font-bold bg-pink-400">Catálogo</a></li>
+                <li><a href="sobre-nosotros.html" class="block py-3 hover:bg-pink-400 transition">Nosotros</a></li>
+                <li><a href="contacto.html" class="block py-3 hover:bg-pink-400 transition">Contacto</a></li>
+            </ul>
         </div>
     </header>
 
@@ -1038,18 +1084,18 @@
                         <div class="filter-title mb-4">
                             <h4 class="font-semibold">BUSCAR</h4>
                         </div>
-                        <div class="search-box relative"> 
+                        <div class="search-box relative">
                             <i class="fas fa-search search-icon text-gray-400"></i>
                             <input type="text" id="searchInput" placeholder="Buscar productos..." class="search-input"
                                 autocomplete="off">
                         </div>
                         <div id="autocomplete-results" class="hidden">
-                            </div>
+                        </div>
                     </div>
 
                     <div class="filter-group mb-6">
                         <div class="filter-title flex justify-between items-center mb-4">
-                               <h4 class="font-semibold">CATEGORÍA</h4>
+                            <h4 class="font-semibold">CATEGORÍA</h4>
                         </div>
                         <div class="filter-options space-y-2">
                             <label class="filter-option">
@@ -1680,7 +1726,7 @@
             allProducts.forEach(product => {
                 const nombre = (product.nombre || "").toLowerCase();
                 const categoria = (product.categoria || "").toLowerCase();
-                
+
                 // Priorizar coincidencias exactas y al inicio de la palabra
                 if (nombre.includes(searchTerm)) {
                     uniqueTerms.add(nombre);
@@ -1804,13 +1850,32 @@
             }
         }
 
-        // ===== CONFIGURAR EVENT LISTENERS (Añadido botón de diálogo) =====
+        // ===== CONFIGURAR EVENT LISTENERS (Añadido la lógica del menú hamburguesa) =====
         function setupEventListeners() {
             const floatingFiltersButton = document.getElementById('floatingFiltersButton');
             const closeFiltersButton = document.getElementById('closeFilters');
             const modalDetailsButton = document.getElementById('modalDetailsButton');
             const imageModal = document.getElementById('imageModal');
             const infoDialog = document.getElementById('productInfoDialog');
+
+            // NUEVOS BOTONES DEL MENÚ HAMBURGUESA PRINCIPAL
+            const mobileMenuButton = document.getElementById('mobileMenuButton');
+            const mobileMenu = document.getElementById('mobileMenu');
+
+            if (mobileMenuButton) {
+                mobileMenuButton.addEventListener('click', function () {
+                    mobileMenu.classList.toggle('active');
+                    // Opcional: Cambiar el icono de hamburguesa a una 'X'
+                    const icon = mobileMenuButton.querySelector('i');
+                    if (mobileMenu.classList.contains('active')) {
+                        icon.classList.remove('fa-bars');
+                        icon.classList.add('fa-times');
+                    } else {
+                        icon.classList.remove('fa-times');
+                        icon.classList.add('fa-bars');
+                    }
+                });
+            }
 
             if (floatingFiltersButton) {
                 floatingFiltersButton.addEventListener('click', toggleMobileFilters);
@@ -1878,5 +1943,4 @@
         });
     </script>
 </body>
-
 </html>
