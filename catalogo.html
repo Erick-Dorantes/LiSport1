@@ -1330,6 +1330,7 @@
         let filteredProducts = [];
         let currentModalCarousel = null;
         let currentProduct = null;
+        let isModalOpen = false; // Nueva variable para controlar el estado del modal
 
         // Función auxiliar para obtener el estado de móvil
         function isMobileView() {
@@ -1421,6 +1422,8 @@
             }
 
             currentProduct = null;
+            isModalOpen = false; // Marcar el modal como cerrado
+            history.back(); // Permitir que el botón de retroceso funcione normalmente
         }
 
         function toggleProductInfoDialog() {
@@ -1450,6 +1453,9 @@
                 infoPanel.classList.remove('active');
                 infoDialog.classList.remove('active');
             }
+
+            isModalOpen = true; // Marcar el modal como abierto
+            history.pushState({ modalOpen: true }, ''); // Añadir una entrada al historial para el modal
         }
 
         function addImageModalListeners() {
@@ -1513,7 +1519,7 @@
                         this.goToSlide(index);
                     });
                 });
-                document.addEventListener('keydown', (e) => this.handleKeydown(e));
+                // REMOVED: Moved keydown listener to global scope for Escape key handling
             }
 
             showSlide(index) {
@@ -1541,21 +1547,6 @@
             goToSlide(index) {
                 if (index >= 0 && index < this.images.length) {
                     this.showSlide(index);
-                }
-            }
-
-            handleKeydown(e) {
-                if (!this.modal.classList.contains('active')) return;
-                switch (e.key) {
-                    case 'ArrowLeft':
-                        this.prevSlide();
-                        break;
-                    case 'ArrowRight':
-                        this.nextSlide();
-                        break;
-                    case 'Escape':
-                        closeImageModal();
-                        break;
                 }
             }
 
@@ -1911,10 +1902,14 @@
             });
 
             // Cerrar diálogo si se hace clic fuera de él (solo en móvil)
+            // MODIFICADO: Ahora el clic fuera de la imagen (pero dentro del modal) cierra el modal
             imageModal.addEventListener('click', function (e) {
-                if (e.target === this) {
+                // Si el clic es directamente en el fondo del modal (imageModal)
+                // Y no en la imagen dentro del carrusel ni en el panel de información ni en el diálogo móvil
+                if (e.target === this || e.target.classList.contains('carousel-container-modal')) {
                     closeImageModal();
                 } else if (isMobileView() && infoDialog.classList.contains('active') && e.target !== modalDetailsButton && !infoDialog.contains(e.target)) {
+                    // Si es móvil y el diálogo de info está abierto, y el clic no fue en el botón de detalles ni dentro del diálogo
                     toggleProductInfoDialog();
                 }
             });
@@ -1923,6 +1918,21 @@
             document.addEventListener('click', function (e) {
                 if (!e.target.closest('.filter-group')) {
                     clearAutocomplete();
+                }
+            });
+
+            // Nuevo listener para la tecla ESCAPE
+            document.addEventListener('keydown', function (e) {
+                if (e.key === 'Escape' && isModalOpen) {
+                    closeImageModal();
+                }
+            });
+
+            // Nuevo listener para el botón de retroceso del navegador
+            window.addEventListener('popstate', function (event) {
+                if (isModalOpen && !event.state?.modalOpen) {
+                    // Si el modal está abierto y el historial ha vuelto a un estado donde no debería estar abierto (e.g., el usuario presionó el botón de retroceso)
+                    closeImageModal();
                 }
             });
         }
@@ -1943,4 +1953,5 @@
         });
     </script>
 </body>
+
 </html>
